@@ -28,16 +28,14 @@ public class StoreRepDAO {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
-			String id = "RestArea";
-			String pass = "4";
-			con = dbCon.getConnection(id, pass);
+			con = dbCon.getConn("jdbc/restarea");
 			//3.
 			String insertStoreRep = "";
 			pstmt = con.prepareStatement(insertStoreRep);
 			pstmt.setString(0, insertStoreRep);
 			pstmt.executeUpdate();
 		} finally {
-			dbCon.dbClose(pstmt, con);
+			dbCon.closeCon(null, pstmt, con);
 		}
 	}
 }

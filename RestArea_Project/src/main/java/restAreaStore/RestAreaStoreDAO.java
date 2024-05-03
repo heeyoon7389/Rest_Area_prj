@@ -33,9 +33,7 @@ public class RestAreaStoreDAO {
 		
 		try {
 			//2.
-			String id = "RestArea";
-			String pass = "4";
-			con = dbCon.getConnection(id, pass);
+			con = dbCon.getConn("jdbc/restarea");
 			//3.
 			String selectStore = "";
 			pstmt = con.prepareStatement(selectStore);
@@ -49,7 +47,7 @@ public class RestAreaStoreDAO {
 				storeList.add(raVO);
 			}
 		} finally {
-			dbCon.dbClose(rs, pstmt, con);
+			dbCon.closeCon(rs, pstmt, con);
 		} 
 		return storeList;
 	}
@@ -64,9 +62,7 @@ public class RestAreaStoreDAO {
 		
 		//2.
 		try {
-			String id = "RestArea";
-			String pass = "4";
-			con = dbCon.getConnection(id, pass);
+			con = dbCon.getConn("jdbc/restarea");
 			//3.
 			String selectRecommandMenu = "";
 			pstmt = con.prepareStatement(selectRecommandMenu);
@@ -78,7 +74,7 @@ public class RestAreaStoreDAO {
 				rasVO = new RestAreaStoreVO();
 			}
 		} finally {
-			dbCon.dbClose(rs, pstmt, con);
+			dbCon.closeCon(rs, pstmt, con);
 		}
 		return rasVO;
 	}
@@ -93,9 +89,7 @@ public class RestAreaStoreDAO {
 		
 		//2
 		try {
-			String id = "RestArea";
-			String pass = "4";
-			con = dbCon.getConnection(id, pass);
+			con = dbCon.getConn("jdbc/restarea");
 			//3.
 			String selectAllMenu = "";
 			pstmt = con.prepareStatement(selectAllMenu);
@@ -109,7 +103,7 @@ public class RestAreaStoreDAO {
 				menuList.add(rasVO);
 			}
 		} finally {
-			dbCon.dbClose(rs,pstmt, con);
+			dbCon.closeCon(rs, pstmt, con);
 		}
 		return menuList;
 	}

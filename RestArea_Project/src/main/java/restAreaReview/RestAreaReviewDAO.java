@@ -33,9 +33,7 @@ public class RestAreaReviewDAO {
 		
 		//2
 		try {
-			String id = "RestArea";
-			String pass = "4";
-			con = dbCon.getConnection(id, pass);
+			con = dbCon.getConn("jdbc/restarea");
 			//3.
 			String selectAllReview = "";
 			pstmt = con.prepareStatement(selectAllReview);
@@ -49,7 +47,7 @@ public class RestAreaReviewDAO {
 				reviewList.add(rarVO);
 			}
 		} finally {
-			dbCon.dbClose(rs, pstmt, con);
+			dbCon.closeCon(rs, pstmt, con);
 		}
 		return reviewList;
 	}
@@ -62,9 +60,7 @@ public class RestAreaReviewDAO {
 		PreparedStatement pstmt = null;
 		
 		try {
-			String id = "RestArea";
-			String pass = "4";
-			con = dbCon.getConnection(id, pass);
+			con = dbCon.getConn("jdbc/restarea");
 			//3.
 			String insertReview = "";
 			pstmt = con.prepareStatement(insertReview);
@@ -73,7 +69,7 @@ public class RestAreaReviewDAO {
 			pstmt.setString(cnt, insertReview);
 			pstmt.executeUpdate();
 		} finally {
-			dbCon.dbClose(pstmt, con);
+			dbCon.closeCon(null, pstmt, con);
 		}
 		return cnt;
 	}
@@ -86,9 +82,7 @@ public class RestAreaReviewDAO {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
-			String id = "RestArea";
-			String pass = "4";
-			con = dbCon.getConnection(id, pass);
+			con = dbCon.getConn("jdbc/restarea");
 			String deleteReview = "";
 			pstmt = con.prepareStatement(deleteReview);
 			
@@ -96,7 +90,7 @@ public class RestAreaReviewDAO {
 			
 			pstmt.executeUpdate();
 		} finally {
-			dbCon.dbClose(pstmt, con);
+			dbCon.closeCon(null, pstmt, con);
 		}
 		
 		
@@ -112,9 +106,7 @@ public class RestAreaReviewDAO {
 		PreparedStatement pstmt = null;
 		
 		try {
-			String id = "RestArea";
-			String pass = "4";
-			con = dbCon.getConnection(id, pass);
+			con = dbCon.getConn("jdbc/restarea");
 			//3.
 			String updateRepReview = "";
 			pstmt = con.prepareStatement(updateRepReview);
@@ -123,10 +115,8 @@ public class RestAreaReviewDAO {
 			
 			pstmt.executeUpdate();
 		} finally {
-			dbCon.dbClose(pstmt, con);;
+			dbCon.closeCon(null, pstmt, con);
 		}
-		
-		
 		return cnt;
 	}
 }

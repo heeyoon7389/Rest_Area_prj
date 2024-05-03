@@ -31,9 +31,7 @@ public class RestAreaInfoDAO {
 		
 		try {
 			//2.
-			String id = "RestArea";
-			String pass = "4";
-			con = dbCon.getConnection(id, pass);
+			con = dbCon.getConn("jdbc/restarea");
 			//3.
 			String selectRestAreaInfo = "";
 			pstmt = con.prepareStatement(selectRestAreaInfo);
@@ -45,7 +43,7 @@ public class RestAreaInfoDAO {
 				raVO = new RestAreaInfoVO();
 			}
 		} finally {
-			dbCon.dbClose(rs, pstmt, con);
+			dbCon.closeCon(rs, pstmt, con);
 		}
 		
 		return raVO;
@@ -62,7 +60,7 @@ public class RestAreaInfoDAO {
 		try {
 			String id = "RestArea";
 			String pass = "4";
-			con = dbCon.getConnection(id, pass);
+			con = dbCon.getConn("jdbc/restarea");
 			//3.
 			String updateFavorite = "";
 			pstmt = con.prepareStatement(updateFavorite);
@@ -71,7 +69,7 @@ public class RestAreaInfoDAO {
 			//5.
 			pstmt.executeUpdate();
 		} finally {
-			dbCon.dbClose(pstmt, con);
+			dbCon.closeCon(null, pstmt, con);
 		}
 		return cnt;
 	}

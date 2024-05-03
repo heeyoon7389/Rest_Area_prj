@@ -33,9 +33,7 @@ public class RestAreaFacilDAO {
 		
 		//2.
 		try {
-			String id = "RestArea";
-			String pass = "4";
-			con = dbCon.getConnection(id, pass);
+			con = dbCon.getConn("jdbc/restarea");
 			//3.
 			String selectFacil = "";
 			pstmt = con.prepareStatement(selectFacil);
@@ -49,7 +47,7 @@ public class RestAreaFacilDAO {
 				facilList.add(rafVO);
 			}
 		} finally {
-			dbCon.dbClose(rs, pstmt, con);
+			dbCon.closeCon(rs, pstmt, con);
 		}
 		return facilList;
 	}

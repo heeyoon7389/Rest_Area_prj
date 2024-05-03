@@ -14,6 +14,10 @@
 		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
 		crossorigin="anonymous"></script>
 	<style type="text/css">
+	#reviewTextarea{
+		position: relative;
+		margin-bottom: 
+	}
 	</style>
 	<!--jQuery CDN 시작-->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js">
@@ -24,17 +28,17 @@
 		});
 	</script>
 </head>
-
 <body>
 	<!-- 리뷰 작성 모달 -->
-<div id="reviewModal" class="modal">
+<div id="reviewModal" class="modal-dialog">
   <div class="modal-content">
-    <span class="close" onclick="closeReviewModal()">&times;</span>
-    <h2>리뷰 작성</h2>
-    <textarea id="reviewTextarea" rows="4" cols="50"></textarea>
-    <button onclick="submitReview()">제출</button>
+    <span class="close" onclick="closeReviewModal()"></span>
+    <h2><strong>리뷰 작성</strong></h2>
+    <span><h3>별점</h3></span><br/>
+    <p>리뷰를 입력해주세요</p>
+    <textarea id="reviewTextarea" rows="10" cols="50"></textarea>
+    <button class="btn btn-primary" onclick="submitReview()">제출</button>
   </div>
 </div>
 </body>
-
 </html>

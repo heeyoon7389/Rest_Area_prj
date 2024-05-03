@@ -32,9 +32,7 @@ public class SearchRestAreaDAO {
 		ResultSet rs = null;
 		
 		try {
-			String id = "RestArea";
-			String pass = "4";
-			con = dbCon.getConnection(id, pass);
+			con = dbCon.getConn("jdbc/restarea");
 			String searchByRaName = "";
 			pstmt = con.prepareStatement(searchByRaName);
 			pstmt.setString(0, searchByRaName);
@@ -45,7 +43,7 @@ public class SearchRestAreaDAO {
 				raNameList.add(ranVO);
 			}
 		} finally {
-			dbCon.dbClose(rs, pstmt, con);
+			dbCon.closeCon(rs, pstmt, con);
 		}
 		
 		return raNameList;
@@ -60,9 +58,7 @@ public class SearchRestAreaDAO {
 		ResultSet rs = null;
 		
 		try {
-			String id = "RestArea";
-			String pass = "4";
-			con = dbCon.getConnection(id, pass);
+			con = dbCon.getConn("jdbc/restarea");
 			
 			String searchByLocation = "";
 			pstmt = con.prepareStatement(searchByLocation);
@@ -75,7 +71,7 @@ public class SearchRestAreaDAO {
 				locationList.add(locVO);
 			}
 		} finally {
-			dbCon.dbClose(rs, pstmt, con);
+			dbCon.closeCon(rs, pstmt, con);
 		}
 		
 		
@@ -91,9 +87,7 @@ public class SearchRestAreaDAO {
 		ResultSet rs = null;
 		
 		try {
-			String id = "RestArea";
-			String pass = "4";
-			con = dbCon.getConnection(id, pass);
+			con = dbCon.getConn("jdbc/restarea");
 			
 			String searchByRoute = "";
 			pstmt = con.prepareStatement(searchByRoute);
@@ -105,7 +99,7 @@ public class SearchRestAreaDAO {
 				routeList.add(roVO);
 			}
 		} finally {
-			dbCon.dbClose(rs, pstmt, con);
+			dbCon.closeCon(rs, pstmt, con);
 		}
 		
 		return routeList;
