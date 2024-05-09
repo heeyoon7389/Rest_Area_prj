@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Builder;
 import restAreaDbConnection.DbConnection;
 
 public class RestAreaReviewDAO {
@@ -35,16 +36,27 @@ public class RestAreaReviewDAO {
 		try {
 			con = dbCon.getConn("jdbc/restarea");
 			//3.
-			String selectAllReview = "";
-			pstmt = con.prepareStatement(selectAllReview);
+			StringBuilder selectAllReview = new StringBuilder()
+					.append("select sr.ra_num, rr.mem_id, sr.star, rr.content, rr.input_date, rr.blind_flag ")
+					.append("from star_rate sr, ra_review rr ")
+					.append("where sr.ra_num = rr.ra_num and rr.mem_id = sr.mem_id and sr.ra_num = ? ")
+					.append("order by rr.input_date desc");
+			pstmt = con.prepareStatement(selectAllReview.toString());
 			//4.
-			pstmt.setString(0, selectAllReview);
-			RestAreaReviewVO rarVO = null;
-			
+			pstmt.setString(1, raNum);
 			rs = pstmt.executeQuery();
+			
+			RestAreaReviewVO rarVO = null;			
 			while(rs.next()) {
-				rarVO = new RestAreaReviewVO();
-				reviewList.add(rarVO);
+				RestAreaReviewVO rarVOBuilder = rarVO.builder()
+						.raNum(rs.getString("ra_num"))
+						.memberId(rs.getString("mem_id"))
+						.star(rs.getDouble("star"))
+						.note(rs.getString("content"))
+						.inputDate(rs.getDate("input_date"))
+						.blindFlag(rs.getString("blind_flag"))
+						.build();
+				reviewList.add(rarVOBuilder);
 			}
 		} finally {
 			dbCon.closeCon(rs, pstmt, con);

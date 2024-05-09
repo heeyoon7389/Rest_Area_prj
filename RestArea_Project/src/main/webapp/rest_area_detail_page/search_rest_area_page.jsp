@@ -1,3 +1,6 @@
+<%@page import="searchRestArea.SearchRestAreaDAO"%>
+<%@page import="searchRestArea.RestAreaNameVO"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" info="휴게소 검색 페이지"%>
 <!DOCTYPE html>
@@ -64,6 +67,11 @@
 	margin-top: 20px;
 }
 
+a {
+	text-decoration: none;
+	color: black;
+}
+
 footer {
 	margin-top: 150px;
 }
@@ -74,12 +82,35 @@ footer {
 	
 </script>
 <script type="text/javascript">
-	$(function() {
+$(document).ready(function(){
+    // 휴게소 링크를 클릭했을 때
+    $(document).on("click", ".rest_area_link", function() {
+        var latitude = $(this).data('lat');
+        var longitude = $(this).data('lng');
+        var name = $(this).text(); // 휴게소 이름
+        
+        // 가져온 값을 콘솔에 출력합니다.
+        console.log("Clicked Rest Area:", name);
+        console.log("Latitude:", latitude);
+        console.log("Longitude:", longitude);
+        
+        // 가져온 위도와 경도 값을 이용하여 showRestArea 함수를 호출합니다.
+        showRestArea(latitude, longitude);
+    });
+});
 
-	});
+function showRestArea(latitude, longitude) {
+    // 여기에 지도 표시 코드를 추가합니다.
+    // var container = document.getElementById('map');
+    // var options = {
+    //     center: new kakao.maps.LatLng(latitude, longitude),
+    //     level : 3
+    // };
+    // var map = new kakao.maps.Map(container, options);
+}
 </script>
-</head>
 
+</head>
 <body>
 	<div class="container">
 		<!-- 메뉴바 시작-->
@@ -114,143 +145,88 @@ footer {
 		<!-- 검색창 끝-->
 		<!-- 지도 & 이달의 맛집 시작 -->
 		<div class="main">
-			<div id="main_1">
-				<!-- 휴게소 정보 -->
+			<div id="main_1" style="overflow: auto;">
+				<%
+				String raName = "서울만남";
+				List<RestAreaNameVO> searchNameList = null;
+				SearchRestAreaDAO sraDAO = SearchRestAreaDAO.getInstance();
+				searchNameList = sraDAO.searchByRaName(raName);
+				RestAreaNameVO ranVO = null;
+				%>
+				<%
+				for (int i = 0; i < searchNameList.size(); i++) {
+				%>
+				<%
+				ranVO = searchNameList.get(i);
+				%>
 				<div class="col-md-12">
+					<!-- 휴게소 정보 -->
 					<!-- 이달의 맛집1 시작 -->
 					<div class="row">
 						<div class="col-md-12">
 							<div
 								class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative">
-								<div class="col p-4 d-flex flex-column position-static">
-									<h3 class="mb-0">병년 휴게소</h3>
-									<div class="mb-1 text-body-secondary">OO구 OO동 xxx-xx</div>
+								<div id="rest_area_name"
+									class="col p-4 d-flex flex-column position-static">
+									<!-- 여기서 showRestArea 함수를 호출하도록 수정 -->
+									<div class="mb-0 rest_area_link"
+										data-lat="<%=ranVO.getLatitude()%>"
+										data-lng="<%=ranVO.getLongitude()%>"><%=ranVO.getRaName()%></div>
+									<div class="mb-1 text-body-secondary"><%=ranVO.getRaAddr()%></div>
 									<p class="mb-auto">
-										전화번호 <br> 010-0000-0000
+										전화번호 <br>
+										<%=ranVO.getRaTel()%>
 									</p>
 									<a
 										href="http://localhost/RestArea_Project/rest_area_detail_page/rest_area_detail_page.jsp"
-										class="icon-link gap-1 icon-link-hover stretched-link"> 병년
-										휴게소 상세페이지 <svg class="bi">
-										<use xlink:href="#chevron-right"></use></svg>
+										class="icon-link gap-1 icon-link-hover stretched-link"> <%=ranVO.getRaName()%>
+										상세페이지 <svg class="bi"> 
+                            <use xlink:href="#chevron-right"></use></svg>
 									</a>
 								</div>
 								<div class="col-auto d-none d-lg-block">
 									<svg class="bd-placeholder-img" width="200" height="250"
 										xmlns="http://www.w3.org/2000/svg" role="img"
 										aria-label="Placeholder: Thumbnail"
-										preserveAspectRatio="xMidYMid slice" focusable="false">
-                                <image href="images/sunji2.png"
-											width="200" height="250" />
-                            </svg>
+										preserveAspectRatio="xMidYMid slice" focusable="false"> 
+                            <image href="images/sunji2.png" width="200"
+											height="250" /> 
+                        </svg>
 								</div>
 							</div>
 						</div>
 					</div>
-					<!-- 이달의 맛집1 끝-->
-					<!-- 이달의 맛집2 시작 -->
-					<div class="row">
-						<div class="col-md-12">
-							<div
-								class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-								<div class="col p-4 d-flex flex-column position-static">
-									<h3 class="mb-0">수연 휴게소</h3>
-									<div class="mb-1 text-body-secondary">XX구 XX동</div>
-									<p class="mb-auto">
-										전화번호 <br> 010-1111-2222
-									</p>
-									<a href="#"
-										class="icon-link gap-1 icon-link-hover stretched-link"> 수연
-										휴게소 상세페이지 <svg class="bi">
-										<use xlink:href="#chevron-right"></use></svg>
-									</a>
-								</div>
-								<div class="col-auto d-none d-lg-block">
-									<svg class="bd-placeholder-img" width="200" height="250"
-										xmlns="http://www.w3.org/2000/svg" role="img"
-										aria-label="Placeholder: Thumbnail"
-										preserveAspectRatio="xMidYMid slice" focusable="false">
-                                <image href="images/hanmoon.png"
-											width="200" height="250" />
-                            </svg>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- 이달의 맛집2 끝-->
-					<!-- 이달의 맛집1 시작 -->
-					<div class="row">
-						<div class="col-md-12">
-							<div
-								class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative">
-								<div class="col p-4 d-flex flex-column position-static">
-									<h3 class="mb-0">예찬 휴게소</h3>
-									<div class="mb-1 text-body-secondary">YY구 YY동 xxx-xx</div>
-									<p class="mb-auto">
-										전화번호 <br> 010-2222-2222
-									</p>
-									<a href="#"
-										class="icon-link gap-1 icon-link-hover stretched-link"> 예찬
-										휴게소 상세페이지 <svg class="bi">
-										<use xlink:href="#chevron-right"></use></svg>
-									</a>
-								</div>
-								<div class="col-auto d-none d-lg-block">
-									<svg class="bd-placeholder-img" width="200" height="250"
-										xmlns="http://www.w3.org/2000/svg" role="img"
-										aria-label="Placeholder: Thumbnail"
-										preserveAspectRatio="xMidYMid slice" focusable="false">
-                                <image href="images/sunji2.png"
-											width="200" height="250" />
-                            </svg>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- 이달의 맛집1 끝-->
-					<!-- 이달의 맛집1 시작 -->
-					<div class="row">
-						<div class="col-md-12">
-							<div
-								class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative">
-								<div class="col p-4 d-flex flex-column position-static">
-									<h3 class="mb-0">웅찬 휴게소</h3>
-									<div class="mb-1 text-body-secondary">MM구 MM동 xxx-xx</div>
-									<p class="mb-auto">
-										전화번호 <br> 010-3333-3333
-									</p>
-									<a href=""
-										class="icon-link gap-1 icon-link-hover stretched-link"> 웅찬
-										휴게소 상세페이지 <svg class="bi">
-										<use xlink:href="#chevron-right"></use></svg>
-									</a>
-								</div>
-								<div class="col-auto d-none d-lg-block">
-									<svg class="bd-placeholder-img" width="200" height="250"
-										xmlns="http://www.w3.org/2000/svg" role="img"
-										aria-label="Placeholder: Thumbnail"
-										preserveAspectRatio="xMidYMid slice" focusable="false">
-                                <image href="images/sunji2.png"
-											width="200" height="250" />
-                            </svg>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- 이달의 맛집1 끝-->
 				</div>
+				<%
+				}
+				%>
 				<!-- 맛집들 끝 -->
-				<!-- 지도 끝 -->
 			</div>
-			<div id="main_2">
+
+			<div id="main_2" style="margin-bottom: auto;">
 				<div class="row">
 					<!-- 지도 시작 -->
-					<div class="col-md-6">
-						<a href="#"> <img src="images/map.png" alt="Main Map">
-						</a>
+					<div id="map"
+						style="margin-left: auto; width: 600px; height: 500px;"
+						class="col-md-6">
+						<!-- 여기에 지도를 표시할 준비를 합니다. -->
 					</div>
 				</div>
 			</div>
+
+			<script type="text/javascript">
+				/* // 여기에 지도 표시 코드를 추가합니다.
+				var container = document.getElementById('map');
+				var options = {
+				    center: new kakao.maps.LatLng(latitude, longitude),
+				    level : 3
+				};
+				var map = new kakao.maps.Map(container, options); */
+			</script>
+
+
+
+
 			<!-- 지도 & 이달의 맛집 끝-->
 			<!-- 	사이트 광고 배너 시작 -->
 			<div id="myCarousel" class="carousel slide mb-6"

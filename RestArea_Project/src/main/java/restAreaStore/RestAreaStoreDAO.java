@@ -35,16 +35,25 @@ public class RestAreaStoreDAO {
 			//2.
 			con = dbCon.getConn("jdbc/restarea");
 			//3.
-			String selectStore = "";
-			pstmt = con.prepareStatement(selectStore);
+			StringBuilder selectStore = new StringBuilder();
+			selectStore
+			.append("select store_image, store_name, note, store_num ")
+			.append("from store ")
+			.append("where ra_num = ?");
+			pstmt = con.prepareStatement(selectStore.toString());
 			//4.
-			pstmt.setString(0, selectStore);
+			pstmt.setString(1, raNum);
+			rs = pstmt.executeQuery();
 			RestAreaStoreVO raVO = null;
 			
-			rs = pstmt.executeQuery();
 			while(rs.next()) {
-				raVO = new RestAreaStoreVO();
-				storeList.add(raVO);
+				RestAreaStoreVO raVOBuilder = raVO.builder()
+						.storeImg(rs.getString("store_image"))
+						.storeName(rs.getString("store_name"))
+						.storeNote(rs.getString("note"))
+						.storeNum(rs.getString("store_num"))
+						.build();
+				storeList.add(raVOBuilder);
 			}
 		} finally {
 			dbCon.closeCon(rs, pstmt, con);
@@ -91,16 +100,25 @@ public class RestAreaStoreDAO {
 		try {
 			con = dbCon.getConn("jdbc/restarea");
 			//3.
-			String selectAllMenu = "";
-			pstmt = con.prepareStatement(selectAllMenu);
+			StringBuilder selectAllMenu = new StringBuilder()
+					.append("select img, menu_name, price, note, store_num ")
+					.append("from menu ")
+					.append("where store_num = ?");
+			pstmt = con.prepareStatement(selectAllMenu.toString());
 			//4.
-			pstmt.setString(0, selectAllMenu);
+			pstmt.setString(1, storeNum);
 			RestAreaStoreVO rasVO = null;
 			
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
-				rasVO = new RestAreaStoreVO();
-				menuList.add(rasVO);
+						RestAreaStoreVO rasVOBuilder = rasVO.builder()
+						.menuImg(rs.getString("img"))
+						.menuName(rs.getString("menu_name"))
+						.price(rs.getInt("price"))
+						.menuNote(rs.getString("note"))
+						.storeNum(rs.getString("store_Num"))
+						.build();
+				menuList.add(rasVOBuilder);
 			}
 		} finally {
 			dbCon.closeCon(rs, pstmt, con);
