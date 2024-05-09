@@ -28,15 +28,19 @@
 </head>
 
 <body>
-	<div>
-		<%
-		DbConnection dbCon = DbConnection.getInstance();
-		Connection con = dbCon.getConn();
-		%>
-		<%= con %>
-		<%
-		dbCon.closeCon(null, null, con);
-		%>
+	<div id = "map" style="width:500px; height: 500px;">
+		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=16ee3555fcc7fa1f7c8e630d95b34e4f">
+						</script>
+						<script type="text/javascript">
+						var container = document.getElementById('map'),
+						option = {
+								center: new kakao.maps.LatLng(37.459939, 127.042514),
+								level : 3
+						};
+						
+						var map = new kakao.maps.Map(container, option);
+						</script>
+				
 	</div>
 </body>
 

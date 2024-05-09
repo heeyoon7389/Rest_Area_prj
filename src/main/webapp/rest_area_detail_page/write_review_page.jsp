@@ -18,13 +18,72 @@
 		position: relative;
 		margin-bottom: 
 	}
+	
+	.star_rating {
+  width: 100%; 
+  box-sizing: border-box; 
+  display: inline-flex; 
+  float: left;
+  flex-direction: row; 
+  justify-content: flex-start;
+}
+.star_rating .star {
+  width: 25px; 
+  height: 25px; 
+  margin-right: 10px;
+  display: inline-block; 
+  background: url('https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FE2bww%2FbtsviSSBz4Q%2F5UYnwSWgTlFt6CEFZ1L3Q0%2Fimg.png') no-repeat; 
+  background-size: 100%; 
+  box-sizing: border-box; 
+}
+.star_rating .star.on {
+  width: 25px; 
+  height: 25px;
+  margin-right: 10px;
+  display: inline-block; 
+  background: url('https://blog.kakaocdn.net/dn/b2d6gV/btsvbDoal87/XH5b17uLeEJcBP3RV3FyDk/img.png') no-repeat;
+  background-size: 100%; 
+  box-sizing: border-box; 
+}
+
+.star_box {
+  width: 400px;
+  box-sizing: border-box;
+  display: inline-block;
+  margin: 15px 0;
+  background: #F3F4F8;
+  border: 0;
+  border-radius: 10px;
+  height: 100px;
+  resize: none;
+  padding: 15px;
+  font-size: 13px;
+  font-family: sans-serif;
+}
+.btn02 {
+  display:block;
+  width: 400px;
+  font-weight: bold;
+  border: 0;
+  border-radius: 10px;
+  max-height: 50px;
+  padding: 15px 0;
+  font-size: 1.1em;
+  text-align: center;
+  background:bisque;
+}
 	</style>
 	<!--jQuery CDN 시작-->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js">
 	</script>
 	<script type="text/javascript">
 		$(function () {
-			
+			$('.star_rating > .star').click(function() {
+				  $(this).parent().children('span').removeClass('on');
+				  $(this).addClass('on').prevAll('span').addClass('on');
+				  var value = $(this).attr('value');
+				  $('#selectedStar').text('선택한 별점: ' + value);
+				});
 		});
 	</script>
 </head>
@@ -34,7 +93,17 @@
   <div class="modal-content">
     <span class="close" onclick="closeReviewModal()"></span>
     <h2><strong>리뷰 작성</strong></h2>
-    <span><h3>별점</h3></span><br/>
+    <span><h3>별점</h3>
+    <div class ="star_rating">
+  <span class="star on" value="1"> </span>
+  <span class="star" value="2"> </span>
+  <span class="star" value="3"> </span>
+  <span class="star" value="4"> </span>
+  <span class="star" value="5"> </span>
+</div>
+  <p id="selectedStar"></p>
+    
+    </span><br/>
     <p>리뷰를 입력해주세요</p>
     <textarea id="reviewTextarea" rows="10" cols="50"></textarea>
     <button class="btn btn-primary" onclick="submitReview()">제출</button>
