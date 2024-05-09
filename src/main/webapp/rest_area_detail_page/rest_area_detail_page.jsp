@@ -243,7 +243,7 @@ a {
 		$("#write_review")
 				.click(
 						function() {
-							var url = "http://localhost/RestArea_Project/rest_area_detail_page/write_review_page.jsp";
+							var url = "http://localhost/Rest_Area_prj/rest_area_detail_page/write_review_page.jsp";
 							var name = "리뷰 작성";
 							var option = "width = 500, height = 500, top = 100, left = 200, location = no";
 							window.open(url, name, option)
@@ -252,7 +252,7 @@ a {
 				.click(
 						function(event) {
 							// 호출할 페이지의 URL을 설정합니다.
-							var url = "http://localhost/RestArea_Project/rest_area_detail_page/menu_detail.jsp";
+							var url = "http://localhost/Rest_Area_prj/rest_area_detail_page/menu_detail.jsp";
 
 							// 현재 클릭한 링크의 부모 요소인 store_detail에서 storeNum 값을 가져옵니다.
 							var storeNum = $(this).find('span').data('value');
@@ -273,7 +273,7 @@ a {
 		$(".store_rep a")
 				.click(
 						function(event) {
-							var url = "http://localhost/RestArea_Project/rest_area_detail_page/store_report.jsp";
+							var url = "http://localhost/Rest_Area_prj/rest_area_detail_page/store_report.jsp";
 							var storeNum = $(this).find('span').data('value');
 							url += "?storeNum=" + storeNum;
 							var name = "매장 신고";

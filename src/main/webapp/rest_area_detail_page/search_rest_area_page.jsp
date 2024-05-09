@@ -178,7 +178,7 @@ function showRestArea(latitude, longitude) {
 										<%=ranVO.getRaTel()%>
 									</p>
 									<a
-										href="http://localhost/RestArea_Project/rest_area_detail_page/rest_area_detail_page.jsp"
+										href="http://localhost/Rest_Area_prj/rest_area_detail_page/rest_area_detail_page.jsp"
 										class="icon-link gap-1 icon-link-hover stretched-link"> <%=ranVO.getRaName()%>
 										상세페이지 <svg class="bi"> 
                             <use xlink:href="#chevron-right"></use></svg>
