@@ -23,12 +23,4 @@ public class RestAreaNameVO {
 	private double latitude;
 	private double longitude;
 	private String menuImg;
-	
-	public RestAreaNameVO(String raName, String raAddr, String raTel, double latitude, double longitude) {
-		this.raName = raName;
-		this.raAddr = raAddr;
-		this.raTel = raTel;
-		this.latitude = latitude;
-		this.longitude = longitude;
-	}
 }

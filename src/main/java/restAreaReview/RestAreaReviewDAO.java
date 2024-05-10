@@ -64,24 +64,57 @@ public class RestAreaReviewDAO {
 		return reviewList;
 	}
 	
-	public int insertReview(RestAreaReviewVO rarVO, String memberId) throws SQLException {
+	public int insertReview(String raNum, String memberId, String content, double star) throws SQLException {
 		int cnt = 0;
 		//1.드라이버 로딩
 		DbConnection dbCon = DbConnection.getInstance();
 		Connection con = null;
-		PreparedStatement pstmt = null;
+		PreparedStatement pstmtReview = null;
+		PreparedStatement pstmtStar = null;
 		
 		try {
 			con = dbCon.getConn("jdbc/restarea");
+			con.setAutoCommit(false);
 			//3.
-			String insertReview = "";
-			pstmt = con.prepareStatement(insertReview);
+			StringBuilder insertReview = new StringBuilder()
+					.append("insert into ra_review(ra_review_num, ra_num, mem_id, content, input_date, blind_flag) ")
+					.append("values (seq_ra_review.nextval, ?, ?, ?, sysdate, '0')");
+			
+			StringBuilder insertStarRate = new StringBuilder()
+					.append("insert into star_rate(star_rate_num, mem_id, ra_num, star, input_date) ")
+					.append("values(seq_star_rate.nextval, ?, ?, ?, sysdate)");
+			
+			pstmtReview = con.prepareStatement(insertReview.toString());
+			pstmtStar = con.prepareStatement(insertStarRate.toString());
 			
 			//4.
-			pstmt.setString(cnt, insertReview);
-			pstmt.executeUpdate();
+			pstmtReview.setString(1, raNum);
+			pstmtReview.setString(2, memberId);
+			pstmtReview.setString(3, content);
+			cnt += pstmtReview.executeUpdate();
+			
+			pstmtStar.setString(1, raNum);
+			pstmtStar.setString(2, memberId);
+			pstmtStar.setDouble(3, star);
+			cnt += pstmtStar.executeUpdate();
+			
+			con.commit();
+		} catch(SQLException e){
+			con.rollback();
+			e.printStackTrace();
+		
 		} finally {
-			dbCon.closeCon(null, pstmt, con);
+			if(pstmtReview != null) {
+				pstmtReview.close();
+			}
+			
+			if(pstmtStar != null) {
+				pstmtStar.close();
+			}
+			
+			if(con != null) {
+				con.close();
+			}
 		}
 		return cnt;
 	}

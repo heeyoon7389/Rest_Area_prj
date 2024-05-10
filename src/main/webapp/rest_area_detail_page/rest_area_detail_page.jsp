@@ -243,10 +243,13 @@ a {
 		$("#write_review")
 				.click(
 						function() {
-							var url = "http://localhost/Rest_Area_prj/rest_area_detail_page/write_review_page.jsp";
+							var raNum = document.review_form.raNum.value;
+							var memberId = document.review_form.memberId.value;
+							var url = "http://localhost/Rest_Area_prj/rest_area_detail_page/write_review_page.jsp?raNum="+raNum + "&memberId="+memberId;
 							var name = "리뷰 작성";
 							var option = "width = 500, height = 500, top = 100, left = 200, location = no";
 							window.open(url, name, option)
+							$("#review_form").submit();
 						});
 		$(".store_note a")
 				.click(
@@ -290,7 +293,7 @@ a {
 		<div id="header">
 			<div id="title">
 				<%
-				String raNum = "A00001";
+				String raNum = request.getParameter("raNum");
 				RestAreaInfoVO raiVO = null;
 				RestAreaInfoDAO raiDAO = RestAreaInfoDAO.getInstance();
 				raiVO = raiDAO.selectRestAreaInfo(raNum);
@@ -308,7 +311,6 @@ a {
 				<div id="store_">매장</div>
 				<div class="store_info">
 					<%
-					raNum = "A00001";
 					List<RestAreaStoreVO> storeList = null;
 					RestAreaStoreDAO rsDAO = RestAreaStoreDAO.getInstance();
 					storeList = rsDAO.selectStore(raNum);
@@ -350,7 +352,6 @@ a {
 								<th>설명</th>
 							</tr>
 							<%
-							raNum = "A00001";
 							List<RestAreaFacilVO> facilList = null;
 							RestAreaFacilDAO rfDAO = RestAreaFacilDAO.getInstance();
 							facilList = rfDAO.selectFacil(raNum);
@@ -388,7 +389,6 @@ a {
 			<div id="review_info">
 				<h1>리뷰</h1>
 				<%
-				raNum = "A00001";
 				List<RestAreaReviewVO> reviewList = new ArrayList<RestAreaReviewVO>();
 				RestAreaReviewDAO rarDAO = RestAreaReviewDAO.getInstance();
 				reviewList = rarDAO.selectAllReview(raNum);
@@ -431,10 +431,15 @@ a {
 						%>
 					</div>
 				</div>
+				<form id ="review_form" name = "review_form" action="rest_area_detail_page.jsp" method="post">
 				<div id="review_button" class="text-end">
 					<input type="button" id="write_review" class="btn btn-primary"
 						value="리뷰쓰기">
 				</div>
+				<input type="hidden" name="raNum" value="<%=raNum%>">
+				<input type="hidden" name="memberId" value="kimking">
+				
+				</form>
 				<br />
 				<div id="review_all" style="overflow: auto;">
 					<%

@@ -84,18 +84,16 @@ footer {
 <script type="text/javascript">
 $(document).ready(function(){
     // 휴게소 링크를 클릭했을 때
-    $(document).on("click", ".rest_area_link", function() {
-        var latitude = $(this).data('lat');
-        var longitude = $(this).data('lng');
+    $(".rest_area_link a").click(function(event) {
+    	event.preventDefault(); // 기본 클릭 동작 막기
+    	alert($(this).find('span').data('lat'));
+        var latitude = $(this).find('span').data('lat');
+        var longitude = $(this).find('span').data('lng');
         var name = $(this).text(); // 휴게소 이름
         
-        // 가져온 값을 콘솔에 출력합니다.
-        console.log("Clicked Rest Area:", name);
-        console.log("Latitude:", latitude);
-        console.log("Longitude:", longitude);
+        console.log("Latitude:", latitude, "Longitude:", longitude);
         
         // 가져온 위도와 경도 값을 이용하여 showRestArea 함수를 호출합니다.
-        showRestArea(latitude, longitude);
     });
 });
 
@@ -108,6 +106,7 @@ function showRestArea(latitude, longitude) {
     // };
     // var map = new kakao.maps.Map(container, options);
 }
+
 </script>
 
 </head>
@@ -133,11 +132,11 @@ function showRestArea(latitude, longitude) {
 		<!-- 검색창 시작-->
 		<div class="search-container">
 			<form class="d-flex" role="search">
-				<select class="form-select" aria-label="고속도로 검색 유형">
-					<option value="1" selected>지역별</option>
+				<select class="form-select" aria-label="고속도로 검색 유형" name="search-type">
+					<option value="1">지역별</option>
 					<option value="2">휴게소별</option>
 					<option value="3">고속도로별</option>
-				</select> <input class="form-control me-2" type="search"
+				</select> <input class="form-control me-2" type="search" name="search-query"
 					placeholder="찾으시는 휴게소를 검색해주세요" aria-label="Search">
 				<button class="btn btn-primary" type="submit">검색</button>
 			</form>
@@ -147,7 +146,8 @@ function showRestArea(latitude, longitude) {
 		<div class="main">
 			<div id="main_1" style="overflow: auto;">
 				<%
-				String raName = "서울만남";
+				
+				String raName = request.getParameter("search-query");
 				List<RestAreaNameVO> searchNameList = null;
 				SearchRestAreaDAO sraDAO = SearchRestAreaDAO.getInstance();
 				searchNameList = sraDAO.searchByRaName(raName);
@@ -169,20 +169,24 @@ function showRestArea(latitude, longitude) {
 								<div id="rest_area_name"
 									class="col p-4 d-flex flex-column position-static">
 									<!-- 여기서 showRestArea 함수를 호출하도록 수정 -->
-									<div class="mb-0 rest_area_link"
+									<div class="mb-0 rest_area_link">
+									<div class ="rest_area_link">
+									<a href=""><span
 										data-lat="<%=ranVO.getLatitude()%>"
-										data-lng="<%=ranVO.getLongitude()%>"><%=ranVO.getRaName()%></div>
+										data-lng="<%=ranVO.getLongitude()%>"></span><%=ranVO.getRaName()%></a></div></div>
 									<div class="mb-1 text-body-secondary"><%=ranVO.getRaAddr()%></div>
 									<p class="mb-auto">
 										전화번호 <br>
 										<%=ranVO.getRaTel()%>
 									</p>
+									<div class="rest_area_detail">
 									<a
-										href="http://localhost/Rest_Area_prj/rest_area_detail_page/rest_area_detail_page.jsp"
-										class="icon-link gap-1 icon-link-hover stretched-link"> <%=ranVO.getRaName()%>
+										href="http://localhost/Rest_Area_prj/rest_area_detail_page/rest_area_detail_page.jsp?raNum=<%=ranVO.getRaNum()%>"
+										class="icon-link gap-1 icon-link-hover stretched-link"><%=ranVO.getRaName()%>
 										상세페이지 <svg class="bi"> 
                             <use xlink:href="#chevron-right"></use></svg>
 									</a>
+									</div>
 								</div>
 								<div class="col-auto d-none d-lg-block">
 									<svg class="bd-placeholder-img" width="200" height="250"
@@ -213,7 +217,7 @@ function showRestArea(latitude, longitude) {
 					</div>
 				</div>
 			</div>
-
+			
 			<script type="text/javascript">
 				/* // 여기에 지도 표시 코드를 추가합니다.
 				var container = document.getElementById('map');

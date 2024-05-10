@@ -34,7 +34,7 @@ public class SearchRestAreaDAO {
 		try {
 			con = dbCon.getConn("jdbc/restarea");
 			StringBuilder searchByRaName = new StringBuilder()
-					.append("select ra_name, addr, tel, latitude, longitude ")
+					.append("select ra_num, ra_name, addr, tel, latitude, longitude ")
 					.append("from rest_area ")
 					.append("where ra_name like ?")
 					;
@@ -43,14 +43,15 @@ public class SearchRestAreaDAO {
 			RestAreaNameVO ranVO = null;
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
-				ranVO = new RestAreaNameVO(
-						rs.getString("ra_name"),
-						rs.getString("addr"),
-						rs.getString("tel"),
-						rs.getDouble("latitude"),
-						rs.getDouble("longitude")
-						);
-				raNameList.add(ranVO);
+				RestAreaNameVO ranVOBuilder = ranVO.builder()
+				.raNum(rs.getString("ra_num"))		
+				.raName(rs.getString("ra_name"))
+				.raAddr(rs.getString("addr"))
+				.raTel(rs.getString("tel"))
+				.latitude(rs.getDouble("latitude"))
+				.longitude(rs.getDouble("longitude"))
+				.build();
+				raNameList.add(ranVOBuilder);
 			}
 		} finally {
 			dbCon.closeCon(rs, pstmt, con);
