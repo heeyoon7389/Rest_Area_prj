@@ -1,3 +1,7 @@
+<%@page import="org.json.simple.JSONArray"%>
+<%@page import="org.json.simple.JSONObject"%>
+<%@page import="org.json.simple.parser.JSONParser"%>
+<%@page import="java.io.FileReader"%>
 <%@page import="restAreaInfo.RestAreaInfoDAO"%>
 <%@page import="restAreaInfo.RestAreaInfoVO"%>
 <%@page import="restAreaReview.RestAreaReviewDAO"%>
@@ -160,7 +164,7 @@ a {
 
 #review_info {
 	float: left;
-	width: 60%;
+	width: 80%;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
@@ -294,6 +298,8 @@ a {
 			<div id="title">
 				<%
 				String raNum = request.getParameter("raNum");
+				String raName = request.getParameter("raName");
+				String addr = request.getParameter("addr");
 				RestAreaInfoVO raiVO = null;
 				RestAreaInfoDAO raiDAO = RestAreaInfoDAO.getInstance();
 				raiVO = raiDAO.selectRestAreaInfo(raNum);
@@ -380,13 +386,50 @@ a {
 		<div class="gs">
 			<div id="gs_">주유소</div>
 			<div id="gs_info">
-				<img src='icons/gasstaion.png'>
-				<h1>OO 휴게소 주유소</h1>
-				<br /> OO 주유소<br> lpg : 2000원<br> tel:010-7255-5901<br>
+			<%
+			String jsonFile = "C:/Users/user/git/Rest_Area_prj/src/main/webapp/rest_area_detail_page/주유소.json";
+			JSONParser parser = new JSONParser();
+			try{
+				Object obj = parser.parse(new FileReader(jsonFile));
+				JSONObject jsonObject = (JSONObject) obj;
+				JSONArray stations = (JSONArray) jsonObject.get("list");
+				for(Object stationObj  : stations){
+					JSONObject station = (JSONObject) stationObj;
+					String tempSaName = (String)station.get("serviceAreaName");
+					if(tempSaName == null){
+						continue;
+					}
+					String serviceAreaName = tempSaName.replace("주유소", "휴게소");
+					if(serviceAreaName.replaceAll(" ", "") != null && serviceAreaName.replaceAll(" ", "").contains(raName)){
+						String diselPrice = (String) station.get("diselPrice");
+						String gasolinePrice = (String) station.get("gasolinePrice");
+						String lpgPrice = (String) station.get("lpgPrice");
+						String telNo = (String) station.get("telNo");%>
+						
+					<h2> <%= raName %> 주유소 정보</h2>
+					<ul>
+						<li>휘발유 : <%= gasolinePrice %></li>
+						<li>경유 : <%= diselPrice %> </li>
+						<%
+							if(lpgPrice.equals("X")){%>
+								<li>LPG : 정보없음 </li>
+							<%}else{%>
+								<li>LPG : <%= lpgPrice %> </li>
+							<%}%>
+						<li>전화번호 : <%= telNo %></li>
+					</ul>
+					<% break; } %>
+				<% }
+			}catch( Exception e){
+				out.println("주유소 정보를 가져오는 중 오류가 발생했습니다.");
+				e.printStackTrace();
+			}
+			
+			%>
 			</div>
 		</div>
 		<div class="review">
-			<div id="review_info">
+			<div id="review_info" style="overflow-x: auto; overflow-y : hidden;">
 				<h1>리뷰</h1>
 				<%
 				List<RestAreaReviewVO> reviewList = new ArrayList<RestAreaReviewVO>();
@@ -496,19 +539,18 @@ a {
 					} else {
 					%>
 					<div
-						style="height: 100px; border: 1px solid #ffffff; border-radius: 5px; background-color: #A8A8A8;">
+						style="height: 100px; display: flex; flex-direction: column; border: 1px solid #ffffff; border-radius: 5px; background-color: #A8A8A8;">
 						<div style="text-align: left;">블라인드 처리 된 글입니다.</div>
 						<br />
 						<%
 						}
 						%>
-					<%
-					}
+					<%}
 					%>
 					</div>
 				</div>
-			</div>
 			<div id="review_">리뷰</div>
+			</div>
 		</div>
 		<!-- 제작&저작권 시작 -->
 		<footer class="py-5 text-center text-body-secondary bg-white">
