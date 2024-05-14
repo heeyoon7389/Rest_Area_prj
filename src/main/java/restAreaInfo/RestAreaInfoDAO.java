@@ -33,14 +33,22 @@ public class RestAreaInfoDAO {
 			//2.
 			con = dbCon.getConn("jdbc/restarea");
 			//3.
-			String selectRestAreaInfo = "";
-			pstmt = con.prepareStatement(selectRestAreaInfo);
+			StringBuilder selectRestAreaInfo = new StringBuilder()
+					.append("select ra_name, addr ")
+					.append("from Rest_area ")
+					.append("where ra_num =?");
+			pstmt = con.prepareStatement(selectRestAreaInfo.toString());
 			//4.
-			pstmt.setString(0, selectRestAreaInfo);
+			pstmt.setString(1, raNum);
 			
 			rs = pstmt.executeQuery();
+			RestAreaInfoVO raiVO = null;
 			if(rs.next()) {
-				raVO = new RestAreaInfoVO();
+				RestAreaInfoVO raiVOBuilder = raiVO.builder()
+						.raName(rs.getString("ra_name"))
+						.raAddr(rs.getString("addr"))
+						.build();
+				raVO = raiVOBuilder;
 			}
 		} finally {
 			dbCon.closeCon(rs, pstmt, con);

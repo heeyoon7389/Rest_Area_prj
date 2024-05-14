@@ -1,3 +1,7 @@
+<%@page import="java.io.Console"%>
+<%@page import="restAreaStore.RestAreaStoreDAO"%>
+<%@page import="restAreaStore.RestAreaStoreVO"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     info=""%>
@@ -45,94 +49,29 @@
 	<div id="menuDetailmodal" class="modal-dialog">
 		<div class="modal-content">
 		<h3><strong>메뉴 정보</strong></h3>
+		<%
+		String storeNum = request.getParameter("storeNum");
+		List<RestAreaStoreVO> menuList = null;
+		RestAreaStoreDAO rasDAO = RestAreaStoreDAO.getInstance();
+		menuList = rasDAO.selectAllMenu(storeNum);
+		RestAreaStoreVO rasVO = null;
+		%>
+		<%for(int i = 0; i < menuList.size(); i++) {%>
+		<% 
+		   rasVO = menuList.get(i);
+		%>
 		<div class ="menuDetail"style="margin-right: 20px; margin-bottom: 20px;">
-		<img src="images/koreanfood.png" alt="avatar"
+		<img src="images/menu_img/<%=rasVO.getMenuImg()%>" alt="avatar"
 		style="width: 50px; height: 50px; margin-right: 10px;">
 		<div class="menu_note" style = "margin-top: 0; text-align: left;" >
-		<p style="margin: 0;"><strong>김치찌개</strong></p>
-		<p style="margin: 0;">한식 전문점 설명 들어갈 부분</p>
+		<p style="margin: 0;"><strong><%= rasVO.getMenuName() %></strong></p>
+		<p style="margin: 0;"><%= rasVO.getMenuNote() %></p>
 		<div class="menuPrice">
-		가격 : 6500원
+		가격 : <%= rasVO.getPrice() %>
 		</div>
 		</div>
 		</div>
-		<div class ="menuDetail"style="margin-right: 20px; margin-bottom: 20px;">
-		<img src="images/koreanfood.png" alt="avatar"
-		style="width: 50px; height: 50px; margin-right: 10px;">
-		<div class="menu_note" style = "margin-top: 0; text-align: left;" >
-		<p style="margin: 0;"><strong>김치찌개</strong></p>
-		<p style="margin: 0;">한식 전문점 설명 들어갈 부분</p>
-		<div class="menuPrice">
-		가격 : 6500원
-		</div>
-		</div>
-		</div>
-		<div class ="menuDetail"style="margin-right: 20px; margin-bottom: 20px;">
-		<img src="images/koreanfood.png" alt="avatar"
-		style="width: 50px; height: 50px; margin-right: 10px;">
-		<div class="menu_note" style = "margin-top: 0; text-align: left;" >
-		<p style="margin: 0;"><strong>김치찌개</strong></p>
-		<p style="margin: 0;">한식 전문점 설명 들어갈 부분</p>
-		<div class="menuPrice">
-		가격 : 6500원
-		</div>
-		</div>
-		</div>
-		<div class ="menuDetail"style="margin-right: 20px; margin-bottom: 20px;">
-		<img src="images/koreanfood.png" alt="avatar"
-		style="width: 50px; height: 50px; margin-right: 10px;">
-		<div class="menu_note" style = "margin-top: 0; text-align: left;" >
-		<p style="margin: 0;"><strong>김치찌개</strong></p>
-		<p style="margin: 0;">한식 전문점 설명 들어갈 부분</p>
-		<div class="menuPrice">
-		가격 : 6500원
-		</div>
-		</div>
-		</div>
-		<div class ="menuDetail"style="margin-right: 20px; margin-bottom: 20px;">
-		<img src="images/koreanfood.png" alt="avatar"
-		style="width: 50px; height: 50px; margin-right: 10px;">
-		<div class="menu_note" style = "margin-top: 0; text-align: left;" >
-		<p style="margin: 0;"><strong>김치찌개</strong></p>
-		<p style="margin: 0;">한식 전문점 설명 들어갈 부분</p>
-		<div class="menuPrice">
-		가격 : 6500원
-		</div>
-		</div>
-		</div>
-		<div class ="menuDetail"style="margin-right: 20px; margin-bottom: 20px;">
-		<img src="images/koreanfood.png" alt="avatar"
-		style="width: 50px; height: 50px; margin-right: 10px;">
-		<div class="menu_note" style = "margin-top: 0; text-align: left;" >
-		<p style="margin: 0;"><strong>김치찌개</strong></p>
-		<p style="margin: 0;">한식 전문점 설명 들어갈 부분</p>
-		<div class="menuPrice">
-		가격 : 6500원
-		</div>
-		</div>
-		</div>
-		<div class ="menuDetail"style="margin-right: 20px; margin-bottom: 20px;">
-		<img src="images/koreanfood.png" alt="avatar"
-		style="width: 50px; height: 50px; margin-right: 10px;">
-		<div class="menu_note" style = "margin-top: 0; text-align: left;" >
-		<p style="margin: 0;"><strong>김치찌개</strong></p>
-		<p style="margin: 0;">한식 전문점 설명 들어갈 부분</p>
-		<div class="menuPrice">
-		가격 : 6500원
-		</div>
-		</div>
-		</div>
-		<div class ="menuDetail"style="margin-right: 20px; margin-bottom: 20px;">
-		<img src="images/koreanfood.png" alt="avatar"
-		style="width: 50px; height: 50px; margin-right: 10px;">
-		<div class="menu_note" style = "margin-top: 0; text-align: left;" >
-		<p style="margin: 0;"><strong>김치찌개</strong></p>
-		<p style="margin: 0;">한식 전문점 설명 들어갈 부분</p>
-		<div class="menuPrice">
-		가격 : 6500원
-		</div>
-		</div>
-		</div>
+		<%}%>
 	</div>
 	</div>
 </body>
