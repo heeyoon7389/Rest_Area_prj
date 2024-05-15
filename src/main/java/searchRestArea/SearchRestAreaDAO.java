@@ -60,7 +60,7 @@ public class SearchRestAreaDAO {
 		return raNameList;
 	}
 	
-	public List<LocationVO> searchByLocation(String locName) throws SQLException{
+	public List<LocationVO> searchByLocation(String locNum) throws SQLException{
 		List<LocationVO> locationList = new ArrayList<LocationVO>();
 		//1. 드라이버 로딩
 		DbConnection dbCon = DbConnection.getInstance();
@@ -89,7 +89,7 @@ public class SearchRestAreaDAO {
 		return locationList;
 	}
 	
-	public List<RouteVO> searchByRoute(String routeName) throws SQLException{
+	public List<RouteVO> searchByRoute(String routeNum) throws SQLException{
 		List<RouteVO> routeList = new ArrayList<RouteVO>();
 		//1. 드라이버 로딩
 		DbConnection dbCon = DbConnection.getInstance();
@@ -100,14 +100,24 @@ public class SearchRestAreaDAO {
 		try {
 			con = dbCon.getConn("jdbc/restarea");
 			
-			String searchByRoute = "";
-			pstmt = con.prepareStatement(searchByRoute);
-			pstmt.setString(0, searchByRoute);
+			StringBuilder searchByRoute = new StringBuilder()
+					.append("select hw.route_num, ra.ra_name, ra.addr, ra.tel, ra.latitude, ra.longitude ")
+					.append("from highway hw, rest_area ra ")
+					.append("where hw.route_id = ra.route_id and hw.route_id = ?");
+			pstmt = con.prepareStatement(searchByRoute.toString());
+			pstmt.setString(1, routeNum);
 			RouteVO roVO = null;
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
-				roVO = new RouteVO();
-				routeList.add(roVO);
+				RouteVO roVOBuilder = roVO.builder()
+						.routeNum(rs.getString("route_num"))
+						.raName(rs.getString("ra_name"))
+						.raAddr(rs.getString("addr"))
+						.raTel(rs.getString("tel"))
+						.restAreaLatitude(rs.getDouble("latitude"))
+						.restAreaLongitude(rs.getDouble("longitude"))
+						.build();
+				routeList.add(roVOBuilder);
 			}
 		} finally {
 			dbCon.closeCon(rs, pstmt, con);

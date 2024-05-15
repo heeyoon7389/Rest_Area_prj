@@ -64,7 +64,8 @@ public class RestAreaReviewDAO {
 		return reviewList;
 	}
 	
-	public int insertReview(String raNum, String memberId, String content, double star) throws SQLException {
+	public boolean insertReview(String raNum, String memberId, String content, double star) throws SQLException {
+		boolean flag = false;
 		int cnt = 0;
 		//1.드라이버 로딩
 		DbConnection dbCon = DbConnection.getInstance();
@@ -81,8 +82,8 @@ public class RestAreaReviewDAO {
 					.append("values (seq_ra_review.nextval, ?, ?, ?, sysdate, '0')");
 			
 			StringBuilder insertStarRate = new StringBuilder()
-					.append("insert into star_rate(star_rate_num, mem_id, ra_num, star, input_date) ")
-					.append("values(seq_star_rate.nextval, ?, ?, ?, sysdate)");
+					.append("insert into star_rate(mem_id, ra_num, star, input_date) ")
+					.append("values(?, ?, ?, sysdate)");
 			
 			pstmtReview = con.prepareStatement(insertReview.toString());
 			pstmtStar = con.prepareStatement(insertStarRate.toString());
@@ -91,14 +92,15 @@ public class RestAreaReviewDAO {
 			pstmtReview.setString(1, raNum);
 			pstmtReview.setString(2, memberId);
 			pstmtReview.setString(3, content);
-			cnt += pstmtReview.executeUpdate();
+			cnt = pstmtReview.executeUpdate();
 			
-			pstmtStar.setString(1, raNum);
-			pstmtStar.setString(2, memberId);
+			pstmtStar.setString(1, memberId);
+			pstmtStar.setString(2, raNum);
 			pstmtStar.setDouble(3, star);
 			cnt += pstmtStar.executeUpdate();
 			
 			con.commit();
+			flag = true;
 		} catch(SQLException e){
 			con.rollback();
 			e.printStackTrace();
@@ -116,7 +118,7 @@ public class RestAreaReviewDAO {
 				con.close();
 			}
 		}
-		return cnt;
+		return flag;
 	}
 	
 	public int deleteReview(RestAreaReviewVO rarVO) throws SQLException {

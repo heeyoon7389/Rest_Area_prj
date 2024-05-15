@@ -34,7 +34,7 @@ public class RestAreaInfoDAO {
 			con = dbCon.getConn("jdbc/restarea");
 			//3.
 			StringBuilder selectRestAreaInfo = new StringBuilder()
-					.append("select ra_name, addr ")
+					.append("select ra_name, addr, latitude, longitude ")
 					.append("from Rest_area ")
 					.append("where ra_num =?");
 			pstmt = con.prepareStatement(selectRestAreaInfo.toString());
@@ -47,6 +47,8 @@ public class RestAreaInfoDAO {
 				RestAreaInfoVO raiVOBuilder = raiVO.builder()
 						.raName(rs.getString("ra_name"))
 						.raAddr(rs.getString("addr"))
+						.latitude(rs.getDouble("latitude"))
+						.longitude(rs.getDouble("longitude"))
 						.build();
 				raVO = raiVOBuilder;
 			}
