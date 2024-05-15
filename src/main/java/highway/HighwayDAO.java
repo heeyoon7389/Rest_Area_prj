@@ -35,7 +35,7 @@ public class HighwayDAO {
 			//3.
 			StringBuilder selectHighway = new StringBuilder();
 			selectHighway
-			.append("select route_name ")
+			.append("select route_name, route_num ")
 			.append("from highway");
 			
 			pstmt = con.prepareStatement(selectHighway.toString());
@@ -45,6 +45,7 @@ public class HighwayDAO {
 			while(rs.next()) {
 				HighwayVO hwVOBuilder = hwVO.builder()
 						.highwayName(rs.getString("route_name"))
+						.routeId(rs.getString("route_num"))
 						.build();
 				highwayList.add(hwVOBuilder);
 			}

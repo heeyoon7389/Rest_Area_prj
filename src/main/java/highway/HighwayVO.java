@@ -12,6 +12,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 public class HighwayVO {
-	String highwayName;
+	String highwayName, routeId;
 	
 }
