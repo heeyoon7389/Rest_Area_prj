@@ -85,7 +85,7 @@
                 <a class="nav-link" href="main_page.jsp?link=myPage">마이페이지</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">문의</a>
+                <a class="nav-link" href="main_page.jsp?link=inquiry">문의</a>
             </li>
             <li class="nav-item">
                 <a href="../login_page/logout.jsp" class="nav-link">로그아웃</a>
@@ -114,6 +114,9 @@
 		<c:when test="${ param.link eq 'myPage' }"><!-- 	마이페이지 클릭 시 -->
 		<c:import url="../my_page/my_page.jsp"/>
 		</c:when>
+		<c:when test="${ param.link eq 'inquiry' }"><!-- 	문의 클릭 시 -->
+		<c:import url="../inquiry_page/inquiry_list.jsp"/>
+		</c:when>
 	</c:choose>
 </c:if>
 <!-- 	v로고, v아이디비번, v회원가입, 공지사항, faq, 맛집, v마이페이지, 문의 	 -->
@@ -124,7 +127,9 @@
 <!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
     <!-- 제작&저작권 시작 -->
     <footer class="py-5 text-center text-body-secondary bg-white">
-  		<p>&copy;고속도로 휴게소 제작 by 4조.</p>
+  		<p>&copy;고속도로 휴게소 제작 by 4조.
+  		<a class="nav-link" href="../mgt/index.html">관리자 페이지</a>
+  		</p>
   		<p class="mb-0">
     	<a href="#">상단으로 올라가기</a>
   		</p>
