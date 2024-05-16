@@ -51,6 +51,15 @@ $(function(){
 	$("#plus_announce").click(function(){
 		alert("공지사항 더보기!!");
 	});
+	//검색버튼 클릭
+	$("#btnSearch").click(function(){
+		if($("#search-keyword").val().trim() != ""){
+			var field = $("#search-type").val();
+			var keyword = $("#search-keyword").val();
+// 			$("#btnSearch")[0].action = "#";
+			$("#btnSearch").submit();
+		}
+	});
 });//ready
 </script>
 <%
@@ -65,14 +74,14 @@ try{
     <!-- 메뉴바 끝-->
     <!-- 검색창 시작-->
     <div class="search-container">
-        <form class="d-flex" role="search">
-    		<select class="form-select" aria-label="고속도로 검색 유형">
+        <form class="d-flex" role="search" action="#">
+    		<select class="form-select" aria-label="고속도로 검색 유형" name="search-type" id="search-type">
   				<option value="1" selected>지역별</option>
   				<option value="2">휴게소별</option>
   				<option value="3">고속도로별</option>
 			</select>
-            <input class="form-control me-2" type="search" placeholder="찾으시는 휴게소를 검색해주세요" aria-label="Search">
-            <button class="btn btn-primary" type="submit">검색</button>
+            <input class="form-control me-2" type="text" name="search-keyword" id="search-keyword" placeholder="찾으시는 휴게소를 검색해주세요" aria-label="Search">
+            <input class="btn btn-primary" type="button" value="검색" id="btnSearch">
         </form>
     </div>
     <!-- 검색창 끝-->
