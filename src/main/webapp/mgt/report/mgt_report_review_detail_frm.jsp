@@ -143,7 +143,7 @@ try {
 				</div>
 				<div class="mgtContent bgGrey" style="margin-top:10px;">
 					<div class="textContent" >
-						<textarea id="reviewContent" rows="2" cols="73" readonly="readonly" style="background:#e0e0e0;">${rarrVO.reviewContent }</textarea>
+						<textarea id="reviewContent" readonly="readonly" style="background:#e0e0e0; width:100%; height:100%;">${rarrVO.reviewContent }</textarea>
 					</div>	
 				</div>
 				
@@ -160,14 +160,14 @@ try {
 				</div>
 				<div class="mgtContent bgGrey" style="margin-top:10px;">
 					<div class="textContent" >
-						<textarea id="reportContent" rows="2" cols="73" readonly="readonly" style="background:#e0e0e0;">${rarrVO.reportContent }</textarea>
+						<textarea id="reportContent" readonly="readonly" style="background:#e0e0e0; width:100%; height:100%;">${rarrVO.reportContent }</textarea>
 					</div>	
 				</div>
 				<div class="mgtContent" style="margin-top:30px;">
 				답변
 				</div>
 				<div class="mgtContent">
-					<textarea name="processContents" id="processContents" class="textContent" cols="73" rows="2" maxlength="1000">${rarrVO.processContents }</textarea>
+					<textarea name="processContents" id="processContents" class="textContent" maxlength="1000" style=" width:100%; height:100%;">${rarrVO.processContents }</textarea>
 				</div>
 				<div class="mgtContent" style="margin-top:20px; width:40%; float:left;">
 					<label>블라인드 처리</label>

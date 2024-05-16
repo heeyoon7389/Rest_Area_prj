@@ -114,7 +114,7 @@ request.setCharacterEncoding("UTF-8");
 				int currentPage = 1;
 				if(tempPage != null) {
 					try {
-						currentPage = Integer.parseInt(tempPage);	// 악의적 목적의 사용자가 주소창 페이지 번호에 숫자가 아닌 값을 넣는 경우 
+						currentPage = Integer.parseInt(tempPage);
 					} catch (NumberFormatException nfe) {
 					} // end catch
 				} // end if
@@ -134,17 +134,17 @@ request.setCharacterEncoding("UTF-8");
 				pageContext.setAttribute("pageScale", pageScale);
 				pageContext.setAttribute("currentPage", currentPage);
 			%>
-			<div style="width:150px; float:left;">
-				<input type="button" value="전체글" id="btnAllSearch" class="btn btn-sm btn-info"/>
-			</div>
-			<div style="width:150px; float:right;">
+			<div style="width:150px; text-align:left; padding-left:15px; float:left;">
+				<input type="button" value="전체글" id="btnAllSearch" class="btn btn-sm btn-secondary"/>
+			</div>			
+			<div style="width:150px; float:right; padding-right:18px;">
 				<select id="selReport" style="float: right;">
 				<option value="0">리뷰 신고</option>
 				<option value="1">매장 신고</option>			
 				</select>
 			</div>
 			
-			<div class="tableFrm" style="height:460px;">
+			<div class="tableFrm" style="height:460px; padding-top:20px;">
 				<table class="restAreaTable">
 					<thead>
 						<tr>

@@ -412,7 +412,7 @@ public class MgtDashBoardDAO {
 			.append("	from	(	")
 			.append("			select	row_number() over (order by input_date desc) rnum, type_, input_date, title, process_flag	")
 			.append("			from	(	")
-			.append("					select	'매장' type_, INPUT_DATE, TITLE, PROCESS_FLAG	")
+			.append("					select	'매장' type_, INPUT_DATE, content TITLE, PROCESS_FLAG	")
 			.append("					from	store_report	")
 			.append("					union all	")
 			.append("					select	'리뷰' type_, INPUT_DATE, CONTENT title, PROCESS_FLAG	")
@@ -429,7 +429,7 @@ public class MgtDashBoardDAO {
 			
 			DashReviewReportVO drrVO = null;
 			while(rs.next()) {
-				drrVO = new DashReviewReportVO(rs.getString("title"), rs.getDate("inputDate"), rs.getBoolean("flagAnswer"));
+				drrVO = new DashReviewReportVO(rs.getString("title"), rs.getDate("inputDate"), rs.getInt("flagAnswer"));
 				list.add(drrVO);
 			} // end while
 		} finally { 

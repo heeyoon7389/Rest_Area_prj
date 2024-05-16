@@ -53,17 +53,20 @@ request.setCharacterEncoding("UTF-8");
 <script type="text/javascript">
 	
 	$(function() {
+		callAjaxStarRate();
+		//callAjaxReview();
+		
 		$("#btnCancel").click(function(){				
 // 			history.back();
 			let href = "http://192.168.10.214/Rest_Area_prj/mgt/member/mgt_member.jsp?currentPage=${param.currentPage }";
 			if("${param.keyword}" != ''){
-				href += "?keyword=${param.keyword}";
+				href += "&keyword=${param.keyword}";
 			} // end if
 			if("${param.field}" != '') {
-				href += "?field=${param.field}";
+				href += "&field=${param.field}";
 			} // end if
 			if("${param.pageScale}" != '') {
-				href += "?pageScale=${param.pageScale}";
+				href += "&pageScale=${param.pageScale}";
 			} // end if
 			location.href = href;
 		}); // click
@@ -95,6 +98,90 @@ request.setCharacterEncoding("UTF-8");
 		$("#frmDetail").submit();
 		window.opener.location.reload();
 	} // suspendMember
+	
+	function callAjaxStarRate() {
+		var param = {memId: "${param.memId}"};
+		
+		var totalCount = 0;
+		var pageScale = 5;
+		var currentPage = 1;
+		var list = new Array();
+		
+		$.ajax({
+			url: "mgt_member_star_rate_process.jsp",
+			type:"POST",
+			data:param,
+			dataType: "JSON",
+			error: function(xhr) {
+				alert('문제가 발생했습니다');
+				console.log(xhr.status + "/" + xhr.statusText);
+			},
+			success: function(jsonObj) {
+				if(jsonObj.result) {
+					totalCount = jsonObj.totalCount;
+					pageScale = jsonObj.pageScale;
+					currentPage = jsonObj.currentPage;
+					list = jsonObj.data;
+					
+					var tabSR = '<table style="width:100%;"><tr><th>번호</th><th>휴게소</th><th>별점</th><th>작성자</th><th>작성일</th></tr>';
+					for (let i = 0; i < list.length; i++){
+						tabSR += '<tr>'
+						+ '<td>' + (totalCount - ((currentPage - 1) * pageScale) - i) + '</td>'
+						+ '<td>' + list[i].raName + '</td>'
+						+ '<td>' + list[i].star + '</td>'
+						+ '<td>' + list[i].memId + '</td>'
+						+ '<td>' + list[i].inputDate + '</td>'
+						+ '</tr>';
+					} // end for
+					tabSR += '</table>';
+					$("#tab").html(tabSR);
+				} // end if
+			} // success
+		}); // ajax
+	} // callAjaxStarRate
+	
+	function callAjaxReview() {
+		var param = {memId: "${param.memId}"};
+		
+		var totalCount = 0;
+		var pageScale = 5;
+		var currentPage = 1;
+		var list = new Array();
+		
+		$.ajax({
+			url: "mgt_member_review_process.jsp",
+			type:"POST",
+			data:param,
+			dataType: "JSON",
+			error: function(xhr) {
+				alert('문제가 발생했습니다');
+				console.log(xhr.status + "/" + xhr.statusText);
+			},
+			success: function(jsonObj) {
+				if(jsonObj.result) {
+					totalCount = jsonObj.totalCount;
+					pageScale = jsonObj.pageScale;
+					currentPage = jsonObj.currentPage;
+					list = jsonObj.data;
+					
+					var tabSR = '<table style="width:100%;"><tr><th>번호</th><th>간략 내용</th><th>휴게소</th><th>작성자</th><th>작성일</th><th>블라인드</th><th>삭제일</th></tr>';
+					for (let i = 0; i < list.length; i++){
+						tabSR += '<tr>'
+						+ '<td>' + (totalCount - ((currentPage - 1) * pageScale) - i) + '</td>'
+						+ '<td>' + list[i].title + '</td>'
+						+ '<td>' + list[i].raName + '</td>'
+						+ '<td>' + list[i].memId + '</td>'
+						+ '<td>' + list[i].inputDate + '</td>'
+						+ '<td>' + list[i].blindFlag + '</td>'
+						+ '<td>' + list[i].deleteDate + '</td>'
+						+ '</tr>';
+					} // end for
+					tabSR += '</table>';
+					$("#tab").html(tabSR);
+				} // end if
+			} // success
+		}); // ajax
+	} // callAjaxStarRate
 	
 	document.getElementById('sideDash').setAttribute('class', 'sideText sideDisSelect');
 	document.getElementById('sideMember').setAttribute('class', 'sideText sideSelect');
@@ -173,6 +260,21 @@ try {
 							<td><fmt:formatDate value="${mVO.withdrawDate }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 						</tr>
 					</table>
+				</div>
+				<!-- <div style="margin-top:10px;">
+					<div>
+					최근 활동
+					</div>
+					<input type="button" value="리뷰" class="btn btn-sm btn-dark" id="review"/>
+					<input type="button" value="문의내역" class="btn btn-sm btn-dark" id="inquiry"/>
+					<input type="button" value="매장신고" class="btn btn-sm btn-dark" id="storeReport"/>
+					<input type="button" value="리뷰신고" class="btn btn-sm btn-dark" id="reviewReport"/>
+					<input type="button" value="별점 내역" class="btn btn-sm btn-dark" id="starRate"/>
+				</div> -->
+				<div style="margin-top:10px;">
+				별점내역
+				</div>
+				<div id="tab" style="width:460px;">
 				</div>
 				<div style="margin-top:10px; float:right;">
 					<c:choose>

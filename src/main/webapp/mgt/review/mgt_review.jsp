@@ -67,7 +67,11 @@ request.setCharacterEncoding("UTF-8");
 	function chkNull() {
 		if($("#keyword").val().trim() != "") {
 			$("#frmBoard").submit();
-		} // end if
+		} else {
+			if($("#raNum").val() != '') {
+				location.href = "mgt_review.jsp?raNum=" + $("#raNum").val();
+			} // end if
+		} // end else
 	} // chkNull
 
 	document.getElementById('sideDash').setAttribute('class', 'sideText sideDisSelect');
@@ -135,8 +139,8 @@ request.setCharacterEncoding("UTF-8");
 				pageContext.setAttribute("listRA", listRA);
 			%>
 			
-			<div style="width:150px; float:left;">
-				<input type="button" value="전체글" id="btnAllSearch" class="btn btn-sm btn-info"/>
+			<div style="width:150px; text-align:left; padding-left:15px;">
+				<input type="button" value="전체글" id="btnAllSearch" class="btn btn-sm btn-secondary"/>
 			</div>
 			<div class="tableFrm" style="height:460px;">
 				<table class="restAreaTable">
