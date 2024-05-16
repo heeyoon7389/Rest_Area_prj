@@ -124,7 +124,7 @@
 			</div>
 		</div>
 		<main>
-			<div id="main">
+			<div id="main" style="overflow: auto;">
 				<div class="ra_map">
 					<div id="map_">
 						<h1>지도</h1>
