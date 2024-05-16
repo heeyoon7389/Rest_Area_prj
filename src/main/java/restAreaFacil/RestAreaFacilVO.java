@@ -18,5 +18,6 @@ public class RestAreaFacilVO {
 	private String raNum;
 	private String facilName;
 	private String facilNote;
-	private String facilIcon;	
+	private String facilIcon;
+	private String img;
 }

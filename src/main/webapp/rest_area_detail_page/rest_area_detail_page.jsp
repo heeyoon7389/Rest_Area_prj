@@ -37,8 +37,16 @@
 <!--jQuery CDN 시작-->
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="JS/gs_info.js">
+	
+</script>
 <script type="text/javascript">
 	$(function() {
+		$('.star_rating > .star').click(function() {
+			$(this).parent().children('span').removeClass('on');
+			$(this).addClass('on').prevAll('span').addClass('on');
+		})
+
 		$("#write_review")
 				.click(
 						function() {
@@ -72,6 +80,7 @@
 							window.open(url, name, options);
 
 							// 기본 이벤트를 막아야 새 창이 열립니다.
+							event.stopPropagation();
 						});
 		$(".store_rep a")
 				.click(
@@ -84,7 +93,9 @@
 									+ (window.screenY + 300) + ",left="
 									+ (window.screenX + 740);
 							window.open(url, name, options);
+							event.stopPropagation();
 						});
+
 		$(".hambuger-button").on('click', function() {
 			event.preventDefault();
 
@@ -115,26 +126,11 @@
 			RestAreaInfoDAO raiDAO = RestAreaInfoDAO.getInstance();
 			raiVO = raiDAO.selectRestAreaInfo(raNum);
 			%>
-			<div class="star_rating">
-				<span class="star" style="width: 50px; height: 50px;" value="1"></span>
 				<%=raiVO.getRaName()%><br />
-				<%=raiVO.getRaAddr()%><br />
-				<span style="margin: left auto;"><%= raiVO.getMemberId() %>님 환영합니다.</span>
+				<%=raiVO.getRaAddr()%>
+			<div class="star_rating">
+				<span class="star" style="width: 50px; height: 50px; margin: left auto;" value="1"></span>
 			</div>
-			<a href="#void" class="hamburger-button"> <span></span> <span></span>
-				<span></span> <span></span>
-			</a>
-			<div class="overlay">
-				<nav class="menu">
-					<ul>
-						<li><a href="#">매장</a>
-						<li><a href="#">편의시설</a>
-						<li><a href="#">주유소</a>
-						<li><a href="#">리뷰</a>
-					</ul>
-				</nav>
-			</div>
-			
 		</div>
 		<main>
 			<div id="main">
@@ -143,7 +139,7 @@
 						<h1>지도</h1>
 					</div>
 					<br />
-					<div id="map" style="width 300px; height:450px;">
+					<div id="map" style="height: 450px;">
 						<script type="text/javascript"
 							src="//dapi.kakao.com/v2/maps/sdk.js?appkey=16ee3555fcc7fa1f7c8e630d95b34e4f"></script>
 						<script>
@@ -186,286 +182,28 @@
 						<h1>매장</h1>
 					</div>
 					<br />
-					<div class="store_info">
-						<%
-						List<RestAreaStoreVO> storeList = null;
-						RestAreaStoreDAO rsDAO = RestAreaStoreDAO.getInstance();
-						storeList = rsDAO.selectStore(raNum);
-						RestAreaStoreVO rsVO = null;
-						%>
-						<%
-						for (int i = 0; i < storeList.size(); i++) {
-						%>
-						<%
-						rsVO = storeList.get(i);
-						%>
-						<div class="store_detail"
-							style="margin-right: 20px; margin-bottom: 20px; display: flex; align-items: center;">
-							<img src="images/<%=rsVO.getStoreImg()%>" alt="avatar"
-								style="width: 100px; height: 100px; margin-right: 10px; top: 0;">
-							<div class="store_info">
-								<a href="">
-									<h3 style="margin: 0;">
-										<span data-value="<%=rsVO.getStoreNum()%>"><%=rsVO.getStoreName()%></span>
-									</h3>
-								</a>
-								<p style="margin: 0;"><%=rsVO.getStoreNote()%></p>
-							</div>
-							<div class="store_rep"
-								style="margin-left: auto; position: relative; bottm: 0;">
-								<a href=""><span data-value="<%=rsVO.getStoreNum()%>">신고하기</span></a>
-							</div>
-						</div>
-
-						<%
-						}
-						%>
-					</div>
+					<!-- /////////////////////매장 시작//////////////////////// -->
+					<jsp:include page="store_content.jsp" />
 				</div>
-				<div class="facil">
-					<div id="facil_info" style="overflow: auto;">
-						<div id="facil_">
-							<h1>편의시설</h1>
-						</div>
-						<br />
-						<table>
-							<tbody>
-								<tr>
-									<th>시설</th>
-									<th>이미지</th>
-									<th>설명</th>
-								</tr>
-								<%
-								List<RestAreaFacilVO> facilList = null;
-								RestAreaFacilDAO rfDAO = RestAreaFacilDAO.getInstance();
-								facilList = rfDAO.selectFacil(raNum);
-								RestAreaFacilVO rafVO = null; // rafVO 정의 추가
-								%>
-								<%
-								for (int i = 0; i < facilList.size(); i++) {
-								%>
-								<%
-								rafVO = facilList.get(i);
-								%>
-								<tr>
-									<td><%=rafVO.getFacilName()%></td>
-									<td><img src="images/pharmacy.png" style ="width: 100px; height: 100px;"></td>
-									<td><%=rafVO.getFacilNote()%></td>
-								</tr>
-								<%
-								}
-								%>
-							</tbody>
-						</table>
-					</div>
-				</div>
-
+				<!-- /////////////////////// 매장 끝 /////////////////////////////////// -->
+				<!--//////////////////////// 편의시설 ///////////////////////////////-->
+				<jsp:include page="facil_content.jsp" />
+				<!-- ////////////////////////////편의시설 끝///////////////////////////// -->
 				<div class="gs">
 					<div id="gs_">
 						<h1>주유소</h1>
 					</div>
 					<br />
 					<div id="gs_info">
-						<%
-						String jsonFile = "C:/Users/user/git/Rest_Area_prj/src/main/webapp/rest_area_detail_page/주유소.json";
-						JSONParser parser = new JSONParser();
-						try {
-							Object obj = parser.parse(new FileReader(jsonFile));
-							JSONObject jsonObject = (JSONObject) obj;
-							JSONArray stations = (JSONArray) jsonObject.get("list");
-							for (Object stationObj : stations) {
-								JSONObject station = (JSONObject) stationObj;
-								String tempSaName = (String) station.get("serviceAreaName");
-								if (tempSaName == null) {
-							continue;
-								}
-								String serviceAreaName = tempSaName.replace("주유소", "휴게소");
-								if (serviceAreaName.replaceAll(" ", "") != null && serviceAreaName.replaceAll(" ", "").contains(raName)) {
-							String diselPrice = (String) station.get("diselPrice");
-							String gasolinePrice = (String) station.get("gasolinePrice");
-							String lpgPrice = (String) station.get("lpgPrice");
-							String telNo = (String) station.get("telNo");
-						%>
-
-
-						<strong><%=raName%><br> 주유소 정보</strong>
-						<table style="">
-							<tr>
-							<tr>
-								<td>휘발유 : <%=gasolinePrice%></td>
-							</tr>
-							<tr>
-								<td>경유 : <%=diselPrice%></td>
-							</tr>
-							<%
-							if (lpgPrice.equals("X")) {
-							%>
-							<tr>
-								<td>LPG : 정보없음</td>
-							</tr>
-							<%
-							} else {
-							%>
-							<tr>
-								<td>LPG : <%=lpgPrice%>
-								</td>
-							</tr>
-							<%
-							}
-							%>
-							<tr>
-								<td>전화번호 : <%=telNo%></td>
-							</tr>
-						</table>
-						<%
-						break;
-						}
-						%>
-						<%
-						}
-						} catch (Exception e) {
-						out.println("주유소 정보를 가져오는 중 오류가 발생했습니다.");
-						e.printStackTrace();
-						}
-						%>
+						<!-- 주유소 ajax로 통신 -->
 					</div>
 				</div>
 			</div>
 		</main>
 		<article>
-			<div class="review">
-				<div id="review_info" style="overflow-x: auto; overflow-y: hidden;">
-					<h1>리뷰</h1>
-					<br />
-					<%
-					List<RestAreaReviewVO> reviewList = new ArrayList<RestAreaReviewVO>();
-					RestAreaReviewDAO rarDAO = RestAreaReviewDAO.getInstance();
-					reviewList = rarDAO.selectAllReview(raNum);
-					RestAreaReviewVO rarVO = null;
-					double totalScore = 0.0;
-					int listSize = reviewList.size();
-					double avg = 0.0;
-					%>
-					<div id="review_star_score"
-						style="display: flex; justify-content: space-between; flex-direction: row;">
-						<br> <span style="width: 100px;"><h2>별점:</h2></span>
-						<%
-						for (int i = 0; i < reviewList.size(); i++) {
-						%>
-						<%
-						rarVO = reviewList.get(i);
-						totalScore += rarVO.getStar();
-
-						avg = totalScore / listSize;
-						%>
-						<%
-						}
-						%>
-
-						<div class="star_rating">
-							<%-- 별점에 대한 평균 값(avg)에 따라 불이 들어오도록 함 --%>
-							<%
-							int avgRounded = (int) Math.round(avg); // 소수점을 반올림하여 정수로 변환
-							for (int i = 1; i <= 5; i++) {
-								if (i <= avgRounded) {
-							%>
-							<span class="star on" value="<%=i%>"></span>
-							<%
-							} else {
-							%>
-							<span class="star" value="<%=i%>"></span>
-							<%
-							}
-							}
-							%>
-						</div>
-					</div>
-					<form id="review_form" name="review_form"
-						action="rest_area_detail_page.jsp" method="post">
-						<div id="review_button" class="text-end">
-							<input type="button" id="write_review" class="btn btn-primary"
-								value="리뷰쓰기">
-						</div>
-						<input type="hidden" name="raNum" value="<%=raNum%>"> <input
-							type="hidden" name="memberId" value="kimking">
-
-					</form>
-					<br />
-					<div id="review_all" style="overflow: auto;">
-						<%
-						for (int i = 0; i < reviewList.size(); i++) {
-						%>
-						<%
-						rarVO = reviewList.get(i);
-						%>
-						<%
-						if (rarVO.getBlindFlag().equals("0")) {
-						%>
-						<div
-							style="height: 100px; display: flex; flex-direction: column; background-color: white">
-							<div style="display: flex; justify-content: space-between;">
-								<span style="width: 250px;"> 아이디 : <%=rarVO.getMemberId()%>
-									별점 :
-								</span>
-								<div class="star_rating">
-									<%-- 별점에 대한 평균 값(avg)에 따라 불이 들어오도록 함 --%>
-									<%
-									double reviewStar = rarVO.getStar();
-									// 별점을 소수로 받았다고 가정하면 별점을 그대로 표시하면 됩니다.
-									for (int j = 1; j <= 5; j++) {
-										if (j <= reviewStar) { // 소수로 받은 별점과 비교
-									%>
-									<span class="star on" style="width: 20px; height: 20px;"
-										value="<%=j%>"></span>
-									<%
-									} else {
-									%>
-									<span class="star" value="<%=j%>"></span>
-									<%
-									}
-									%>
-									<%
-									}
-									%>
-									(<%=rarVO.getStar()%>)
-								</div>
-								<div id="review_input_date" style="width: 250px;">
-									<span style="width: 150px;"> 입력일 : <%=rarVO.getInputDate()%>
-									</span>
-								</div>
-							</div>
-							<br />
-							<div style="text-align: left;">
-								<%=rarVO.getNote()%>
-							</div>
-						</div>
-						<br />
-						<%
-						} else {
-						%>
-						<div
-							style="height: 100px; display: flex; flex-direction: column; border: 1px solid #ffffff; border-radius: 5px; background-color: #A8A8A8;">
-							<div style="text-align: left;">블라인드 처리 된 글입니다.</div>
-							<br />
-							<%
-							}
-							%>
-							<%
-							}
-							%>
-						</div>
-					</div>
-				</div>
-			</div>
-	</div>
-	</article>
-	<!-- 제작&저작권 시작 -->
-	<footer class="py-5 text-center text-body-secondary bg-white">
-		<p>&copy;고속도로 휴게소 제작 by 4조.</p>
-		<p class="mb-0">
-			<a href="#">상단으로 올라가기</a>
-		</p>
-	</footer>
-	<!-- 제작&저작권 끝 -->
+			<!--//////////////////////// 리뷰 ///////////////////////////////-->
+			<jsp:include page="review_content.jsp" />
+			<!-- ////////////////////////////리뷰 끝///////////////////////////// -->
+		</article>
 </body>
 </html>
