@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     info="로그인 팝업창"%>
@@ -189,11 +188,11 @@ background-color:#4285F4;
       <form action="../login_page/login_process.jsp" method="post" id="loginFrm">
         <div class="form-group">
           <label for="id">아이디</label>
-          <input type="text" id="id" name="id" required value="bbanana">
+          <input type="text" id="id" name="id" required>
         </div>
         <div class="form-group">
           <label for="password">비밀번호</label>
-          <input type="password" id="password" name="password" required value="12345">
+          <input type="password" id="password" name="password" required>
         </div>
         <div class="form-group">
           <a class="form-recovery" id="serachIdPass">아이디 / 비밀번호 찾기</a>
