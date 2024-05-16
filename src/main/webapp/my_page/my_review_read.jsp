@@ -15,7 +15,7 @@
 <!-- 별점css -->
 
 <c:if test="${ empty sessionScope.loginData }">
-	<c:redirect url="http://localhost/RestArea_Project/main_page/main_page.jsp"/>
+	<c:redirect url="http://localhost/Rest_Area_prj/main_page/main_page.jsp"/>
 </c:if>
 
 <style type="text/css">

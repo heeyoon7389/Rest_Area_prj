@@ -139,15 +139,15 @@
                 <tr>
                     <th><label for="name1">이름</label></th>
                     <td>
-                        <input value="최수연" data-value="이름을 입력해주세요." id="name1" name="name1" class="inputTxt inputName" type="text"  />
+                        <input data-value="이름을 입력해주세요." id="name1" name="name1" class="inputTxt inputName" type="text"  />
                     </td>
                 </tr>
                 <tr>
                     <th><label for="idEmail1">이메일</label></th>
                     <td class="mail_type">
-                        <input value="bbanana" data-value="이메일을 입력해주세요." name="idEmail1" id="idEmail1" class="inputEmail" type="text" maxlength="100" style="width:200px;"/>
+                        <input data-value="이메일을 입력해주세요." name="idEmail1" id="idEmail1" class="inputEmail" type="text" maxlength="100" style="width:200px;"/>
                         <span class="email_txt">@</span>
-                        <input value="naver.com" type="text" list="selecEmail1" name="idEmail2" id="idEmail2">
+                        <input type="text" list="selecEmail1" name="idEmail2" id="idEmail2">
                         <datalist class="selecEmail" name="selecEmail1" id="selecEmail1" data-value="이메일을 선택해주세요.">
                             <option value="">선택해주세요.</option>
                             <option value='직접 입력'>직접 입력</option>
@@ -183,21 +183,21 @@
                 <tr>
                     <th><label for="id">아이디</label></th>
                     <td>
-                        <input value="testcode" data-value="아이디를 입력해주세요." name="id" id="id" class="inputTxt inputIdtype" type="text" maxlength="20"  />
+                        <input data-value="아이디를 입력해주세요." name="id" id="id" class="inputTxt inputIdtype" type="text" maxlength="20"  />
                     </td>
                 </tr>
                 <tr>
                     <th><label for="name2">이름</label></th>
                     <td>
-                        <input value="암호화222" data-value="이름을 입력해주세요." id="name2" name="name2" class="inputTxt inputName" type="text"  />
+                        <input data-value="이름을 입력해주세요." id="name2" name="name2" class="inputTxt inputName" type="text"  />
                     </td>
                 </tr>
                 <tr>
                     <th><label for="passEmail1">이메일</label></th>
                     <td class="mail_type">
-                        <input  value="testcode" data-value="이메일을 입력해주세요." name="passEmail1" id="passEmail1" class="inputEmail" type="text" maxlength="100" style="width:200px;" />
+                        <input data-value="이메일을 입력해주세요." name="passEmail1" id="passEmail1" class="inputEmail" type="text" maxlength="100" style="width:200px;" />
                         <span class="email_txt">@</span>
-                        <input  value="testcode.com" type="text" list="selecEmail2" name="passEmail2" id="passEmail2">
+                        <input type="text" list="selecEmail2" name="passEmail2" id="passEmail2">
                         <datalist class="selecEmail" name="selecEmail2" id="selecEmail2" data-value="이메일을 선택해주세요.">
                             <option value="">선택해주세요.</option>
                             <option value='직접 입력'>직접 입력</option>

@@ -1,7 +1,6 @@
 
 <%@page import="restAreaInquiry.InquirydetailVO"%>
 <%@page import="restAreaInquiry.InquiryDAO"%>
-<%@page import="prj2VO.MemJoinVO"%>
 <%@page import="java.util.List"%>
 <%@page import="java.sql.SQLException"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -9,39 +8,16 @@
     info="공지사항 상세보기"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
- <%
- //개발의 편의성을 위해서 로그인 한 것 처럼 코드를 작성한 후 작업진행.
-	MemJoinVO mVO=new MemJoinVO();
-	mVO.setId("anyid");
-	
-	session.setAttribute("loginData", mVO); 
-%>
+
 <c:if test="${ empty sessionScope.loginData }">
-	<c:redirect url="http://192.168.10.213/index.jsp"/>
+	<c:redirect url="http://localhost/Rest_Area_prj/main_page/main_page.jsp"/>
 </c:if>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<!--<link rel="icon" href="http://192.168.10.210/jsp_prj/common/favicon.ico"/>-->
-<!--bootstrap 시작-->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<!--bootstrap 끝-->
-<link rel="stylesheet" href="http://192.168.10.213/common/css/main.css" type="text/css" media="all" />
-<link rel="stylesheet" href="http://192.168.10.213/common/css/board.css" type="text/css" media="all" />
-<!--jquery CDN 시작-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-<!--jquery CDN 끝-->
 <!-- summernote 시작 -->
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 <!-- summernote 끝 -->
 <style type="text/css">
 	#wrap{ width: 1462px; height: 749px; margin: 0px auto; }
-	#header{ height: 100px;
-	background: #FFFFFF url('http://192.168.10.213/common/images/header.png') no-repeat; }
 	
 	.programCon {
     max-width: 1400px;
@@ -146,25 +122,16 @@
 	$(function(){
 		$("#btnList").click(function(){
 			//history.back();
-			location.href="http://192.168.10.213/Reatarea_Project/inquiry/inquiry_list.jsp?currentPage=${ param.currentPage}";
+			location.href="../main_page/main_page.jsp?link=inquiry&currentPage=${ param.currentPage}";
+			
 		});//click
 	
 	});//ready
 	
 </script>
-
-<script>
-	$(function(){
-     
-		
-	});//ready
-    </script>
     
     
-</head>
-<body>
 <div id="wrap">
-<div id="header"></div>
 <div id="programCon">
 <div id="boardContent">
 <%
@@ -180,7 +147,7 @@
 		se.printStackTrace();
 	%>
 	<script type="text/javascript">
-	location.href="http://192.168.10.213/jsp_prj/error/err_500.html";
+	location.href="../common/err_500.html";
 	</script>
 	<% 
 	}//end catch
@@ -210,12 +177,6 @@
 		</div>
 		    
 	</div>
-	
-	
-	
 	</div>
 </div>
 </div>
-
-</body>
-</html>

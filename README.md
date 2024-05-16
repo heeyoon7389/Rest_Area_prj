@@ -1,4 +1,4 @@
-# RestArea_Project
+# Rest_Area_prj
 
 ## 프로젝트 소개
 "쌍용교육센터 2차 프로젝트로, 휴게소 관리 웹 사이트 프로젝트입니다. Back-end 기술은 Java, Front-end 기술은 HTML,CSS,JavaScript, DB는 Oracle을 활용해서 진행했습니다.
