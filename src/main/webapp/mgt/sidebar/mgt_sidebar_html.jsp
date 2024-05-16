@@ -5,7 +5,7 @@
 	<nav>
 		<ul class="sideUl">
 			<br/>
-			<li class="topMenu"/><a href="#void" class="sideText sideSelect" id="sideDash">대시보드</a></li>
+			<li class="topMenu"/><a href="http://192.168.10.214/Rest_Area_prj/mgt/dashboard/mgt_dashboard.jsp" class="sideText sideSelect" id="sideDash">대시보드</a></li>
 		  
 			<br/>
 			<li class="topMenu"/><a href="#void" class="sideText sideDisSelect" id="sideRestArea">휴게소 관리</a></li>
