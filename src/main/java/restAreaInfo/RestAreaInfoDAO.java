@@ -84,7 +84,7 @@ public class RestAreaInfoDAO {
 		return cnt;
 	}
 	
-	public int updateFavorite(String memberId, String raNum) throws SQLException {
+	public int updateFavorite(String flag, String memberId, String raNum) throws SQLException {
 		int cnt = 0;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -96,13 +96,21 @@ public class RestAreaInfoDAO {
 		
 		StringBuilder updateFavoite = new StringBuilder();
 		updateFavoite
-		.append(" ")
-		.append(" ")
-		.append("");
+		.append("update  favorite ")
+		.append("set     favorite_flag = ? ")
+		.append("where   mem_id = ? and ra_num = ? ");
+		
+		pstmt=con.prepareStatement(updateFavoite.toString());
+		
+		pstmt.setString(1, flag);
+		pstmt.setString(2, memberId);
+		pstmt.setString(3, raNum);
+		
+		cnt = pstmt.executeUpdate();
 		}finally {
 			dbCon.closeCon(null, pstmt, con);
-		}
+		}//end finally
 		
 		return cnt;
-	}
+	}//updateFavorite
 }

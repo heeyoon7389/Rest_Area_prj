@@ -16,6 +16,22 @@
 <%@page import="restAreaFacil.RestAreaFacilDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" info="휴게소 상세 페이지"%>
+	<%
+			String memberId = null;
+	        LoginVO loginData = (LoginVO) session.getAttribute("loginData");
+	        if(loginData != null) {
+	            memberId = loginData.getMemId();
+	        } else {
+	            // 세션 값이 null인 경우 비회원으로 설정
+	            memberId = "nonMember";
+	        } 
+			String raNum = request.getParameter("raNum");
+			String raName = request.getParameter("raName");
+			String addr = request.getParameter("addr");
+			RestAreaInfoVO raiVO = null;
+			RestAreaInfoDAO raiDAO = RestAreaInfoDAO.getInstance();
+			raiVO = raiDAO.selectRestAreaInfo(raNum);
+			%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,10 +60,7 @@
 </script>
 <script type="text/javascript">
 	$(function() {
-		$('.star_rating > .star').click(function() {
-			$(this).parent().children('span').removeClass('on');
-			$(this).addClass('on').prevAll('span').addClass('on');
-		})
+		
 
 		$("#write_review")
 				.click(
@@ -97,6 +110,39 @@
 							window.open(url, name, options);
 							event.stopPropagation();
 						});
+		
+		$('#switch').change(function() {
+            
+            if ("input[name'favorite_toggle']:checked") {
+                flag = "1"; // 체크박스가 체크된 경우
+                
+            } else {
+                flag = "0"; // 체크박스가 체크 해제된 경우
+            	
+            }
+            
+            // AJAX를 이용하여 서버로 데이터 전송
+            $.ajax({
+                url: '../rest_area_detail_page/rest_area_detail_page.jsp', // 업데이트를 처리할 JSP 페이지의 경로
+                type: 'POST', // HTTP 요청 방식
+                data: {
+                    "flag":flag,
+                    "memberId":memberId,
+                    "raNum":raNum
+                },
+                dataType="JSON",
+                success: function(response) {
+                    // 성공적으로 업데이트된 경우
+                    alert('즐겨 찾기 수정 완료!');
+                    console.log(response); // 성공 메시지 또는 처리 결과 출력
+                },
+                error: function(xhr, status, error) {
+                    // 업데이트 중 오류 발생한 경우
+                    console.error(error); // 오류 메시지 출력
+                }
+            });
+        });
+
 
 	});
 </script>
@@ -105,23 +151,27 @@
 	<div class="container">
 		<div id="header">
 			<%
-			String raNum = request.getParameter("raNum");
-			String raName = request.getParameter("raName");
-			String addr = request.getParameter("addr");
-			RestAreaInfoVO raiVO = null;
-			RestAreaInfoDAO raiDAO = RestAreaInfoDAO.getInstance();
-			raiVO = raiDAO.selectRestAreaInfo(raNum);
-			%>
-			<%
 			CntDAO cDAO = CntDAO.getInstance();
 			cDAO.insertRestAreaViewCnt(request.getParameter("raNum"));
 			%>
 			<%=raiVO.getRaName()%><br />
 			<%=raiVO.getRaAddr()%>
-			<div class="star_rating">
+			<%
+				String flag = "0";
+				raiDAO.updateFavorite(flag, memberId, raNum);
+			%>
+			<div class="wrapper">
+		
+				<input type="checkbox" id="switch" name="favorite_toggle" value=<%=flag%>> <label for="switch"
+					class="switch_label"> <span class="onf_btn"></span>
+				</label>
+	
+			</div>
+
+			<!-- <div class="star_rating">
 				<span class="star"
 					style="width: 50px; height: 50px; margin: left auto;" value="1"></span>
-			</div>
+			</div> -->
 		</div>
 		<main>
 			<div id="main" style="overflow: auto;">
