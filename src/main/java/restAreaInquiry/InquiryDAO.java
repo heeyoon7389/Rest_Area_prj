@@ -55,7 +55,7 @@ public class InquiryDAO {
 		
 			
 			String insertInquiry=
-			" insert into inquiry(mem_id, title, content) values(?,?,?)";
+			" insert into inquiry(mem_id, title, content, INQUIRY_NUM) values(?,?,?,SEQ_INQUIRY.NEXTVAL)";
 	
 			pstmt=con.prepareStatement(insertInquiry);
 			

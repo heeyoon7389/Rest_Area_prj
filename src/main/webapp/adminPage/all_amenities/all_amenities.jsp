@@ -6,11 +6,15 @@
     pageEncoding="UTF-8"
     info="사용 가능 휴게시설 관리"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+
 <title>사용 가능 휴게시설 관리</title>
+
 <!-- 파비콘 시작 -->
 <!-- <link rel="icon" href="http://192.168.10.220/jsp_prj/common/favicon.ico"/> -->
 <!-- 파비콘 끝 -->
@@ -187,8 +191,7 @@
 			if(confirm("정말 삭제하시겠습니까?")){
 				alert("삭제되었습니다.")
 			}//end if
-		});
-		
+		});	
 		/* 테이블이벤트 */
 		$("#shopTable tr").click(function(){
 			
@@ -208,6 +211,7 @@
 			console.log("클릭한 Row의 모든 데이터 : "+tr.text());
 			
 		});
+
 	});//ready
 </script>
 </head>
@@ -217,7 +221,9 @@
 <!-- 좌측 사이드바 시작 -->
 <ul>
 	<br>
+
 	<li class="topMenu"><a href="http://192.168.10.214/Rest_Area_prj/mgt/dashboard/mgt_dashboard.jsp" id="unSelsected">대시보드</a></li>
+
   
 	<br>
 	<li class="topMenu"><a href="http://192.168.10.220/Rest_Area_prj/adminPage/area_management/area_management_frm.jsp" id="unSelsected">휴게소 관리</a></li>
@@ -227,6 +233,7 @@
 		<li class="bottomMenu"><a href="http://192.168.10.220/Rest_Area_prj/adminPage/area_management/area_management_frm.jsp" id="unSelsected">휴게소 편의시설 관리</a></li>
 		<li class="bottomMenu"><a href="http://192.168.10.220/Rest_Area_prj/adminPage/gas_station_management/gas_station.html" id="unSelsected">주유소 관리</a></li>
 	<br>
+
 	<li class="topMenu"><a href="#" id="unSelsected">게시글 관리</a></li>
 		<li class="bottomMenu"><a href="http://192.168.10.214/Rest_Area_prj/mgt/inquiry/mgt_inquiry.jsp" id="unSelsected">문의</a></li>
 		<li class="bottomMenu"><a href="http://192.168.10.214/Rest_Area_prj/mgt/report/mgt_report_review.jsp" id="unSelsected">신고</a></li>
@@ -235,6 +242,7 @@
   
 	<br>
 	<li class="topMenu"><a href="http://192.168.10.214/Rest_Area_prj/mgt/member/mgt_member.jsp" id="unSelsected">회원 관리</a></li>
+
 </ul>
 <!-- 좌측 사이드바 끝 -->
 
@@ -244,6 +252,7 @@
 	<div id="currentMenu">
 		<span id="currentTopMenuName">휴게소 관리</span>
 		<span id="currentBottomMenuName"> > 전체 편의시설 관리</span>
+
 	</div>
 	<!-- 최상단 메뉴이름 타이틀바 끝 -->
 	
@@ -270,13 +279,16 @@
 				<td><c:out value="${ aaVO.amenitieName }"/></td>
 			</tr>
 			</c:forEach>
+
 		</table>
 		</div>
 		
 		<div id="modifyFrame" style="display: none;">
 			<label><h3><strong>상세정보</strong></h3></label><br/><br/>
 			<label>편의시설 이름</label><br/>
+
 			<input type="text" id="storeNameM" class="storeNameM" style="width:300px; height: 40px;" placeholder="편의시설 이름"/><br/><br/>
+
 			<input type="button" value="수정" id="modifyAmenitieBtn"/>　
 			<input type="button" value="삭제" id="deleteAmenitieBtn"/>
 		</div>
@@ -284,7 +296,9 @@
 		<div id="addFrame" style="display: none;">
 			<label><h3><strong>추가</strong></h3></label><br/><br/>
 			<label>편의시설 이름</label><br/>
+
 			<input type="text" id="storeNameA" class="storeNameA" style="width:300px; height: 40px;" placeholder="편의시설 이름"/><br/><br/>
+
 			<input type="button" value="추가" id="addAmenitieBtn"/>　
 		</div>
 		

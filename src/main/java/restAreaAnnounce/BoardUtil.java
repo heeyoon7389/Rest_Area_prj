@@ -32,7 +32,7 @@ public class BoardUtil {
 		
 		if(currentPage > pageNumber){//시작페이지보다 1적은 페이지로 이동
 			movePage=startPage-1;
-			prevMark="[ <a href='"+url+"?currentPage="+movePage+param+"'> &lt;&lt; </a> ]";
+			prevMark="[ <a href='"+url+"&currentPage="+movePage+param+"'> &lt;&lt; </a> ]";
 		}//end if
 		 
 		pageNation.append( prevMark ).append(" ... ");
@@ -45,7 +45,7 @@ public class BoardUtil {
 				.append(currentPage).append("</span> ]");
 			}else{
 				pageNation.append("[ <a href='").append(url)
-				.append("?currentPage=").append(movePage).append(param).append("'>")
+				.append("&currentPage=").append(movePage).append(param).append("'>")
 				.append( movePage).append("</a> ]");
 			}//end else
 				movePage++;
@@ -55,7 +55,7 @@ public class BoardUtil {
 		String endMark="[ &gt;&gt; ]";
 		 if( totalPage > endPage ){
 			 movePage = endPage+1;
-			 endMark="[ <a href='inquiry_list.jsp?currentPage="+movePage+param
+			 endMark="[ <a href='"+ url +"&currentPage="+movePage+param
 					 +"'> &gt;&gt; </a> ]";
 		 }//end if
 		 

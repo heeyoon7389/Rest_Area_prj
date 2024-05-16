@@ -45,19 +45,21 @@
 <script type="text/javascript">
 $(function(){
 	$("#plus_FAQ").click(function(){
-		alert("FAQ 더보기!!");
+		location.href="main_page.jsp?link=FAQ";
 	});
 	
 	$("#plus_announce").click(function(){
-		alert("공지사항 더보기!!");
+		location.href="main_page.jsp?link=announce";
 	});
 	//검색버튼 클릭
 	$("#btnSearch").click(function(){
-		if($("#search-keyword").val().trim() != ""){
-			var field = $("#search-type").val();
-			var keyword = $("#search-keyword").val();
-// 			$("#btnSearch")[0].action = "#";
-			$("#btnSearch").submit();
+		if($("#search-query").val().trim() != ""){
+			var query = $("#search-query").val();
+			var type = $("#search-type").val();
+			$("#frm")[0].action ="main_page.jsp?link=searchRA"+"&search-type="+type+"&search-query="+query;
+			$("#frm").submit();
+		}else{
+			alert("검색어를 입력해주세요.");
 		}
 	});
 });//ready
@@ -74,13 +76,14 @@ try{
     <!-- 메뉴바 끝-->
     <!-- 검색창 시작-->
     <div class="search-container">
-        <form class="d-flex" role="search" action="#">
+        <form class="d-flex" role="search" name="frm" id="frm">
     		<select class="form-select" aria-label="고속도로 검색 유형" name="search-type" id="search-type">
   				<option value="1" selected>지역별</option>
   				<option value="2">휴게소별</option>
   				<option value="3">고속도로별</option>
 			</select>
-            <input class="form-control me-2" type="text" name="search-keyword" id="search-keyword" placeholder="찾으시는 휴게소를 검색해주세요" aria-label="Search">
+            <input class="form-control me-2" type="text" name="search-query" id="search-query" placeholder="찾으시는 휴게소를 검색해주세요" aria-label="Search">
+            <input type="hidden" name="link" value="searchRA"/>
             <input class="btn btn-primary" type="button" value="검색" id="btnSearch">
         </form>
     </div>
@@ -115,7 +118,7 @@ try{
 	<div class="row g-1 row-cols-lg-4" style="border: 1px solid #333;">
       <div class="feature col" style="padding: 10px;">
       <div style="text-align: center; padding-top: 17px">
-        <a href="#void" style="text-decoration: none; color: black;">
+        <a href="../main_page/main_page.jsp?link=searchRA&search-type=1&search-query=" style="text-decoration: none; color: black;">
         <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3" style="border-radius: 10px;">
           <svg class="bi" width="2em" height="2em">
           	<svg xmlns="http://www.w3.org/2000/svg" width="90%" height="90%" fill="currentColor" class="bi bi-map-fill" viewBox="-3 -3 20 20">
@@ -129,7 +132,7 @@ try{
       </div>
       <div class="feature col" style="padding: 10px;">
       <div style="text-align: center; padding-top: 17px">
-      <a href="#void" style="text-decoration: none; color: black;">
+      <a href="../main_page/main_page.jsp?link=searchRA&search-type=2&search-query=" style="text-decoration: none; color: black;">
         <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3" style="border-radius: 10px;">
           <svg class="bi" width="2em" height="2em">
           	<svg xmlns="http://www.w3.org/2000/svg" width="90%" height="90%" fill="currentColor" class="bi bi-house-exclamation-fill" viewBox="-3 -3 20 20">
@@ -145,7 +148,7 @@ try{
       </div>
       <div class="feature col" style="padding: 10px;">
       <div style="text-align: center; padding-top: 17px">
-      <a href="#void" style="text-decoration: none; color: black;">
+      <a href="../main_page/main_page.jsp?link=searchRA&search-type=3&search-query=" style="text-decoration: none; color: black;">
         <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3" style="border-radius: 10px;">
           <svg class="bi" width="2em" height="2em">
           	<svg xmlns="http://www.w3.org/2000/svg" width="90%" height="90%" fill="currentColor" class="bi bi-sign-turn-slight-right-fill" viewBox="-3 -3 20 20">
@@ -159,7 +162,7 @@ try{
       </div>
       <div class="feature col" style="padding: 10px;">
       <div style="text-align: center; padding-top: 17px">
-      <a href="#void" style="text-decoration: none; color: black;">
+      <a href="main_page.jsp?link=FAQ" style="text-decoration: none; color: black;">
         <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3" style="border-radius: 10px;">
           <svg class="bi" width="2em" height="2em">
           	<svg xmlns="http://www.w3.org/2000/svg" width="90%" height="90%" fill="currentColor" class="bi bi-question-circle-fill" viewBox="-3 -3 20 20">
@@ -235,7 +238,7 @@ try{
                 <tr>
                     <th scope="row"><c:out value="${i.count}"/></th>
                     <td colspan="3">
-                    <a href="#void" style="text-decoration:none; color: black;">
+                    <a href="main_page.jsp?link=FAQ" style="text-decoration:none; color: black;">
                     <c:out value="${ faVO.QStr }"/>
       				</a>
                     </td>
@@ -260,7 +263,7 @@ try{
                 <tr>
                     <th scope="row"><c:out value="${i.count}"/></th>
                     <td colspan="3">
-                    <a href="#void" style="text-decoration:none; color: black;">
+                    <a href="main_page.jsp?link=announce" style="text-decoration:none; color: black;">
                     <c:out value="${ faVO.title }"/>
       				</a>
                     </td>
