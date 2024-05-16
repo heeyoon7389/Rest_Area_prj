@@ -8,12 +8,12 @@
 			<li class="topMenu"/><a href="http://192.168.10.214/Rest_Area_prj/mgt/dashboard/mgt_dashboard.jsp" class="sideText sideSelect" id="sideDash">대시보드</a></li>
 		  
 			<br/>
-			<li class="topMenu"/><a href="#void" class="sideText sideDisSelect" id="sideRestArea">휴게소 관리</a></li>
-			<li class="bottomMenu"/><a href="#void" class="sideText sideDisSelect" id="sideStore">매장 관리</a></li>
-			<li class="bottomMenu"/><a href="#void" class="sideText sideDisSelect" id="sideMenu">메뉴 관리</a></li>
-			<li class="bottomMenu"/><a href="#void" class="sideText sideDisSelect" id="sideFacilAll">전체 편의시설 관리</a></li>
-			<li class="bottomMenu"/><a href="#void" class="sideText sideDisSelect" id="sideFacilRA">휴게소 편의시설 관리</a></li>
-			<li class="bottomMenu"/><a href="#void" class="sideText sideDisSelect" id="sideGas">주유소 관리</a></li>
+			<li class="topMenu"/><a href="http://192.168.10.220/Rest_Area_prj/adminPage/area_management/area_management_frm.jsp" class="sideText sideDisSelect" id="sideRestArea">휴게소 관리</a></li>
+			<li class="bottomMenu"/><a href="http://192.168.10.220/Rest_Area_prj/adminPage/area_management/area_management_frm.jsp" class="sideText sideDisSelect" id="sideStore">매장 관리</a></li>
+			<li class="bottomMenu"/><a href="http://192.168.10.220/Rest_Area_prj/adminPage/area_management/area_management_frm.jsp" class="sideText sideDisSelect" id="sideMenu">메뉴 관리</a></li>
+			<li class="bottomMenu"/><a href="http://192.168.10.220/Rest_Area_prj/adminPage/all_amenities/all_amenities.jsp" class="sideText sideDisSelect" id="sideFacilAll">전체 편의시설 관리</a></li>
+			<li class="bottomMenu"/><a href="http://192.168.10.220/Rest_Area_prj/adminPage/area_management/area_management_frm.jsp" class="sideText sideDisSelect" id="sideFacilRA">휴게소 편의시설 관리</a></li>
+			<li class="bottomMenu"/><a href="http://192.168.10.220/Rest_Area_prj/adminPage/gas_station_management/gas_station.html" class="sideText sideDisSelect" id="sideGas">주유소 관리</a></li>
 			  
 			<br/>
 			<li class="topMenu"/><span class=" sideText sideDisSelect" id="sideBoard">게시글 관리</span></li>
