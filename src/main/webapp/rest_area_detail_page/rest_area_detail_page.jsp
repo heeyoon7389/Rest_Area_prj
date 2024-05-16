@@ -157,13 +157,13 @@
 				String flag = "0";
 				raiDAO.updateFavorite(flag, memberId, raNum);
 			%>
-			<div class="wrapper">
+	<%-- 		<div class="wrapper">
 		
 				<input type="checkbox" id="switch" name="favorite_toggle" value=<%=flag%>> <label for="switch"
 					class="switch_label"> <span class="onf_btn"></span>
 				</label>
 	
-			</div>
+			</div> --%>
 
 			<!-- <div class="star_rating">
 				<span class="star"
