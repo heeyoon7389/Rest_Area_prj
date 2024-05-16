@@ -96,22 +96,6 @@
 							event.stopPropagation();
 						});
 
-		$(".hambuger-button").on('click', function() {
-			event.preventDefault();
-
-			$(this).toggleClass('active');
-			$('.overlay').toggleClass('visible');
-		});
-
-		$(document).on('scroll', function() {
-			if ($(window).scrollTop() > 100) {
-				$("#header").removeClass("deactive");
-				$("#header").addClass("active");
-			} else {
-				$("#header").removeClass("active");
-				$("#header").addClass("deactive");
-			}
-		});
 	});
 </script>
 </head>
@@ -126,10 +110,11 @@
 			RestAreaInfoDAO raiDAO = RestAreaInfoDAO.getInstance();
 			raiVO = raiDAO.selectRestAreaInfo(raNum);
 			%>
-				<%=raiVO.getRaName()%><br />
-				<%=raiVO.getRaAddr()%>
+			<%=raiVO.getRaName()%><br />
+			<%=raiVO.getRaAddr()%>
 			<div class="star_rating">
-				<span class="star" style="width: 50px; height: 50px; margin: left auto;" value="1"></span>
+				<span class="star"
+					style="width: 50px; height: 50px; margin: left auto;" value="1"></span>
 			</div>
 		</div>
 		<main>
