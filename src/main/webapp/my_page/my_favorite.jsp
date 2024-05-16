@@ -112,7 +112,6 @@ try{
 	}
 
 %>	
-<!-- <form action="../my_page/my_favorite_delete_process.jsp" method="post" name="frm" id="frm"> -->
 <table class="table table-hover table-bordered">
   <thead>
     <tr>

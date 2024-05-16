@@ -9,7 +9,7 @@
 <meta charset="UTF-8">
 <title>고속도로 휴게소</title>
 <!-- 브라우저 아이콘 설정 -->
-<link rel="icon" href="http://192.168.10.218/RestArea_Project/common/tamcatIcon.ico"/>
+<link rel="icon" href="http://192.168.10.218/Rest_Area_prj/common/tamcatIcon.ico"/>
 <!-- 브라우저 아이콘 설정 -->
 <!--bootstrap 시작-->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -63,7 +63,7 @@
     <!-- 메뉴바 시작-->
     <header id="header1" class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
         <a href="main_page.jsp?link=logo" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-            <img src="http://192.168.10.218/RestArea_Project/common/RestArealogo.png">
+            <img src="http://192.168.10.218/Rest_Area_prj/common/RestArealogo.png">
         </a>
 		<%
 		CntDAO cDAO = CntDAO.getInstance();
@@ -144,9 +144,26 @@
 		<c:when test="${ param.link eq 'inquiry' }"><!-- 	문의 클릭 시 -->
 		<c:import url="../inquiry_page/inquiry_list.jsp"/>
 		</c:when>
+		<c:when test="${ param.link eq 'inquiry_read' }"><!-- 	문의 클릭 시 -->
+		<c:import url="../inquiry_page/inquiry_read_frm.jsp"/>
+		</c:when>
+		<c:when test="${ param.link eq 'inquiry_write' }"><!-- 	문의 클릭 시 -->
+		<c:import url="../inquiry_page/inquiry_write_frm.jsp"/>
+		</c:when>
+		<c:when test="${ param.link eq 'searchRA' }"><!-- 	검색 클릭 시 -->
+		<c:import url="../rest_area_detail_page/search_rest_area_page.jsp"/>
+		</c:when>
+		<c:when test="${ param.link eq 'FAQ' }"><!-- 	FAQ 클릭 시 -->
+		<c:import url="../faq_page/faq.jsp"/>
+		</c:when>
+		<c:when test="${ param.link eq 'announce' }"><!-- 	공지사항 클릭 시 -->
+		<c:import url="../announce_page/announce_list.jsp"/>
+		</c:when>
+		<c:when test="${ param.link eq 'announce_read' }"><!-- 	공지사항 클릭 시 -->
+		<c:import url="../announce_page/announce_read_frm.jsp"/>
+		</c:when>
 	</c:choose>
 </c:if>
-<!-- 	v로고, v아이디비번, v회원가입, 공지사항, faq, 맛집, v마이페이지, 문의 	 -->
 </div>
 
 

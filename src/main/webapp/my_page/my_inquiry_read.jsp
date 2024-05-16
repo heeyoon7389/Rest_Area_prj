@@ -11,7 +11,7 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 <!-- summernote 끝 -->
 <c:if test="${ empty sessionScope.loginData }">
-	<c:redirect url="http://localhost/RestArea_Project/main_page/main_page.jsp"/>
+	<c:redirect url="http://localhost/Rest_Area_prj/main_page/main_page.jsp"/>
 </c:if>
 
 <style type="text/css">
