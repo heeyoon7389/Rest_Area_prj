@@ -1,3 +1,4 @@
+<%@page import="prj2VO.LoginVO"%>
 <%@page import="restAreaReview.RestAreaReviewDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" info="휴게소 리뷰 작성 페이지"%>
@@ -56,7 +57,7 @@
 			</h2>
 			<%
 			String raNum = request.getParameter("raNum");
-			String memberId = request.getParameter("memberId");
+			String memberId = ((LoginVO) session.getAttribute("loginData")).getMemId();
 			%>
 			<form action="write_review_process.jsp" method="post"
 				onsubmit="return chkNull();">
