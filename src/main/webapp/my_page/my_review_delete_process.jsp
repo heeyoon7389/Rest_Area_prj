@@ -6,7 +6,7 @@
     info=""%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:if test="${ empty sessionScope.loginData }">
-	<c:redirect url="http://localhost/RestArea_Project/main_page/main_page.jsp"/>
+	<c:redirect url="http://localhost/Rest_Area_prj/main_page/main_page.jsp"/>
 </c:if>
 <% request.setCharacterEncoding("UTF-8"); %>
 <jsp:useBean id="mrVO" class="prj2VO.MyReviewVO" scope="page"/>

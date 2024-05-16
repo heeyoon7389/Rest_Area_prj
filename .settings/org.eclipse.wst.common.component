@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="RestArea_Project">
+    <wb-module deploy-name="Rest_Area_prj">
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
-        <property name="context-root" value="RestArea_Project"/>
-        <property name="java-output-path" value="/RestArea_Project/build/classes"/>
+        <property name="context-root" value="Rest_Area_prj"/>
+        <property name="java-output-path" value="/Rest_Area_prj/build/classes"/>
     </wb-module>
 </project-modules>
