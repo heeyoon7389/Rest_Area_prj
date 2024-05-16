@@ -28,7 +28,7 @@
 <style type="text/css">
 	#wrap{ width: 1462px; height: 749px; margin: 0px auto; }
 	#header{ height: 100px;
-	background: #FFFFFF url('http://localhost/jsp_prj/common/images/header.png') no-repeat; }
+	background: #FFFFFF url('http://192.168.10.218/common/images/header.png') no-repeat; }
 	.num{ width: 80px}
 	.title{ width :350px}
 	.id{ width: 120px}
