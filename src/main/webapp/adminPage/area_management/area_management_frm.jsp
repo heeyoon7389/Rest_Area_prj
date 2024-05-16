@@ -392,6 +392,7 @@
 		<input type="button" value="주유소 관리" class="petrolBtn" id="petrolBtn"/>
 	</div>
 	
+	
 	<!-- 내용 끝 -->
 </div>
 <!-- 중앙 메인프레임 끝 -->
