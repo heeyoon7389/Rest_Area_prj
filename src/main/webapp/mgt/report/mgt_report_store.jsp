@@ -152,7 +152,7 @@ request.setCharacterEncoding("UTF-8");
 						<tr>
 							<th>번호</th>
 							<th style="display:none">신고 번호</th>
-							<th>제목</th>
+							<th>간략내용</th>
 							<th>신고자</th>
 							<th>신고일</th>
 							<th>휴게소명</th>

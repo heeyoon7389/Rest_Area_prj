@@ -1,3 +1,4 @@
+<%@page import="prj2.common.dao.CntDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     info="메인페이지"%>
@@ -64,6 +65,9 @@
         <a href="main_page.jsp?link=logo" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
             <img src="http://192.168.10.218/RestArea_Project/common/RestArealogo.png">
         </a>
+		<%
+		CntDAO cDAO = CntDAO.getInstance();
+		%>
 <!--         로그인 전 -->
     <c:if test="${ empty sessionScope.loginData.memId }">
         <ul class="nav justify-content-end">
@@ -74,6 +78,17 @@
                 <a class="nav-link" href="main_page.jsp?link=join">회원가입</a>
             </li>
         </ul>
+        <c:if test="${ empty sessionScope.nonMember }">
+        	<%
+	    	session.setAttribute("nonMember", true);
+	    	cDAO.mergeIntoVisitorViewCnt(false);
+        	%>
+        </c:if>
+        <c:if test="${ not empty sessionScope.member }">
+			<%
+			session.removeAttribute("member");
+	    	%>
+        </c:if>
     </c:if>
 <!--     로그인 후 -->
 	<c:if test="${ not empty sessionScope.loginData.memId }">
@@ -91,6 +106,18 @@
                 <a href="../login_page/logout.jsp" class="nav-link">로그아웃</a>
             </li>
         </ul>
+        <c:if test="${ not empty sessionScope.nonMember }">
+        	<%
+        	session.removeAttribute("nonMember");
+        	%>
+        </c:if>
+        <c:if test="${ empty sessionScope.member }">
+			<%
+			session.setAttribute("member", true);
+	    	cDAO.mergeIntoVisitorViewCnt(true);
+	    	%>
+        </c:if>
+        
     </c:if>
     </header>
 <!-- ////////////////////////////////여기에 내용 넣기////////////////////////////////////////////////////////////////////////////// -->
