@@ -1,7 +1,7 @@
-<%@page import="restAreaInquiry.BoardUtil"%>
+
+<%@page import="restAreaAnnounce.BoardUtil"%>
 <%@page import="restAreaAnnounce.AnnounceVO"%>
 <%@page import="restAreaAnnounce.AnnounceDAO"%>
-
 <%@page import="java.util.List"%>
 <%@page import="java.sql.SQLException"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -18,8 +18,8 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <!--bootstrap 끝-->
-<link rel="stylesheet" href="http://192.168.10.213/jsp_prj/common/css/main.css" type="text/css" media="all" />
-<link rel="stylesheet" href="http://192.168.10.213/jsp_prj/common/css/board.css" type="text/css" media="all" />
+<link rel="stylesheet" href="http://192.168.10.213/Reatarea_Project/common/css/main.css" type="text/css" media="all" />
+<link rel="stylesheet" href="http://192.168.10.213/Reatarea_Project/common/css/board.css" type="text/css" media="all" />
 <!--jquery CDN 시작-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!--jquery CDN 끝-->
@@ -29,11 +29,42 @@
 	#header{ height: 100px;
 	background: #FFFFFF url('http://localhost/jsp_prj/common/images/header.png') no-repeat; }
 	.num{ width: 80px}
-	.title{ width :350px}
+	.title{ width :180px}
 	.id{ width: 120px}
 	.date{ width: 150px}
 	.cnt{ width: 100px}
 	
+	.program_table table tr th {
+    height: 47px;
+    padding: 0 10px;
+    font-size: 14px;
+    color: #001e26;
+    font-weight: bold;
+    line-height: 1.4;
+    background: #f9f8f8;
+    text-align: center; /* 텍스트를 가운데 정렬합니다. */
+    vertical-align: middle; 
+	}
+
+  .program_table tbody td {
+        vertical-align: middle; /* 텍스트를 수직으로 중앙 정렬합니다. */
+    }
+
+  .paging {
+        margin-top: 70px; /* 상단 여백을 20px로 설정하여 아래로 내립니다. */
+    }
+   
+ 
+ .program_table {
+        max-width: 85%; /* 최대 너비를 80%로 설정합니다. */
+        margin: 0 auto; /* 가운데 정렬을 위해 좌우 마진을 자동으로 설정합니다. */
+    }
+	
+	 .btn-info {
+        background-color: #567FA8; /* 버튼의 배경색을 지정합니다. */
+        color: #FFFFFF; /* 버튼의 글자색을 지정합니다. */
+        border-color: transparent; /* 버튼의 테두리 색상을 투명하게 설정합니다. */
+    }
 </style>
 <script type="text/javascript">
 	$(function(){
@@ -116,7 +147,7 @@ try{
 	끝번호 :<%= endNum %>번<br/>
 	
 	<div style="height: 500px"> 
-	<input type="button" value="글작성" id="btnWrite" class="btn btn-info btn-sm"/>
+	<div class="program_table">
 	<table class="table">
 		<thead>
 		<tr>
@@ -131,7 +162,7 @@ try{
 		<c:forEach var="aVO" items="${ list }" varStatus="i">
 		<tr>
 		<td><c:out value="${totalCount-(currentPage-1)*pageScale- i.index }"/></td>
-		<td><a href="announce_read_frm.jsp?seq=${ aVO.announce_num }&currentPage=${empty param.currentPage ?1:param.currentPage}"><c:out value="${ aVO.title }"/></a></td>
+		<td><a href="announce_read_frm.jsp?announce_num=${ aVO.announce_num }&currentPage=${empty param.currentPage ?1:param.currentPage}"><c:out value="${ aVO.title }"/></a></td>
 		<td><c:out value="${ aVO.managerid }"/></td>
 		<td><c:out value="${ aVO.input_date }"/></td>
 		<td><c:out value="${ aVO.announce_view }"/></td>
@@ -139,9 +170,12 @@ try{
 		</c:forEach>
 		</tbody>
 	</table>
+	</div>
 	
 	</div>
 	
+	
+	<div class="paging">
 	<div style="text-align:  center;">
 	<form action="announce_list.jsp" name="frmBoard" id="frmBoard">
 		<select name="field" id="field">
@@ -155,6 +189,8 @@ try{
 		<input type="text" style="display: none;"/>
 	</form>
 	</div>
+	</div>
+	
 	<div style="text-align:  center;">
 	<%
 	String param="";

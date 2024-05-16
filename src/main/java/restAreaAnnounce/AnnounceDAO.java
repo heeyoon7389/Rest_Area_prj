@@ -1,5 +1,8 @@
 package restAreaAnnounce;
 
+import java.io.BufferedReader;
+
+import java.io.IOException;
 import java.sql.Connection;
 
 
@@ -9,8 +12,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import prj2DAO.DbConnection;
 import prj2VO.SearchVO;
-import restAreaDbConnection.DbConnection;
+
 
 
 
@@ -149,7 +153,7 @@ public class AnnounceDAO {
 		}//end finally
 		return list;
 	}//selectallAnnounce
-	/*
+	
 	public AnnounceVO selectoneAnnounce( String announce_num)throws SQLException{
 
 		AnnounceVO aVO = null;
@@ -179,10 +183,25 @@ public class AnnounceDAO {
 		//6. 쿼리문 수행 후 결과 얻기
 			rs=pstmt.executeQuery();
 				
-			 if (rs.next()) {
-				 aVO = new AnnounceVO(rs.getString("announce_num"),		           
-		                rs.getString("managerid"),rs.getString("title"),
-		                rs.getClob("content"),rs.getDate("input_date"),
+			if(rs.next()) {
+				StringBuilder content=new StringBuilder();
+				String temp="";
+				
+				//content는 clob데이터 형이어서 별도의 Stream을 연결하여 검색한다.
+				BufferedReader br=null;
+				try {
+					br=new BufferedReader(rs.getClob("content").getCharacterStream());
+					while( (temp=br.readLine()) != null) {
+						content.append(temp).append("\n");
+					}//end while
+					br.close();
+				}catch(IOException ie) {
+					ie.printStackTrace();
+				}//end catch
+					
+				 aVO = new AnnounceVO(announce_num,		           
+		                rs.getString("manager_id"),rs.getString("title"),
+		                content.toString(),rs.getDate("input_date"),
 		                rs.getInt("announce_view"));
 		        }//end if
 			
@@ -194,5 +213,5 @@ public class AnnounceDAO {
 		 return aVO;
 		
 	}//selectoneAnnounce
-	*/
+	
 }//class
