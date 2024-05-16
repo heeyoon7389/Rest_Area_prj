@@ -36,7 +36,6 @@
 	  position: fixed;
 	}
 
-
 	#unSelsected { /* 사이드바 글자 */
 	  text-decoration: none;
 	  padding: 5px;
