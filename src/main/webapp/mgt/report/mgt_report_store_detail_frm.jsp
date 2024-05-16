@@ -35,6 +35,10 @@
 <script	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 <!-- summernote 끝 -->
 
+<!-- 관리자 페이지 사이드바 디자인 (css) 시작 -->
+<c:import url="http://192.168.10.214/Rest_Area_prj/mgt/sidebar/mgt_sidebar_css.jsp"/>
+<!-- 관리자 페이지 사이드바 디자인 (css) 끝 -->
+
 <style type="text/css">
 	.mgtContent {	/* 내용이 들어가는 자리 */
 		margin-left: 5%;
@@ -115,13 +119,13 @@ try {
 			<form method="post" name="frmDetail" id="frmDetail">
 				<input type="hidden" name="storeRepNum" id="storeRepNum" value="${msrVO.storeRepNum }"/>
 				<div class="mgtContent bgGrey" style="height:150px;">
-					<div class="textTitle padL" style="width:78%; float:left;">
-						<span><c:out value="${msrVO.title }"/>&nbsp;</span>
-					</div>
-					<div class="textContent padR" style="width:18%; float:right; text-align:right;">
+<!-- 					<div class="textTitle padL" style="width:78%; float:left;"> -->
+<%-- 						<span><c:out value="${msrVO.title }"/>&nbsp;</span> --%>
+<!-- 					</div> -->
+					<div class="textContent padL" style="width:18%; float:left;">
 						<span>글번호: <c:out value="${param.rnum }"/></span>
 					</div>
-					<div class="textContent padL" style="width:40%; float:left;">
+					<div class="textContent padL" style="clear:both; width:40%; float:left;">
 						<span>작성자: <c:out value="${msrVO.memId }"/></span>
 					</div>
 					<div class="textContent padR" style="width:40%; float:right; text-align:right;">
@@ -136,7 +140,7 @@ try {
 				</div>
 				<div class="mgtContent bgGrey" style="clear:both; margin-top:10px;">
 					<div class="textContent" >
-						<textarea id="reviewContent" rows="2" cols="73" readonly="readonly" style="background:#e0e0e0;">${msrVO.content }</textarea>
+						<textarea id="reviewContent"  readonly="readonly" style="background:#e0e0e0; width:100%; height: 100%">${msrVO.content }</textarea>
 					</div>	
 				</div>
 				
@@ -144,7 +148,7 @@ try {
 				답변
 				</div>
 				<div class="mgtContent">
-					<textarea name="processContents" id="processContents" class="textContent" cols="73" rows="2" maxlength="1000">${msrVO.processContents }</textarea>
+					<textarea name="processContents" id="processContents" class="textContent"  maxlength="1000" style="width:100%; height: 100%">${msrVO.processContents }</textarea>
 				</div>
 				<div class="mgtContent padR" style="margin-top:20px; width:40%; float:right; text-align:right;">
 					<select id="processFlag" name="processFlag">

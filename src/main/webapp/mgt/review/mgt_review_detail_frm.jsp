@@ -37,6 +37,10 @@
 <script	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 <!-- summernote 끝 -->
 
+<!-- 관리자 페이지 사이드바 디자인 (css) 시작 -->
+<c:import url="http://192.168.10.214/Rest_Area_prj/mgt/sidebar/mgt_sidebar_css.jsp"/>
+<!-- 관리자 페이지 사이드바 디자인 (css) 끝 -->
+
 <style type="text/css">
 	.mgtContent {	/* 내용이 들어가는 자리 */
 		margin-left: 5%;

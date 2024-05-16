@@ -109,9 +109,13 @@ public class MgtStoreRepDAO {
 			// 4. 쿼리문 생성 객체 얻기 (Dynamic Query)
 			StringBuilder selectPagingStoreRep = new StringBuilder();
 			selectPagingStoreRep
-			.append("	select	rnum, num_rep_store, title, mem_id, input_date, ra_name, store_name, process_flag, process_date	")
+			.append("	select	rnum, num_rep_store, mem_id, input_date, ra_name, store_name, process_flag, process_date,	")
+			.append("			case	")
+			.append("				when length(content) > 15 then substr(content, 0, 12) || '...'	")
+			.append("				else content	")
+			.append("			end title	")
 			.append("	from	(	")
-			.append("			select	row_number() over(order by rpt.process_flag, rpt.input_date desc) rnum, rpt.num_rep_store, rpt.title, rpt.mem_id, rpt.input_date, ra.ra_name, st.store_name, rpt.process_flag, rpt.process_date	")
+			.append("			select	row_number() over(order by rpt.process_flag, rpt.input_date desc) rnum, rpt.num_rep_store, rpt.title, rpt.content, rpt.mem_id, rpt.input_date, ra.ra_name, st.store_name, rpt.process_flag, rpt.process_date	")
 			.append("			from	(select STORE_NUM, NUM_REP_STORE, TITLE, content, MEM_ID, INPUT_DATE, PROCESS_FLAG, PROCESS_DATE from store_report) rpt,	")
 			.append("					(select RA_NUM, STORE_NUM, STORE_NAME from store) st,	")
 			.append("					(select RA_NUM, RA_NAME from REST_AREA) ra	")
