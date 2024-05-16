@@ -1,3 +1,4 @@
+<%@page import="prj2.common.dao.CntDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     info="메인페이지"%>
@@ -7,7 +8,9 @@
 <head>
 <meta charset="UTF-8">
 <title>고속도로 휴게소</title>
-<link rel="icon" href="http://192.168.10.218/jsp_prj/common/favicon.ico"/>
+<!-- 브라우저 아이콘 설정 -->
+<link rel="icon" href="http://192.168.10.218/RestArea_Project/common/tamcatIcon.ico"/>
+<!-- 브라우저 아이콘 설정 -->
 <!--bootstrap 시작-->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -43,13 +46,6 @@
 			location.href="../login_page/logout.jsp"
 		});
 		
-		$("#plus_FAQ").click(function(){
-			alert("FAQ 더보기!!");
-		});
-		$("#plus_announce").click(function(){
-			alert("공지사항 더보기!!");
-		});
-		
 	});//ready
 	
 	function winReload( ){
@@ -67,9 +63,11 @@
     <!-- 메뉴바 시작-->
     <header id="header1" class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
         <a href="main_page.jsp?link=logo" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-            <img src="https://data.ex.co.kr/images/common/logo.png">
-            <span class="fs-4">고속도로 휴게소</span>
+            <img src="http://192.168.10.218/RestArea_Project/common/RestArealogo.png">
         </a>
+		<%
+		CntDAO cDAO = CntDAO.getInstance();
+		%>
 <!--         로그인 전 -->
     <c:if test="${ empty sessionScope.loginData.memId }">
         <ul class="nav justify-content-end">
@@ -80,6 +78,17 @@
                 <a class="nav-link" href="main_page.jsp?link=join">회원가입</a>
             </li>
         </ul>
+        <c:if test="${ empty sessionScope.nonMember }">
+        	<%
+	    	session.setAttribute("nonMember", true);
+	    	cDAO.mergeIntoVisitorViewCnt(false);
+        	%>
+        </c:if>
+        <c:if test="${ not empty sessionScope.member }">
+			<%
+			session.removeAttribute("member");
+	    	%>
+        </c:if>
     </c:if>
 <!--     로그인 후 -->
 	<c:if test="${ not empty sessionScope.loginData.memId }">
@@ -91,12 +100,24 @@
                 <a class="nav-link" href="main_page.jsp?link=myPage">마이페이지</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">문의</a>
+                <a class="nav-link" href="main_page.jsp?link=inquiry">문의</a>
             </li>
             <li class="nav-item">
                 <a href="../login_page/logout.jsp" class="nav-link">로그아웃</a>
             </li>
         </ul>
+        <c:if test="${ not empty sessionScope.nonMember }">
+        	<%
+        	session.removeAttribute("nonMember");
+        	%>
+        </c:if>
+        <c:if test="${ empty sessionScope.member }">
+			<%
+			session.setAttribute("member", true);
+	    	cDAO.mergeIntoVisitorViewCnt(true);
+	    	%>
+        </c:if>
+        
     </c:if>
     </header>
 <!-- ////////////////////////////////여기에 내용 넣기////////////////////////////////////////////////////////////////////////////// -->
@@ -120,6 +141,9 @@
 		<c:when test="${ param.link eq 'myPage' }"><!-- 	마이페이지 클릭 시 -->
 		<c:import url="../my_page/my_page.jsp"/>
 		</c:when>
+		<c:when test="${ param.link eq 'inquiry' }"><!-- 	문의 클릭 시 -->
+		<c:import url="../inquiry_page/inquiry_list.jsp"/>
+		</c:when>
 	</c:choose>
 </c:if>
 <!-- 	v로고, v아이디비번, v회원가입, 공지사항, faq, 맛집, v마이페이지, 문의 	 -->
@@ -130,7 +154,9 @@
 <!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
     <!-- 제작&저작권 시작 -->
     <footer class="py-5 text-center text-body-secondary bg-white">
-  		<p>&copy;고속도로 휴게소 제작 by 4조.</p>
+  		<p>&copy;고속도로 휴게소 제작 by 4조.
+  		<a class="nav-link" href="../mgt/index.html">관리자 페이지</a>
+  		</p>
   		<p class="mb-0">
     	<a href="#">상단으로 올라가기</a>
   		</p>
@@ -141,3 +167,11 @@
 <!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 </body>
 </html>
+
+
+
+
+
+
+
+

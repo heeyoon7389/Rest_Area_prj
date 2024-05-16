@@ -1,3 +1,7 @@
+<%@page import="prj2VO.FAQAnnounceVO"%>
+<%@page import="java.util.List"%>
+<%@page import="prj2DAO.FAQAnnounceDAO"%>
+<%@page import="java.sql.SQLException"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     info="메인페이지"%>
@@ -36,33 +40,60 @@
     .col-md-6{
 	 	margin-top: 25px; 
     }
+    
 </style>
+<script type="text/javascript">
+$(function(){
+	$("#plus_FAQ").click(function(){
+		alert("FAQ 더보기!!");
+	});
+	
+	$("#plus_announce").click(function(){
+		alert("공지사항 더보기!!");
+	});
+	//검색버튼 클릭
+	$("#btnSearch").click(function(){
+		if($("#search-keyword").val().trim() != ""){
+			var field = $("#search-type").val();
+			var keyword = $("#search-keyword").val();
+// 			$("#btnSearch")[0].action = "#";
+			$("#btnSearch").submit();
+		}
+	});
+});//ready
+</script>
+<%
+try{
+	FAQAnnounceDAO faDAO = FAQAnnounceDAO.getInstance();
+	List<FAQAnnounceVO> listFAQ = faDAO.selectFAQ();
+	List<FAQAnnounceVO> listAn = faDAO.selectAn();
+	pageContext.setAttribute("listFAQ", listFAQ);
+	pageContext.setAttribute("listAn", listAn);
+%>
 <!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
     <!-- 메뉴바 끝-->
     <!-- 검색창 시작-->
     <div class="search-container">
-        <form class="d-flex" role="search">
-    		<select class="form-select" aria-label="고속도로 검색 유형">
+        <form class="d-flex" role="search" action="#">
+    		<select class="form-select" aria-label="고속도로 검색 유형" name="search-type" id="search-type">
   				<option value="1" selected>지역별</option>
   				<option value="2">휴게소별</option>
   				<option value="3">고속도로별</option>
 			</select>
-            <input class="form-control me-2" type="search" placeholder="찾으시는 휴게소를 검색해주세요" aria-label="Search">
-            <button class="btn btn-primary" type="submit">검색</button>
+            <input class="form-control me-2" type="text" name="search-keyword" id="search-keyword" placeholder="찾으시는 휴게소를 검색해주세요" aria-label="Search">
+            <input class="btn btn-primary" type="button" value="검색" id="btnSearch">
         </form>
     </div>
     <!-- 검색창 끝-->
-	<!-- 지도 & 이달의 맛집 시작 -->
-    <div class="row">
 		<!-- 지도 시작 -->
-		<div class="col-md-6">
-			<div id="map" style="width:644px; height:525px"></div>
+		<div style="margin-top: 20px; margin-bottom: 30px;">
+			<div id="map" style="width:1297px; height:525px; margin: 0 auto;"></div>
 			<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8d3586aeb6c2239e14526eef8de731f9"></script>
 			<script type="text/javascript">
 				var container = document.getElementById('map');//지도를 담을 영역의 DOM 레퍼런스
 				var options = { //지도를 생성할 때 필요한 기본 옵션
 				center: new kakao.maps.LatLng(37.499515, 127.033212),//지도의 중심좌표.
-				level: 3 //지도의 레벨(확대, 축소 정도)
+				level: 10 //지도의 레벨(확대, 축소 정도)
 				};
 
 				var map = new kakao.maps.Map(container, options);//지도 생성 및 객체 리턴
@@ -80,29 +111,68 @@
 			</script>
 		</div>
 		<!-- 지도 끝 -->
-		<!-- 이달의 맛집 시작 -->
-		<div class="col-md-6">
-    		<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative set-height">
-        		<div class="col p-4 d-flex flex-column position-static">
-            		<strong class="d-inline-block mb-2 text-success-emphasis">이달의 맛집</strong>
-            		<h3 class="mb-0">얼큰한 선지해장국</h3>
-            		<div class="mb-1 text-body-secondary">강남휴게소</div>
-            		<p class="mb-auto">지금까지 이런 맛을 없었다!! <br> 앞으로도 없을 것 같은 맛!!</p>
-            		<a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
-                		강남휴게소 바로가기
-                		<svg class="bi"><use xlink:href="#chevron-right"></use></svg>
-            		</a>
-        		</div>
-        		<div class="col-auto d-none d-lg-block">
-            		<svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                		<image href="../images/sunji2.png" width="200" height="250" />
-            		</svg>
-        		</div>
-    		</div>
-		</div>
-		<!-- 이달의 맛집 끝 -->
-	</div>
-	<!-- 지도 & 이달의 맛집 끝-->
+		<!-- 아이콘 바 시작 -->
+	<div class="row g-1 row-cols-lg-4" style="border: 1px solid #333;">
+      <div class="feature col" style="padding: 10px;">
+      <div style="text-align: center; padding-top: 17px">
+        <a href="#void" style="text-decoration: none; color: black;">
+        <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3" style="border-radius: 10px;">
+          <svg class="bi" width="2em" height="2em">
+          	<svg xmlns="http://www.w3.org/2000/svg" width="90%" height="90%" fill="currentColor" class="bi bi-map-fill" viewBox="-3 -3 20 20">
+  				<path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.598-.49L10.5.99 5.598.01a.5.5 0 0 0-.196 0l-5 1A.5.5 0 0 0 0 1.5v14a.5.5 0 0 0 .598.49l4.902-.98 4.902.98a.5.5 0 0 0 .196 0l5-1A.5.5 0 0 0 16 14.5zM5 14.09V1.11l.5-.1.5.1v12.98l-.402-.08a.5.5 0 0 0-.196 0zm5 .8V1.91l.402.08a.5.5 0 0 0 .196 0L11 1.91v12.98l-.5.1z"/>
+			</svg>
+		  </svg>
+        </div>
+        <h3 class="fs-3 fw-medium">지도보기</h3>
+        </a>
+      </div>
+      </div>
+      <div class="feature col" style="padding: 10px;">
+      <div style="text-align: center; padding-top: 17px">
+      <a href="#void" style="text-decoration: none; color: black;">
+        <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3" style="border-radius: 10px;">
+          <svg class="bi" width="2em" height="2em">
+          	<svg xmlns="http://www.w3.org/2000/svg" width="90%" height="90%" fill="currentColor" class="bi bi-house-exclamation-fill" viewBox="-3 -3 20 20">
+  				<path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293z"/>
+  				<path d="m8 3.293 4.712 4.712A4.5 4.5 0 0 0 8.758 15H3.5A1.5 1.5 0 0 1 2 13.5V9.293z"/>
+  				<path d="M16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0m-3.5-2a.5.5 0 0 0-.5.5v1.5a.5.5 0 1 0 1 0V11a.5.5 0 0 0-.5-.5m0 4a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1"/>
+			</svg>
+		  </svg>
+        </div>
+        <h3 class="fs-3 fw-medium">휴게소안내</h3>
+        </a>
+      </div>
+      </div>
+      <div class="feature col" style="padding: 10px;">
+      <div style="text-align: center; padding-top: 17px">
+      <a href="#void" style="text-decoration: none; color: black;">
+        <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3" style="border-radius: 10px;">
+          <svg class="bi" width="2em" height="2em">
+          	<svg xmlns="http://www.w3.org/2000/svg" width="90%" height="90%" fill="currentColor" class="bi bi-sign-turn-slight-right-fill" viewBox="-3 -3 20 20">
+  				<path d="M6.95.435c.58-.58 1.52-.58 2.1 0l6.515 6.516c.58.58.58 1.519 0 2.098L9.05 15.565c-.58.58-1.519.58-2.098 0L.435 9.05a1.48 1.48 0 0 1 0-2.098zm1.385 6.547.8 1.386a.25.25 0 0 0 .451-.039l1.06-2.882a.25.25 0 0 0-.192-.333l-3.026-.523a.25.25 0 0 0-.26.371l.667 1.154-.621.373A2.5 2.5 0 0 0 6 8.632V11h1V8.632a1.5 1.5 0 0 1 .728-1.286z"/>
+			</svg>
+		  </svg>
+        </div>
+        <h3 class="fs-3 fw-medium">고속도로</h3>
+        </a>
+      </div>
+      </div>
+      <div class="feature col" style="padding: 10px;">
+      <div style="text-align: center; padding-top: 17px">
+      <a href="#void" style="text-decoration: none; color: black;">
+        <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3" style="border-radius: 10px;">
+          <svg class="bi" width="2em" height="2em">
+          	<svg xmlns="http://www.w3.org/2000/svg" width="90%" height="90%" fill="currentColor" class="bi bi-question-circle-fill" viewBox="-3 -3 20 20">
+  				<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.496 6.033h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286a.237.237 0 0 0 .241.247m2.325 6.443c.61 0 1.029-.394 1.029-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94 0 .533.425.927 1.01.927z"/>
+			</svg>
+		  </svg>
+        </div>
+        <h3 class="fs-3 fw-medium">자주묻는질문</h3>
+        </a>
+      </div>
+      </div>
+      </div>
+		<!-- 아이콘 바 끝 -->
  <!-- 	사이트 광고 배너 시작 -->
     <div id="myCarousel" class="carousel slide mb-6" data-bs-ride="carousel">
         <!-- 하단이동버튼 시작 -->
@@ -153,87 +223,59 @@
     <div class="row">
         <!-- FAQ 시작 -->
         <div class="col-md-6">
-            <table class="table">
+            <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th scope="col"></th>
+                    <th scope="col">#</th>
                     <th scope="col" class="text-start">FAQ <span id="plus_FAQ" class="float-end">더보기+</span></th>
                 </tr>
                 </thead>
                 <tbody>
+                <c:forEach var="faVO" items="${ listFAQ }" varStatus="i">
                 <tr>
-                    <th scope="row">1</th>
-                    <td colspan="3">휴게소 상세정보가 알고 싶어요</td>
+                    <th scope="row"><c:out value="${i.count}"/></th>
+                    <td colspan="3">
+                    <a href="#void" style="text-decoration:none; color: black;">
+                    <c:out value="${ faVO.QStr }"/>
+      				</a>
+                    </td>
                 </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td colspan="3">이 휴게소 사이트는 언제 끝나나요</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td colspan="3">회원탈퇴 하는 법을 알려주세요</td>
-                </tr>
-                <tr>
-                    <th scope="row">4</th>
-                    <td colspan="3">휴게소 상세정보가 알고 싶어요</td>
-                </tr>
-                <tr>
-                    <th scope="row">5</th>
-                    <td colspan="3">이 휴게소 사이트는 언제 끝나나요</td>
-                </tr>
-                <tr>
-                    <th scope="row">6</th>
-                    <td colspan="3">회원탈퇴 하는 법을 알려주세요</td>
-                </tr>
+                </c:forEach>
                 </tbody>
             </table>
         </div>
         <!-- FAQ 끝 -->
         <!-- 공지사항 시작 -->
         <div class="col-md-6">
-            <table class="table">
+            <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th scope="col"></th>
-                    <th scope="col" colspan="2">공지사항</th>
+                    <th scope="col">#</th>
+                    <th scope="col" colspan="3">공지사항</th>
                     <th scope="col">입력일 <span id="plus_announce" class="float-end">더보기+</span></th>
                 </tr>
                 </thead>
                 <tbody>
+                <c:forEach var="faVO" items="${ listAn }" varStatus="i">
                 <tr>
-                    <th scope="row">1</th>
-                    <td colspan="2">댕 큰 공지사항이 있어요</td>
-                    <td>2024-12-32</td>
+                    <th scope="row"><c:out value="${i.count}"/></th>
+                    <td colspan="3">
+                    <a href="#void" style="text-decoration:none; color: black;">
+                    <c:out value="${ faVO.title }"/>
+      				</a>
+                    </td>
+                    <td><c:out value="${ faVO.inputDate }"/></td>
                 </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td colspan="2">조금 작은 공지사항이 있어요</td>
-                    <td>2024-13-01</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td colspan="2">암튼 공지사항이 있어요</td>
-                    <td>2024-01-33</td>
-                </tr>
-                <tr>
-                    <th scope="row">4</th>
-                    <td colspan="2">댕 큰 공지사항이 있어요</td>
-                    <td>2024-12-32</td>
-                </tr>
-                <tr>
-                    <th scope="row">5</th>
-                    <td colspan="2">조금 작은 공지사항이 있어요</td>
-                    <td>2024-13-01</td>
-                </tr>
-                <tr>
-                    <th scope="row">6</th>
-                    <td colspan="2">암튼 공지사항이 있어요</td>
-                    <td>2024-01-33</td>
-                </tr>
+                </c:forEach>
                 </tbody>
             </table>
         </div>
         <!-- 공지사항 끝 -->
     </div>
     <!-- 공지사항&FAQ 끝 -->
+<%
+}catch(SQLException e){
+	e.printStackTrace();
+}//end catch
+%>
 <!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->

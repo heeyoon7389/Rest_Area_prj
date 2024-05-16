@@ -12,8 +12,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import prj2DAO.DbConnection;
 import prj2VO.SearchVO;
-import restAreaDbConnection.DbConnection;
 
 
 
@@ -38,7 +38,7 @@ public class InquiryDAO {
 		return iDAO;
 	}//getInstance
 	
-	/*
+	
 	public void insertInquiry( InquirydetailVO idVO) throws SQLException{
 		
 		Connection con=null;
@@ -55,7 +55,7 @@ public class InquiryDAO {
 		
 			
 			String insertInquiry=
-			" insert into inquiry(mem_id, title, contents, secret_flag) values(?,?,?,?)";
+			" insert into inquiry(mem_id, title, content) values(?,?,?)";
 	
 			pstmt=con.prepareStatement(insertInquiry);
 			
@@ -63,8 +63,7 @@ public class InquiryDAO {
 			pstmt.setString(1, idVO.getMemid());
 			pstmt.setString(2, idVO.getTitle());
 			pstmt.setString(3, idVO.getContent());
-			pstmt.setLong(4, idVO.get);
-			
+		
 			
 		//6. 쿼리문 수행 후 결과 얻기
 			pstmt.executeUpdate();
@@ -75,7 +74,7 @@ public class InquiryDAO {
 		}//end finally
 		
 	}//insertInquiry
-	*/
+	
 	
 	/**
 	 * 총 레코드의 수
@@ -241,7 +240,7 @@ public class InquiryDAO {
 					ie.printStackTrace();
 				}//end catch
 					
-				idVO = new InquirydetailVO(rs.getString("inquiry_num"),		           
+				idVO = new InquirydetailVO(inquiry_num,		           
 						rs.getString("mem_id"),rs.getString("title"),
 						content.toString(),rs.getDate("input_date"),
 						false,rs.getString("answer_contents"),rs.getDate("answer_date"),false);
