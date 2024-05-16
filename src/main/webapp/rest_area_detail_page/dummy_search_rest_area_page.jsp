@@ -1,4 +1,4 @@
-<%@page import="searchRestArea.RouteVO"%>
+<%-- <%@page import="searchRestArea.RouteVO"%>
 <%@page import="highway.HighwayDAO"%>
 <%@page import="highway.HighwayVO"%>
 <%@page import="searchRestArea.SearchRestAreaDAO"%>
@@ -432,4 +432,4 @@ if (searchType.equals("3")) {
 %>
 </div>
 <!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-</html>
+</html> --%>
