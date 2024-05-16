@@ -144,9 +144,26 @@
 		<c:when test="${ param.link eq 'inquiry' }"><!-- 	문의 클릭 시 -->
 		<c:import url="../inquiry_page/inquiry_list.jsp"/>
 		</c:when>
+		<c:when test="${ param.link eq 'inquiry_read' }"><!-- 	문의 클릭 시 -->
+		<c:import url="../inquiry_page/inquiry_read_frm.jsp"/>
+		</c:when>
+		<c:when test="${ param.link eq 'inquiry_write' }"><!-- 	문의 클릭 시 -->
+		<c:import url="../inquiry_page/inquiry_write_frm.jsp"/>
+		</c:when>
+		<c:when test="${ param.link eq 'searchRA' }"><!-- 	검색 클릭 시 -->
+		<c:import url="../rest_area_detail_page/search_rest_area_page.jsp"/>
+		</c:when>
+		<c:when test="${ param.link eq 'FAQ' }"><!-- 	FAQ 클릭 시 -->
+		<c:import url="../faq_page/faq.jsp"/>
+		</c:when>
+		<c:when test="${ param.link eq 'announce' }"><!-- 	공지사항 클릭 시 -->
+		<c:import url="../announce_page/announce_list.jsp"/>
+		</c:when>
+		<c:when test="${ param.link eq 'announce_read' }"><!-- 	공지사항 클릭 시 -->
+		<c:import url="../announce_page/announce_read_frm.jsp"/>
+		</c:when>
 	</c:choose>
 </c:if>
-<!-- 	v로고, v아이디비번, v회원가입, 공지사항, faq, 맛집, v마이페이지, 문의 	 -->
 </div>
 
 

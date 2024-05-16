@@ -58,7 +58,7 @@ public class BoardUtil {
 // 		String nextMark="[&gt;&gt;]"; 이렇게도 쓸 수 있음. 결과 같음.
 		if(totalPage > endPage){
 			movePage=endPage+1;
-			endMark="[ <a style='text-decoration:none; ' href='" + url + "8currentPage=" + movePage + param + "'> &gt;&gt; </a> ]";
+			endMark="[ <a style='text-decoration:none; ' href='" + url + "&currentPage=" + movePage + param + "'> &gt;&gt; </a> ]";
 		}//end if
 		
 		pageNation.append("...").append(endMark);
