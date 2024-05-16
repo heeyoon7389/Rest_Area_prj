@@ -16,22 +16,6 @@
 <%@page import="restAreaFacil.RestAreaFacilDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" info="휴게소 상세 페이지"%>
-	<%
-			String memberId = null;
-	        LoginVO loginData = (LoginVO) session.getAttribute("loginData");
-	        if(loginData != null) {
-	            memberId = loginData.getMemId();
-	        } else {
-	            // 세션 값이 null인 경우 비회원으로 설정
-	            memberId = "nonMember";
-	        } 
-			String raNum = request.getParameter("raNum");
-			String raName = request.getParameter("raName");
-			String addr = request.getParameter("addr");
-			RestAreaInfoVO raiVO = null;
-			RestAreaInfoDAO raiDAO = RestAreaInfoDAO.getInstance();
-			raiVO = raiDAO.selectRestAreaInfo(raNum);
-			%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -112,13 +96,11 @@
 						});
 		
 		$('#switch').change(function() {
-            
-            if ("input[name'favorite_toggle']:checked") {
+            var flag;
+            if ($(this).is(':checked')) {
                 flag = "1"; // 체크박스가 체크된 경우
-                
             } else {
                 flag = "0"; // 체크박스가 체크 해제된 경우
-            	
             }
             
             // AJAX를 이용하여 서버로 데이터 전송
@@ -126,11 +108,10 @@
                 url: '../rest_area_detail_page/rest_area_detail_page.jsp', // 업데이트를 처리할 JSP 페이지의 경로
                 type: 'POST', // HTTP 요청 방식
                 data: {
-                    "flag":flag,
-                    "memberId":memberId,
-                    "raNum":raNum
+                    'flag': flag, // 업데이트할 플래그 값
+                    'memberId': memberId, // 멤버 아이디
+                    'raNum': raNum // 리뷰 번호
                 },
-                dataType="JSON",
                 success: function(response) {
                     // 성공적으로 업데이트된 경우
                     alert('즐겨 찾기 수정 완료!');
@@ -150,6 +131,22 @@
 <body>
 	<div class="container">
 		<div id="header">
+			<%
+			String memberId = null;
+	        LoginVO loginData = (LoginVO) session.getAttribute("loginData");
+	        if(loginData != null) {
+	            memberId = loginData.getMemId();
+	        } else {
+	            // 세션 값이 null인 경우 비회원으로 설정
+	            memberId = "nonMember";
+	        } 
+			String raNum = request.getParameter("raNum");
+			String raName = request.getParameter("raName");
+			String addr = request.getParameter("addr");
+			RestAreaInfoVO raiVO = null;
+			RestAreaInfoDAO raiDAO = RestAreaInfoDAO.getInstance();
+			raiVO = raiDAO.selectRestAreaInfo(raNum);
+			%>
 			<%
 			CntDAO cDAO = CntDAO.getInstance();
 			cDAO.insertRestAreaViewCnt(request.getParameter("raNum"));
