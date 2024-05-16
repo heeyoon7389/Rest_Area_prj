@@ -47,14 +47,14 @@ public class RestAreaFacilDAO {
 			rs = pstmt.executeQuery();
 			RestAreaFacilVO rafVO = null;			
 			while(rs.next()) {
-				rafVO = new RestAreaFacilVO(
-						rs.getString("ra_facil_num"),
-						rs.getString("ra_num"), 
-						rs.getString("ra_facil_name"),
-						rs.getString("note"),
-						rs.getString("img")
-						);
-				facilList.add(rafVO);
+				RestAreaFacilVO rafVOBuilder = rafVO.builder()
+						.raNum(rs.getString("ra_num"))
+						.raFacilNum(rs.getString("ra_facil_num"))
+						.img(rs.getString("img"))
+						.facilName(rs.getString("ra_facil_name"))
+						.facilNote(rs.getString("note"))
+						.build();		
+				facilList.add(rafVOBuilder);
 			}
 		} finally {
 			dbCon.closeCon(rs, pstmt, con);

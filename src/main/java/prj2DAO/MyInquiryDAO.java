@@ -21,7 +21,7 @@ public class MyInquiryDAO {
 	
 	private MyInquiryDAO() {
 		//키워드 검색할 열이름
-		columnNames = new String[] {"title", "content", "answerContents"};
+		columnNames = new String[] {"title", "content", "ANSWER_CONTENTS"};
 	}
 	
 	public static MyInquiryDAO getInstance() {
@@ -60,7 +60,7 @@ public class MyInquiryDAO {
 			//검색 키워드가 존재하면 키워드에 해당하는 레코드의 수만 검색
 			if( sVO.getKeyword() != null && !"".equals(sVO.getKeyword() )) {
 				selectCnt
-				.append(" where instr(").append(columnNames[Integer.parseInt(sVO.getField())])
+				.append(" and instr(").append(columnNames[Integer.parseInt(sVO.getField())])
 				.append(",? ) > 0 ");
 			}//end if
 			
@@ -110,14 +110,14 @@ public class MyInquiryDAO {
 			selectBoard
 			.append("	select rnum, INQUIRY_NUM, MEM_ID, TITLE, INPUT_DATE, SECRET_FLAG, ANSWER_FLAG	")
 			.append("	from (select INQUIRY_NUM, MEM_ID, TITLE, INPUT_DATE, SECRET_FLAG, ANSWER_FLAG,	")
-			.append("	row_number() over(order by input_date desc) rnum	")
-			.append("	from INQUIRY ")
-			.append("	where mem_id=? ");
+			.append("			row_number() over(order by input_date desc) rnum	")
+			.append("			from INQUIRY ")
+			.append("			where mem_id=? ");
 			
 			if(sVO.getKeyword() != null && !"".equals(sVO.getKeyword() )) {
 				
 				selectBoard
-				.append(" where instr(").append(columnNames[Integer.parseInt(sVO.getField())])
+				.append(" and instr(").append(columnNames[Integer.parseInt(sVO.getField())])
 				.append(",? ) > 0 ");
 				
 			}//end if
@@ -183,7 +183,7 @@ public class MyInquiryDAO {
 			StringBuilder selectBoard=new StringBuilder();
 			
 			selectBoard
-			.append("	select MEM_ID, TITLE, CONTENT, INPUT_DATE, SECRET_FLAG, ANSWER_CONTENTS, ANSWER_DATE, ANSWER_FLAG	")
+			.append("	select MEM_ID, INQUIRY_NUM, TITLE, CONTENT, INPUT_DATE, SECRET_FLAG, ANSWER_CONTENTS, ANSWER_DATE, ANSWER_FLAG	")
 			.append("	from INQUIRY ")
 			.append("	where INQUIRY_NUM=?  ");
 			
@@ -201,7 +201,8 @@ public class MyInquiryDAO {
 				//content는 clob데이터 형이여서 별도의 Stream을 연결하여 검색.
 				BufferedReader br = null;
 				try {
-					br = new BufferedReader(rs.getClob("content").getCharacterStream());
+//					문의내용
+					br = new BufferedReader(rs.getClob("CONTENT").getCharacterStream());
 					while((temp = br.readLine()) != null) {
 						content.append(temp).append("\n");
 					}//end while
@@ -214,7 +215,7 @@ public class MyInquiryDAO {
 				.inquiryNum(rs.getString("INQUIRY_NUM"))
 				.memId(rs.getString("MEM_ID"))
 				.title(rs.getString("TITLE"))
-				.content(rs.getString("CONTENT"))
+				.content(content.toString())
 				.secretFlag(rs.getString("SECRET_FLAG"))
 				.inputDate(rs.getDate("INPUT_DATE"))
 				.answerContents(rs.getString("ANSWER_CONTENTS"))
@@ -305,6 +306,8 @@ public class MyInquiryDAO {
 			//바인드 변수에 값 설정
 			pstmt.setString(1, miVO.getInquiryNum());
 			pstmt.setString(2, miVO.getMemId());
+			
+			cnt = pstmt.executeUpdate();
 		}finally {
 			//7. 연결 끊기
 			db.closeCon(null, pstmt, con);

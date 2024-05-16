@@ -63,7 +63,7 @@
         <li class="nav-item mp-item" id="myFavorite"><a href="../main_page/main_page.jsp?link=myPage&my=myFavorite" class="nav-link">즐겨찾기</a></li>
         <li class="nav-item mp-item" id="myReview"><a href="../main_page/main_page.jsp?link=myPage&my=myReview" class="nav-link">내가 쓴 리뷰</a></li>
         <li class="nav-item mp-item" id="myInquiry"><a href="../main_page/main_page.jsp?link=myPage&my=myInquiry" class="nav-link">내가 쓴 문의</a></li>
-        <li class="nav-item mp-item" id="myInfo"><a href="../main_page/main_page.jsp?link=myPage&my=myInfo" class="nav-link">내 정보 수정</a></li>
+        <li class="nav-item mp-item" id="myInfo"><a href="../main_page/main_page.jsp?link=myPage&my=myInfoInputPass" class="nav-link">내 정보 수정</a></li>
       </ul>
     </header>
 <!--     마이페이지 네비게이션 끝 -->
@@ -82,8 +82,17 @@
 		<c:when test="${ param.my eq 'myReview' }"><!-- 	내가 쓴 리뷰 클릭 시 -->
 		<c:import url="../my_page/my_review.jsp"/>
 		</c:when>
+		<c:when test="${ param.my eq 'myReview_read' }"><!-- 	내가 쓴 리뷰 클릭 시 -->
+		<c:import url="../my_page/my_review_read.jsp"/>
+		</c:when>
 		<c:when test="${ param.my eq 'myInquiry' }"><!-- 	내가 쓴 문의 클릭 시 -->
 		<c:import url="../my_page/my_inquiry.jsp"/>
+		</c:when>
+		<c:when test="${ param.my eq 'myInquiry_read' }"><!-- 	내가 쓴 문의 클릭 시 -->
+		<c:import url="../my_page/my_inquiry_read.jsp"/>
+		</c:when>
+		<c:when test="${ param.my eq 'myInfoInputPass' }"><!-- 	내 정보 수정 클릭 시 -->
+		<c:import url="../my_page/my_info_input_pass.jsp"/>
 		</c:when>
 		<c:when test="${ param.my eq 'myInfo' }"><!-- 	내 정보 수정 클릭 시 -->
 		<c:import url="../my_page/my_info.jsp"/>

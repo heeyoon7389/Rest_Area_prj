@@ -16,6 +16,8 @@ import lombok.ToString;
 public class LocationVO {
 	private String raNum;
 	private String raName;
+	private String addr;
+	private String raTel;
 	private String locNum;
 	private String locName;
 	private double latitude;
