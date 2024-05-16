@@ -1,6 +1,10 @@
+<%@page import="Amenities.AreaAmeniteVO"%>
+<%@page import="java.util.List"%>
+<%@page import="Amenities.AmenitieDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     info=""%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -77,32 +81,58 @@
 	}
 	
 </style>
+
+<%
+	String areaCode = request.getParameter("areaCode");
+	
+	AmenitieDAO aaDAO = AmenitieDAO.getInstance();
+	List<String> amenitieList = aaDAO.selectAreaAmenitie(areaCode); //휴게소 보유 휴게시설
+	pageContext.setAttribute("amenitieList", amenitieList);
+
+	List<AreaAmeniteVO> list = aaDAO.selectAllAmenitie(); //사용 가능한 전체 편의시설
+	pageContext.setAttribute("list", list);
+	
+	String areaName = aaDAO.selectAreaName(areaCode); //휴게소 이름
+	
+%>
+
 <script type="text/javascript">
 	$(function(){
-		/* 닫기 */
+		
 		$("#okBtn").click(function(){
-			alert("asdf");
+			
+			
+			
+			
+			self.close();
 		});
 		
 	});//ready
 </script>
 </head>
 <body>
+
 <div id="wrap">
-	<div id="amenitie_management"><h3><strong>고창고인돌(목포)</strong></h3></div>
+	<div id="amenitie_management"><h3><strong><%= areaName %></strong></h3></div>
 	<div id="tableWrap">
 	
-	<table id="amenitie_table"/>
+	<table id="amenitie_table">
 		<tr>
 			<th>편의시설명</th>
-			<th>휴게소</th>
-			<th>주유소</th>
+			<th>보유 유무</th>
 		</tr>
+		<c:forEach var="aaVO" items="${ list }" varStatus="i">
 		<tr>
-			<td>수면실</td>
-			<td><input type="checkbox" id=chk value="수면실/휴게소"></td>
-			<td><input type="checkbox" id=chk value="수면실/주유소"></td>
+			<td><c:out value="${ aaVO.amenitieName }"/></td>
+			<td>
+			<input type="checkbox" 
+			<c:forEach var="amenitie" items="${ amenitieList }" varStatus="i">
+			${ amenitie eq aaVO.amenitieCode ? " checked='checked'":""}
+			</c:forEach>
+			id="${ aaVO.amenitieCode }" value="${ aaVO.amenitieCode }">
+			</td>
 		</tr>
+		</c:forEach>
 	</table></br>
 	<div id="btnWrap">
 	<input type="button" value="확인" id="okBtn"/>

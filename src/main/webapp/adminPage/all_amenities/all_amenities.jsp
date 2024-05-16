@@ -1,11 +1,16 @@
+<%@page import="Amenities.AreaAmeniteVO"%>
+<%@page import="java.util.List"%>
+<%@page import="java.sql.SQLException"%>
+<%@page import="Amenities.AmenitieDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
-    info=""%>
+    info="사용 가능 휴게시설 관리"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>사용 가능 휴게시설 관리</title>
 <!-- 파비콘 시작 -->
 <!-- <link rel="icon" href="http://192.168.10.220/jsp_prj/common/favicon.ico"/> -->
 <!-- 파비콘 끝 -->
@@ -183,6 +188,26 @@
 				alert("삭제되었습니다.")
 			}//end if
 		});
+		
+		/* 테이블이벤트 */
+		$("#shopTable tr").click(function(){
+			
+			var str = ""
+			var tdArr = new Array();
+			
+			// 현재 클릭된 Row(<tr>)
+			var tr = $(this);
+			var td = tr.children();
+			
+			$("#addFrame").hide();
+			$("#modifyFrame").show();
+			
+			$("#storeNameM").val( tr.text().trim() );
+			
+			// tr.text()는 클릭된 Row 즉 tr에 있는 모든 값을 가져온다.
+			console.log("클릭한 Row의 모든 데이터 : "+tr.text());
+			
+		});
 	});//ready
 </script>
 </head>
@@ -192,7 +217,7 @@
 <!-- 좌측 사이드바 시작 -->
 <ul>
 	<br>
-	<li class="topMenu"/><a href="#" id="unSelsected"/>대시보드</a></li>
+	<li class="topMenu"><a href="http://192.168.10.214/Rest_Area_prj/mgt/dashboard/mgt_dashboard.jsp" id="unSelsected">대시보드</a></li>
   
 	<br>
 	<li class="topMenu"><a href="http://192.168.10.220/Rest_Area_prj/adminPage/area_management/area_management_frm.jsp" id="unSelsected">휴게소 관리</a></li>
@@ -202,14 +227,14 @@
 		<li class="bottomMenu"><a href="http://192.168.10.220/Rest_Area_prj/adminPage/area_management/area_management_frm.jsp" id="unSelsected">휴게소 편의시설 관리</a></li>
 		<li class="bottomMenu"><a href="http://192.168.10.220/Rest_Area_prj/adminPage/gas_station_management/gas_station.html" id="unSelsected">주유소 관리</a></li>
 	<br>
-	<li class="topMenu"/><a href="#" id="unSelsected"/>게시글 관리</a></li>
-		<li class="bottomMenu"/><a href="#" id="unSelsected"/>문의</a></li>
-		<li class="bottomMenu"/><a href="#" id="unSelsected"/>신고</a></li>
-		<li class="bottomMenu"/><a href="#" id="unSelsected"/>리뷰</a></li>
-		<li class="bottomMenu"/><a href="#" id="unSelsected"/>공지사항</a></li>
+	<li class="topMenu"><a href="#" id="unSelsected">게시글 관리</a></li>
+		<li class="bottomMenu"><a href="http://192.168.10.214/Rest_Area_prj/mgt/inquiry/mgt_inquiry.jsp" id="unSelsected">문의</a></li>
+		<li class="bottomMenu"><a href="http://192.168.10.214/Rest_Area_prj/mgt/report/mgt_report_review.jsp" id="unSelsected">신고</a></li>
+		<li class="bottomMenu"><a href="http://192.168.10.214/Rest_Area_prj/mgt/review/mgt_review.jsp" id="unSelsected">리뷰</a></li>
+		<li class="bottomMenu"><a href="http://192.168.10.214/Rest_Area_prj/mgt/announce/mgt_announce.jsp" id="unSelsected">공지사항</a></li>
   
 	<br>
-	<li class="topMenu"/><a href="#" id="unSelsected"/>회원 관리</a></li>
+	<li class="topMenu"><a href="http://192.168.10.214/Rest_Area_prj/mgt/member/mgt_member.jsp" id="unSelsected">회원 관리</a></li>
 </ul>
 <!-- 좌측 사이드바 끝 -->
 
@@ -218,31 +243,40 @@
 	<!-- 최상단 메뉴이름 타이틀바 시작 -->
 	<div id="currentMenu">
 		<span id="currentTopMenuName">휴게소 관리</span>
-		<span id="currentBottomMenuName"> > 휴게소 선택</span>
+		<span id="currentBottomMenuName"> > 전체 편의시설 관리</span>
 	</div>
 	<!-- 최상단 메뉴이름 타이틀바 끝 -->
 	
 	<!-- 내용 시작 -->
-	<div class="mainWrap"/>
-		<div class="tableFrm"/>
-		<table class="shopTable"/>
+	
+	<%
+		AmenitieDAO aaDAO = AmenitieDAO.getInstance();
+			try{
+				List<AreaAmeniteVO> list = aaDAO.selectAllAmenitie();
+				pageContext.setAttribute("list", list);
+			}catch(SQLException se){
+				se.printStackTrace();
+			}//end catch
+		%>
+	
+	<div class="mainWrap">
+		<div class="tableFrm">
+		<table class="shopTable" id="shopTable">
 			<tr>
-				<th style="width: 4%;"> </td>
-				<th style="width: 96%;">현재 사용 가능한 편의시설 목록</td>
+				<th>현재 사용 가능한 편의시설 목록</th>
 			</tr>
+			<c:forEach var="aaVO" items="${ list }" varStatus="i">
 			<tr>
-				<td></td>
-				<td>수면실</td>
+				<td><c:out value="${ aaVO.amenitieName }"/></td>
 			</tr>
+			</c:forEach>
 		</table>
 		</div>
 		
 		<div id="modifyFrame" style="display: none;">
 			<label><h3><strong>상세정보</strong></h3></label><br/><br/>
 			<label>편의시설 이름</label><br/>
-			<input type="text" id="storeName" class="storeName" style="width:300px; height: 40px;" placeholder="편의시설 이름"/><br/><br/>
-			<label>편의시설 아이콘</label><br/>
-			<input type="file" id="iconFile"/><br><br><br>
+			<input type="text" id="storeNameM" class="storeNameM" style="width:300px; height: 40px;" placeholder="편의시설 이름"/><br/><br/>
 			<input type="button" value="수정" id="modifyAmenitieBtn"/>　
 			<input type="button" value="삭제" id="deleteAmenitieBtn"/>
 		</div>
@@ -250,9 +284,7 @@
 		<div id="addFrame" style="display: none;">
 			<label><h3><strong>추가</strong></h3></label><br/><br/>
 			<label>편의시설 이름</label><br/>
-			<input type="text" id="storeName" class="storeName" style="width:300px; height: 40px;" placeholder="편의시설 이름"/><br/><br/>
-			<label>편의시설 아이콘</label><br/>
-			<input type="file" id="iconFile"/><br><br><br>
+			<input type="text" id="storeNameA" class="storeNameA" style="width:300px; height: 40px;" placeholder="편의시설 이름"/><br/><br/>
 			<input type="button" value="추가" id="addAmenitieBtn"/>　
 		</div>
 		

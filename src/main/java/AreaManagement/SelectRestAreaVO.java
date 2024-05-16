@@ -1,4 +1,4 @@
-package Admin_main;
+package AreaManagement;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

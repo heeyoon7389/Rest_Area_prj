@@ -1,10 +1,10 @@
 <%@page import="java.sql.SQLException"%>
-<%@page import="Admin_main.SelectRestAreaVO"%>
+<%@page import="AreaManagement.SelectRestAreaVO"%>
 <%@page import="java.util.List"%>
-<%@page import="Admin_main.SelectRestAreaDAO"%>
+<%@page import="AreaManagement.SelectRestAreaDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
-    info=""%>
+    info="휴게소 관리"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -261,7 +261,7 @@
 <!-- 좌측 사이드바 시작 -->
 <ul>
 	</br>
-	<li class="topMenu"><a href="#" id="unSelsected">대시보드</a></li>
+	<li class="topMenu"><a href="http://192.168.10.214/Rest_Area_prj/mgt/dashboard/mgt_dashboard.jsp" id="unSelsected">대시보드</a></li>
   
 	</br>
 	<li class="topMenu"><a href="http://192.168.10.220/Rest_Area_prj/adminPage/area_management/area_management_frm.jsp" id="selected">휴게소 관리</a></li>
@@ -273,13 +273,13 @@
 	  
 	</br>
 	<li class="topMenu"><a href="#" id="unSelsected">게시글 관리</a></li>
-		<li class="bottomMenu"><a href="#" id="unSelsected">문의</a></li>
-		<li class="bottomMenu"><a href="#" id="unSelsected">신고</a></li>
-		<li class="bottomMenu"><a href="#" id="unSelsected">리뷰</a></li>
-		<li class="bottomMenu"><a href="#" id="unSelsected">공지사항</a></li>
+		<li class="bottomMenu"><a href="http://192.168.10.214/Rest_Area_prj/mgt/inquiry/mgt_inquiry.jsp" id="unSelsected">문의</a></li>
+		<li class="bottomMenu"><a href="http://192.168.10.214/Rest_Area_prj/mgt/report/mgt_report_review.jsp" id="unSelsected">신고</a></li>
+		<li class="bottomMenu"><a href="http://192.168.10.214/Rest_Area_prj/mgt/review/mgt_review.jsp" id="unSelsected">리뷰</a></li>
+		<li class="bottomMenu"><a href="http://192.168.10.214/Rest_Area_prj/mgt/announce/mgt_announce.jsp" id="unSelsected">공지사항</a></li>
   
 	</br>
-	<li class="topMenu"><a href="#" id="unSelsected">회원 관리</a></li>
+	<li class="topMenu"><a href="http://192.168.10.214/Rest_Area_prj/mgt/member/mgt_member.jsp" id="unSelsected">회원 관리</a></li>
 </ul>
 <!-- 좌측 사이드바 끝 -->
 

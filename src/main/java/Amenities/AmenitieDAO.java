@@ -1,4 +1,4 @@
-package Store_management;
+package Amenities;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,59 +7,59 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import AreaManagement.SelectRestAreaVO;
 import restAreaDbConnection.DbConnection;
 
-public class StoreManagementDAO {
-	private static StoreManagementDAO smmDAO;
+public class AmenitieDAO {
 	
-	private StoreManagementDAO() {
-	}//StoreManagementDAO
+	private static AmenitieDAO aaDAO;
 	
-	public static StoreManagementDAO getInstance() {
-		if(smmDAO == null) {
-			smmDAO = new StoreManagementDAO();
+	private AmenitieDAO() {
+	}
+	
+	public static AmenitieDAO getInstance() {
+		if(aaDAO == null) {
+			aaDAO = new AmenitieDAO();
 		}//end if
-		return smmDAO;
+		return aaDAO;
 	}//getInstance
 	
-	public List<StoreManagementVO> selectAllStore(String areaCode) throws SQLException {
-		List<StoreManagementVO> list = new ArrayList<StoreManagementVO>();
+	
+	/**
+	 * 사용 가능한 모든 편의시설 조회
+	 * @return
+	 */
+	public List<AreaAmeniteVO> selectAllAmenitie() throws SQLException {
+		List<AreaAmeniteVO> list = new ArrayList<AreaAmeniteVO>();
 		
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		DbConnection db = DbConnection.getInstance();
-		
 		try {
 			//1.JNDI 사용객체 생성
 			//2. DataSource 얻기
 			//3. Connection 얻기
 			con = db.getConn("jdbc/restarea");
 			//4. 쿼리문 생성 객체 얻기
-			StringBuilder selectAllStore = new StringBuilder();
-			selectAllStore
-			.append(" select store_num, store_kind, store_name, note ")
-			.append(" from store ")
-			.append(" where ra_num = ? ");
+			StringBuilder selectAllAmenitie = new StringBuilder();
+			selectAllAmenitie
+			.append(" select ra_facil_num, ra_facil_name ")
+			.append(" from restarea_facility ");
 			
-			pstmt = con.prepareStatement(selectAllStore.toString());
+			pstmt = con.prepareStatement(selectAllAmenitie.toString());
 			
 			//5. 바인드 변수에 값 설정
-			pstmt.setString(1, areaCode);
 			
 			//6. 쿼리문 수행 후 결과 얻기
-			rs = pstmt.executeQuery();
+			rs=pstmt.executeQuery();
 			
-			StoreManagementVO smmVO = new StoreManagementVO();
+			AreaAmeniteVO aaVO = null;
 			while(rs.next()) {
-				smmVO = new StoreManagementVO(
-						rs.getString("store_name"),
-						rs.getString("store_kind"),
-						rs.getString("store_num"),
-						rs.getString("note")
+				aaVO = new AreaAmeniteVO(
+						rs.getString("ra_facil_num"),
+						rs.getString("ra_facil_name")
 						);
-				list.add(smmVO);
+				list.add(aaVO);
 			}//end if
 		}finally {
 			db.closeCon(rs, pstmt, con);
@@ -67,11 +67,10 @@ public class StoreManagementDAO {
 		}//end finally
 		
 		return list;
-	}//selectAllStore
+	}//selectAllAmenitie
 	
 	public String selectAreaName(String areaCode) throws SQLException {
 		String areaName = "";
-		
 		
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -109,8 +108,8 @@ public class StoreManagementDAO {
 		return areaName;
 	}//selectAreaName
 	
-	public boolean selectStoreName(String storeName, String areaCode) throws SQLException {
-		boolean flag = false;
+	public List<String> selectAreaAmenitie(String areaCode) throws SQLException{
+		List<String> list = new ArrayList<String>();
 		
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -123,30 +122,29 @@ public class StoreManagementDAO {
 			//3. Connection 얻기
 			con = db.getConn("jdbc/restarea");
 			//4. 쿼리문 생성 객체 얻기
-			StringBuilder selectAreaName = new StringBuilder();
-			selectAreaName
-			.append(" select store_name ")
-			.append(" from store ")
-			.append(" where store_name=? and ra_num=? ");
+			StringBuilder selectAreaAmenitie = new StringBuilder();
+			selectAreaAmenitie
+			.append(" select ra_facil_num ")
+			.append(" from held_ra_facility ")
+			.append(" where ra_num=? ");
 			
-			pstmt = con.prepareStatement(selectAreaName.toString());
+			pstmt = con.prepareStatement(selectAreaAmenitie.toString());
 			
 			//5. 바인드 변수에 값 설정
-			pstmt.setString(1, storeName);
-			pstmt.setString(2, areaCode);
+			pstmt.setString(1, areaCode);
 			
 			//6. 쿼리문 수행 후 결과 얻기
 			rs = pstmt.executeQuery();
 			
-			if(rs.next()) {
-				flag = true;
+			while(rs.next()) {
+				list.add(rs.getString("ra_facil_num"));
 			}//end if
 		}finally {
 			db.closeCon(rs, pstmt, con);
 		//7. 연결 끊기
 		}//end finally
 		
-		return flag;
-	}
+		return list;
+	}//selectAreaAmenitie
 	
-}//class
+}
