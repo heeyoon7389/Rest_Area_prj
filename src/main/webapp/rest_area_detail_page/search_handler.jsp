@@ -1,3 +1,5 @@
+<%@page import="location.LocationVO"%>
+<%@page import="location.LocationDAO"%>
 <%@page import="searchRestArea.RouteVO"%>
 <%@page import="highway.HighwayDAO"%>
 <%@page import="highway.HighwayVO"%>
@@ -11,12 +13,36 @@ String searchType = request.getParameter("search-type");
 String searchValue = request.getParameter("search-query");
 SearchRestAreaDAO sraDAO = SearchRestAreaDAO.getInstance();
 List<RestAreaNameVO> searchNameList = null;
-
+%>
+<%
 if (searchType.equals("1")) {
+	List<LocationVO>lcList = null;
+	LocationDAO lcDAO = LocationDAO.getInstance();
+	lcList = lcDAO.selectAllLocation();
     // 지역별 검색 처리
 %>
 <!-- 지역별 검색 결과 출력 -->
-<div>지역별 검색 결과</div>
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-6">
+            <table>
+                <%
+                for (LocationVO lcVO : lcList) {
+                %>
+                <tr>
+                    <th><input type="button" data-value="<%=lcVO.getLocNum()%>" class="location_content btn btn-light" value="<%=lcVO.getLocationName()%>"></th>
+                </tr>
+                <%
+                }
+                %>
+            </table>
+        </div>
+        <div class="col-md-6" style="overflow:auto;">
+            <div id="restAreaListByLocation">
+                <!-- 휴게소 정보를 여기에 로드 -->
+            </div>
+        </div>
+    </div>
 <%
 } else if (searchType.equals("2")) {
     // 휴게소 이름별 검색 처리
@@ -107,6 +133,24 @@ $(document).ready(function() {
                 alert('휴게소 정보를 불러오는 데 실패했습니다. 다시 시도해 주세요.');
             }
         });
+    });
+    
+    $(document).on('click', '.location_content', function(){
+    	var locNum = $(this).data('value');
+    	$.ajax({
+    		url: 'location_handler.jsp',
+    		type: 'GET',
+    		data: {
+    			'locNum':locNum
+    		},
+    		success: function(data) {
+    			$('#restAreaListByLocation').html(data);
+    		},
+    		error: function(xhr, status, error) {
+    			console.err('AJAX 못 불러옴:', status, error);
+    			aler('휴게소 없음');
+    		}
+    	});
     });
 });
 </script>

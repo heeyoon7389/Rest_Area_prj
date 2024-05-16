@@ -71,15 +71,26 @@ public class SearchRestAreaDAO {
 		try {
 			con = dbCon.getConn("jdbc/restarea");
 			
-			String searchByLocation = "";
-			pstmt = con.prepareStatement(searchByLocation);
-			pstmt.setString(0, searchByLocation);
-			LocationVO locVO = null;
+			StringBuilder searchByLocation = new StringBuilder()
+					.append("select ra.ra_num, lc.loc_num, ra.ra_name, ra.addr, ra.tel, ra.latitude, ra.longitude ")
+					.append("from location lc, rest_area ra ")
+					.append("where lc.loc_num = ra.loc_num and lc.loc_num =?");
+			pstmt = con.prepareStatement(searchByLocation.toString());
+			pstmt.setString(1, locNum);
 			rs = pstmt.executeQuery();
+			LocationVO locVO = null;
 			
 			while(rs.next()) {
-				locVO = new LocationVO();
-				locationList.add(locVO);
+				LocationVO locVOBuilder = locVO.builder()
+						.raNum(rs.getString("ra_num"))
+						.locNum(rs.getString("loc_num"))
+						.raName(rs.getString("ra_name"))
+						.addr(rs.getString("addr"))
+						.raTel(rs.getString("tel"))
+						.latitude(rs.getDouble("latitude"))
+						.longitude(rs.getDouble("longitude"))
+						.build();
+				locationList.add(locVOBuilder);
 			}
 		} finally {
 			dbCon.closeCon(rs, pstmt, con);
