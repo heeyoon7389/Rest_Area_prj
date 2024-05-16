@@ -55,7 +55,7 @@
 			</div>
 		</div>
 		<form id="review_form" name="review_form"
-			action="rest_area_detail_page.jsp" method="post">
+			action="" method="post">
 			<div id="review_button" class="text-end">
 				<input type="button" id="write_review" class="btn btn-primary"
 					value="리뷰쓰기">
