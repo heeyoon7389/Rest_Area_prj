@@ -83,4 +83,26 @@ public class RestAreaInfoDAO {
 		}
 		return cnt;
 	}
+	
+	public int updateFavorite(String memberId, String raNum) throws SQLException {
+		int cnt = 0;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		DbConnection dbCon = DbConnection.getInstance();
+		
+		try {
+		con = dbCon.getConn("jdbc/restarea");
+		
+		StringBuilder updateFavoite = new StringBuilder();
+		updateFavoite
+		.append(" ")
+		.append(" ")
+		.append("");
+		}finally {
+			dbCon.closeCon(null, pstmt, con);
+		}
+		
+		return cnt;
+	}
 }
