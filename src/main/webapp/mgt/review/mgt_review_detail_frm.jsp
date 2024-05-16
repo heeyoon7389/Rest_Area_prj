@@ -139,7 +139,7 @@ try {
 				</div>
 				<div class="mgtContent bgGrey">
 					<div class="textContent" >
-						<textarea id="contents" rows="4" cols="73" readonly="readonly" style="background:#e0e0e0;">${rarVO.contents }</textarea>
+						<textarea id="contents" readonly="readonly" style="background:#e0e0e0; width:100%; height:100%;">${rarVO.contents }</textarea>
 					</div>	
 				</div>
 				<div class="mgtContent" style="margin-top:20px;">

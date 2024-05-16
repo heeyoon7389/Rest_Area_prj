@@ -53,17 +53,19 @@ request.setCharacterEncoding("UTF-8");
 <script type="text/javascript">
 	
 	$(function() {
+		callAjaxStarRate();
+		
 		$("#btnCancel").click(function(){				
 // 			history.back();
 			let href = "http://192.168.10.214/Rest_Area_prj/mgt/member/mgt_member.jsp?currentPage=${param.currentPage }";
 			if("${param.keyword}" != ''){
-				href += "?keyword=${param.keyword}";
+				href += "&keyword=${param.keyword}";
 			} // end if
 			if("${param.field}" != '') {
-				href += "?field=${param.field}";
+				href += "&field=${param.field}";
 			} // end if
 			if("${param.pageScale}" != '') {
-				href += "?pageScale=${param.pageScale}";
+				href += "&pageScale=${param.pageScale}";
 			} // end if
 			location.href = href;
 		}); // click
@@ -95,6 +97,14 @@ request.setCharacterEncoding("UTF-8");
 		$("#frmDetail").submit();
 		window.opener.location.reload();
 	} // suspendMember
+	
+// 	function callAjaxStarRate() {
+// 		var param = 
+// 		$.ajax({
+// 			url: "mgt_member_star_rate_process.jsp",
+// 			data:
+// 		});
+// 	} // callAjaxStarRate
 	
 	document.getElementById('sideDash').setAttribute('class', 'sideText sideDisSelect');
 	document.getElementById('sideMember').setAttribute('class', 'sideText sideSelect');
