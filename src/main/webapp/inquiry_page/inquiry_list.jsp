@@ -1,8 +1,6 @@
 <%@page import="restAreaInquiry.BoardUtil"%>
-<%@page import="restAreaInquiry.InquiryDAO"%>
 <%@page import="restAreaInquiry.InquiryVO"%>
-
-
+<%@page import="restAreaInquiry.InquiryDAO"%>
 <%@page import="java.util.List"%>
 <%@page import="java.sql.SQLException"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -33,7 +31,39 @@
 	.title{ width :350px}
 	.id{ width: 120px}
 	.date{ width: 150px}
-	.cnt{ width: 100px}
+	
+	
+	.program_table table tr th {
+    height: 47px;
+    padding: 0 10px;
+    font-size: 14px;
+    color: #001e26;
+    font-weight: bold;
+    line-height: 1.4;
+    background: #f9f8f8;
+    text-align: center; /* 텍스트를 가운데 정렬합니다. */
+    vertical-align: middle; 
+	}
+
+  .program_table tbody td {
+        vertical-align: middle; /* 텍스트를 수직으로 중앙 정렬합니다. */
+    }
+
+  .paging {
+        margin-top: 70px; /* 상단 여백을 20px로 설정하여 아래로 내립니다. */
+    }
+   
+ 
+ .program_table {
+        max-width: 85%; /* 최대 너비를 80%로 설정합니다. */
+        margin: 0 auto; /* 가운데 정렬을 위해 좌우 마진을 자동으로 설정합니다. */
+    }
+	
+	 .btn-info {
+        background-color: #567FA8; /* 버튼의 배경색을 지정합니다. */
+        color: #FFFFFF; /* 버튼의 글자색을 지정합니다. */
+        border-color: transparent; /* 버튼의 테두리 색상을 투명하게 설정합니다. */
+    }
 	
 </style>
 <script type="text/javascript">
@@ -118,6 +148,7 @@ try{
 	
 	<div style="height: 500px"> 
 	<input type="button" value="글작성" id="btnWrite" class="btn btn-info btn-sm"/>
+	<div class="program_table">
 	<table class="table">
 		<thead>
 		<tr>
@@ -131,16 +162,18 @@ try{
 		<c:forEach var="iVO" items="${ list }" varStatus="i">
 		<tr>
 		<td><c:out value="${totalCount-(currentPage-1)*pageScale- i.index }"/></td>
-		<td><a href="inquiry_read_frm.jsp?seq=${ iVO.inquirynum }&currentPage=${empty param.currentPage ?1:param.currentPage}"><c:out value="${ iVO.title }"/></a></td>
+		<td><a href="inquiry_read_frm.jsp?inquiry_num=${ iVO.inquirynum }&currentPage=${empty param.currentPage ?1:param.currentPage}"><c:out value="${ iVO.title }"/></a></td>
 		<td><c:out value="${ iVO.memid }"/></td>
 		<td><c:out value="${ iVO.input_date }"/></td>
 		</tr>
 		</c:forEach>
 		</tbody>
 	</table>
+	</div>
 	
 	</div>
 	
+	<div class="paging">
 	<div style="text-align:  center;">
 	<form action="inquiry_list.jsp" name="frmBoard" id="frmBoard">
 		<select name="field" id="field">
@@ -153,6 +186,7 @@ try{
 		<input type="button" value="전체글" id="btnAllSearch" class="btn btn-info btn-sm"/>
 		<input type="text" style="display: none;"/>
 	</form>
+	</div>
 	</div>
 	<div style="text-align:  center;">
 	<%

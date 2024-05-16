@@ -35,7 +35,6 @@
 								<tr style=" background-color: #FFFFFF;">
 									<td><%=rafVO.getFacilName()%></td>
 									<td><img src="images/<%=rafVO.getImg()%>"
-									<%out.print(rafVO.getImg()); %>
 										style="width: 100px; height: 100px;"></td>
 									<td><%=rafVO.getFacilNote()%></td>
 								</tr>

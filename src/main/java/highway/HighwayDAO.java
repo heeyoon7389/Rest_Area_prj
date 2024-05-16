@@ -3,6 +3,7 @@ package highway;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class HighwayDAO {
 		return hwDAO;
 	}//getInstance
 	
-	public List<HighwayVO> selectAllHighway() {
+	public List<HighwayVO> selectAllHighway() throws SQLException {
 		List<HighwayVO> highwayList = new ArrayList<HighwayVO>();
 		//1. 드라이버 로딩
 		DbConnection dbCon = DbConnection.getInstance();
@@ -49,8 +50,9 @@ public class HighwayDAO {
 						.build();
 				highwayList.add(hwVOBuilder);
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		} 
+		finally {
+			 dbCon.closeCon(rs, pstmt, con);
 		}
 		return highwayList;
 	}
