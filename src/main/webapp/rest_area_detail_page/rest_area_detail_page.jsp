@@ -1,3 +1,4 @@
+<%@page import="prj2.common.dao.CntDAO"%>
 <%@page import="prj2VO.LoginVO"%>
 <%@page import="org.json.simple.JSONArray"%>
 <%@page import="org.json.simple.JSONObject"%>
@@ -110,6 +111,10 @@
 			RestAreaInfoVO raiVO = null;
 			RestAreaInfoDAO raiDAO = RestAreaInfoDAO.getInstance();
 			raiVO = raiDAO.selectRestAreaInfo(raNum);
+			%>
+			<%
+			CntDAO cDAO = CntDAO.getInstance();
+			cDAO.insertRestAreaViewCnt(request.getParameter("raNum"));
 			%>
 			<%=raiVO.getRaName()%><br />
 			<%=raiVO.getRaAddr()%>
