@@ -162,20 +162,20 @@
 	/* 대시보드 */
 	#content{width:1600px; height:2000px; margin:0px auto;}
 	
-	#siteView{position:absolute;width:770px; height:400px; background-color: #ffffff;}
-	#memberVari{position:absolute;width:770px; height:400px; margin-left:790px; background-color: #ffffff;float: right;}
+	#siteView{position:absolute;width:770px; height:500px; background-color: #ffffff;}
+	#memberVari{position:absolute;width:770px; height:500px; margin-left:790px; background-color: #ffffff;float: right;}
 	
-	#raView{position:absolute;width:770px; height:400px; margin-top:420px; background-color: #ffffff;}
-	#raReview{position:absolute;width:770px; height:400px; margin-top:420px; margin-left:790px; background-color: #ffffff;}
+	#raView{position:absolute;width:770px; height:400px; margin-top:520px; background-color: #ffffff;}
+	#raReview{position:absolute;width:770px; height:400px; margin-top:520px; margin-left:790px; background-color: #ffffff;}
 	
-	#inquiryList{position:absolute;width:770px; height:400px; margin-top:840px; background-color: #ffffff;}
-	#reportList{position:absolute;width:770px; height:400px; margin-top:840px; margin-left:790px; background-color: #ffffff;}
+	#inquiryList{position:absolute;width:770px; height:400px; margin-top:940px; background-color: #ffffff;}
+	#reportList{position:absolute;width:770px; height:400px; margin-top:940px; margin-left:790px; background-color: #ffffff;}
 	
 	.subtitle{font-size: 25px; font-weight: bold; color:#364A63; padding: 5px;}
 
 	.selecDate{text-align: right; margin-right:10px; font-size:15px;}
 	
-	.graph{width:750px; height:280px;}
+	.graph{width:750px; height:420px;}
 	
 	.borderBot{border-left: none; border-right: none; border-top: none;}
 	.tableC1{width: 150px;}

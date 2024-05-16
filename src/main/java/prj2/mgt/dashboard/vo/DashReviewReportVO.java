@@ -16,5 +16,5 @@ import lombok.ToString;
 public class DashReviewReportVO {
 	private String title;
 	private Date inputDate;
-	private boolean flagAnswer;
+	private int flagAnswer;
 }

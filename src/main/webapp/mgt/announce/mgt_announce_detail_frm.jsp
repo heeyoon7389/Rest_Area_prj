@@ -168,7 +168,7 @@ try {
 						</tr>
 						<tr style="border:none;">
 							<td style="border:none;">조회수</td>
-							<td style="border:none;"><input type="text" name="views" id="views" value="${aVO.views }"
+							<td style="border:none;"><input type="text" name="views" id="views" value="${aVO.views + 1 }"
 								style="width: 100px; height: 40px;" /></td>
 						</tr>
 						<tr style="border:none;">

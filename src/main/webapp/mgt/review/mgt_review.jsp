@@ -67,7 +67,11 @@ request.setCharacterEncoding("UTF-8");
 	function chkNull() {
 		if($("#keyword").val().trim() != "") {
 			$("#frmBoard").submit();
-		} // end if
+		} else {
+			if($("#raNum").val() != '') {
+				location.href = "mgt_review.jsp?raNum=" + $("#raNum").val();
+			} // end if
+		} // end else
 	} // chkNull
 
 	document.getElementById('sideDash').setAttribute('class', 'sideText sideDisSelect');
