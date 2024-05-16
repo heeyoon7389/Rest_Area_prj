@@ -1,3 +1,7 @@
+<%@page import="prj2.mgt.post.vo.RestAreaReviewRepVO"%>
+<%@page import="prj2.mgt.post.vo.RestAreaReviewVO"%>
+<%@page import="prj2.mgt.post.dao.MgtReviewReportDAO"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="prj2.mgt.manageMember.vo.StarRateMemVO"%>
 <%@page import="java.util.List"%>
@@ -19,51 +23,53 @@ JSONArray jsonArr = new JSONArray();
 jsonObj.put("result", false);
 try {
 	String memId = request.getParameter("memId");
-	MgtStarRateDAO msrDAO = MgtStarRateDAO.getInstance();
-	
-	// 총 레코드의 수
-	int totalCount = msrDAO.selectMaxPage(memId);
+	MgtReviewReportDAO mrrDAO = MgtReviewReportDAO.getInstance();
 	
 	// 한 화면에 보여줄 게시물의 수
 	int pageScale = 5;
 	
-	// 총 페이지수
-	int totalPage = (int)Math.ceil((double)totalCount / pageScale);
-	
 	// 게시물의 시작 번호
-	String tempPage = sVO.getCurrentPage();
 	int currentPage = 1;
-	if(tempPage != null) {
-		try {
-			currentPage = Integer.parseInt(tempPage);
-		} catch (NumberFormatException nfe) {
-		} // end catch
-	} // end if
-	int startNum = (currentPage - 1) * pageScale + 1;
+	int startNum = 1;
 				
 	// 끝번호
 	int endNum = startNum + pageScale - 1;
 	
+	sVO.setField("2");
 	sVO.setKeyword(memId);
 	sVO.setStartNum(startNum);
 	sVO.setEndNum(endNum);
 	
-	List<StarRateMemVO> list = msrDAO.selectPagingStarRate(sVO);
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	
+	List<RestAreaReviewRepVO> list = mrrDAO.selectPagingRevRep(sVO);
 	JSONObject jsonTemp = null;
-	for(StarRateMemVO vo : list) {
+	for(RestAreaReviewRepVO vo : list) {
 		jsonTemp = new JSONObject();
-		jsonTemp.put("raName", vo.getRaName());
-		jsonTemp.put("raNum", vo.getRaNum());
-		jsonTemp.put("memId", memId);
-		jsonTemp.put("star", vo.getStar());
-		jsonTemp.put("inputDate", vo.getInputDate());
+		jsonTemp.put("reviewMemId", vo.getReviewMemId());
+		jsonTemp.put("reportMemId", vo.getReportMemId());
+		jsonTemp.put("reportContent", vo.getReportContent());
+		jsonTemp.put("reportInputDate", vo.getReportInputDate() != null ? sdf.format(vo.getReportInputDate()) : "");
+		jsonTemp.put("blindFlag", vo.isBlindFlag() ? "블라인드" : "");
+		jsonTemp.put("deleteFlag", vo.isDeleteFlag() ? "삭제" : "");
+		jsonTemp.put("processDate", vo.getProcessDate() != null ? sdf.format(vo.getProcessDate()) : "");
+		switch(vo.getProcessFlag()){
+		case 0:
+			jsonTemp.put("processFlag", "처리전");
+			break;
+		case 1:
+			jsonTemp.put("processFlag", "처리중");
+			break;
+		case 2:
+			jsonTemp.put("processFlag", "처리완료");
+			break;
+		} // end switch
+		
 		jsonArr.add(jsonTemp);
 	} // end for 
 	
 	jsonObj.put("result", true);
-	jsonObj.put("totalCount", totalCount);
 	jsonObj.put("pageScale", pageScale);
-	jsonObj.put("currentPage", currentPage);
 	jsonObj.put("data", jsonArr);
 } catch (SQLException se) {
 	se.printStackTrace();
