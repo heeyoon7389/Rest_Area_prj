@@ -16,7 +16,7 @@
     
     footer{margin-top: 180px;}
     
-    #search-result{
+    #result{
     	margin-top: 50px;
     	font-size: 25px;
     	text-align: center;
@@ -27,6 +27,7 @@
 
 	$(function(){
 		$("#searachId").click(function(){
+			var name1 = document.frm.name1.value;
 			var idEmail1 = document.frm.idEmail1.value;
 			var idEmail2 = document.frm.idEmail2.value;
 			var email = idEmail1+"@"+idEmail2;
@@ -47,19 +48,34 @@
   				$("#idEmail2").val('');
   				$("#idEmail1").focus();
   			}else{
-  				$("#id").val('');
-  				$("#name2").val('');
-  				$("#passEmail1").val('');
-  				$("#passEmail2").val('');
-  				var obj = document.frm;
-  				obj.submit();
+  				var searachId = "name1=" + name1 + "&email=" + email;
+        		$.ajax({
+        			url : "../login_page/search_id_process.jsp",
+        			type : "POST",
+        			data : searachId,
+        			dataType : "JSON",
+        			error : function(xhr){
+        				alert("죄송합니다. 잠시후 다시 시도해주세요.");
+        				console.log(xhr.status);
+        			},
+        			success : function(jsonObj){
+        				var resultMsg = document.getElementById('result');
+        				resultMsg.innerHTML = "아이디 찾기에 실패했습니다. 잠시후 다시 시도해주세요.";
+        				if(jsonObj.flag){
+	        				resultMsg.innerHTML = "[ "+ jsonObj.name + " ] 님의 아이디는 <strong style='color:#0055FF'>" 
+	        				+ jsonObj.id + "</strong> 입니다.";
+        				}//end if
+        			}//success
+        		});//ajax
   			}//end else
 		});//searachId
 		
 		$("#searchPass").click(function(){
+			var id = document.frm.id.value;
+			var name2 = document.frm.name2.value;
 			var passEmail1 = document.frm.passEmail1.value;
 			var passEmail2 = document.frm.passEmail2.value;
-			var email = passEmail1+"@"+passEmail2;
+			var email2 = passEmail1+"@"+passEmail2;
   			var emailPattern = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-za-z0-9\-]+/;
   			
   			//유효성검사
@@ -74,37 +90,39 @@
   				$("#passEmail1").val('');
   				$("#passEmail2").val('');
   				$("#passEmail1").focus();
-  			}else if( !emailPattern.test(email) ){
+  			}else if( !emailPattern.test(email2) ){
   				alert("이메일 형식이 맞지 않습니다.");
   				$("#passEmail1").val('');
   				$("#passEmail2").val('');
   				$("#passEmail1").focus();
   			}else{
-  				$("#name1").val('');
-  				$("#idEmail1").val('');
-  				$("#idEmail2").val('');
-  				
-  				var obj = document.frm;
-  				obj.submit();
+  				var searachPass = "id=" + id + "&name2=" + name2 + "&email2=" + email2;
+        		$.ajax({
+        			url : "../login_page/search_id_process.jsp",
+        			type : "POST",
+        			data : searachPass,
+        			dataType : "JSON",
+        			error : function(xhr){
+        				alert("죄송합니다. 잠시후 다시 시도해주세요.");
+        				console.log(xhr.status);
+        			},
+        			success : function(jsonObj){
+        				var resultMsg = document.getElementById('result');
+        				resultMsg.innerHTML = "아이디 찾기에 실패했습니다. 잠시후 다시 시도해주세요.";
+        				if(jsonObj.flag2){
+	        				resultMsg.innerHTML = "[ "+ jsonObj.name2 + " ] 님의 임시비밀번호는 <strong style='color:#0055FF'>" 
+	        				+ jsonObj.tempPass + "</strong> 입니다.";
+        				}//end if
+        			}//success
+        		});//ajax
   			}//end else
 		});//searchPass
 	});//ready
 </script>
-
 <div class="container">
-	<div id="search-result">
-		<c:if test="${ not empty sessionScope.search_userId }">
-			[ <c:out value="${ sessionScope.search_username }"/> ]님의 아이디는 " 
-			<strong style="color:#0055FF">
-			<c:out value="${ sessionScope.search_userId }"/>
-			</strong> " 입니다.
-		</c:if>
-		<c:if test="${ not empty sessionScope.search_pass_tempPass }">
-			[ <c:out value="${ sessionScope.search_pass_name }"/> ]님의 임시 비밀번호는 " 
-			<strong style="color:#0055FF"><c:out value="${ sessionScope.search_pass_tempPass }"/>
-			</strong> " 입니다.
-		</c:if>
-	</div>
+<!-- 	검색 결과 보여주기 -->
+	<div id="result"></div> 
+<!-- 	검색 결과 보여주기 -->
     <!-- 아이디/비밀번호 찾기 시작 -->
     <form action="../login_page/search_id_process.jsp" method="post" name="frm" id="frm">
     <div class="row">

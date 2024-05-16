@@ -7,7 +7,9 @@
 <head>
 <meta charset="UTF-8">
 <title>고속도로 휴게소</title>
-<link rel="icon" href="http://192.168.10.218/jsp_prj/common/favicon.ico"/>
+<!-- 브라우저 아이콘 설정 -->
+<link rel="icon" href="http://192.168.10.218/RestArea_Project/common/tamcatIcon.ico"/>
+<!-- 브라우저 아이콘 설정 -->
 <!--bootstrap 시작-->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -43,13 +45,6 @@
 			location.href="../login_page/logout.jsp"
 		});
 		
-		$("#plus_FAQ").click(function(){
-			alert("FAQ 더보기!!");
-		});
-		$("#plus_announce").click(function(){
-			alert("공지사항 더보기!!");
-		});
-		
 	});//ready
 	
 	function winReload( ){
@@ -67,8 +62,7 @@
     <!-- 메뉴바 시작-->
     <header id="header1" class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
         <a href="main_page.jsp?link=logo" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-            <img src="https://data.ex.co.kr/images/common/logo.png">
-            <span class="fs-4">고속도로 휴게소</span>
+            <img src="http://192.168.10.218/RestArea_Project/common/RestArealogo.png">
         </a>
 <!--         로그인 전 -->
     <c:if test="${ empty sessionScope.loginData.memId }">
@@ -141,3 +135,11 @@
 <!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 </body>
 </html>
+
+
+
+
+
+
+
+
