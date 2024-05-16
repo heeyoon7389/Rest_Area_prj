@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="prj2.mgt.post.vo.RestAreaReviewVO"%>
 <%@page import="prj2.mgt.post.vo.RestAreaVO"%>
@@ -12,7 +13,7 @@
 <%request.setCharacterEncoding("UTF-8");%>
 
 <jsp:useBean id="srVO" class="prj2.mgt.paging.vo.SearchReviewVO" scope="page"/>
-<jsp:setProperty property="*" name="sVO"/>
+<jsp:setProperty property="*" name="srVO"/>
 
 <%
 JSONObject jsonObj = new JSONObject();
@@ -28,7 +29,7 @@ try {
 	int totalCount = mrDAO.selectMaxPage(srVO);
 	
 	// 한 화면에 보여줄 게시물의 수
-	int pageScale = 10;
+	int pageScale = 5;
 	
 	// 총 페이지수
 	int totalPage = (int)Math.ceil((double)totalCount / pageScale);
@@ -47,21 +48,22 @@ try {
 	// 끝번호
 	int endNum = startNum + pageScale - 1;
 	
+	srVO.setField("1");
 	srVO.setKeyword(memId);
 	srVO.setStartNum(startNum);
 	srVO.setEndNum(endNum);
 	
 	List<RestAreaReviewVO> list = mrDAO.selectPagingReview(srVO);
-	
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	JSONObject jsonTemp = null;
 	for(RestAreaReviewVO vo : list) {
 		jsonTemp = new JSONObject();
 		jsonTemp.put("title", vo.getContents());
 		jsonTemp.put("raName", vo.getRaName());
 		jsonTemp.put("memId", memId);
-		jsonTemp.put("inputDate", vo.getInputDate());
-		jsonTemp.put("blindFlag", vo.isBlindFlag());
-		jsonTemp.put("deleteDate", vo.getDeleteDate());
+		jsonTemp.put("inputDate", vo.getInputDate() != null ? sdf.format(vo.getInputDate()) : "");
+		jsonTemp.put("blindFlag", !vo.isBlindFlag() ? "" : "블라인드");
+		jsonTemp.put("deleteDate", vo.getDeleteDate() != null ? sdf.format(vo.getDeleteDate()) : "");
 		jsonArr.add(jsonTemp);
 	} // end for 
 	
