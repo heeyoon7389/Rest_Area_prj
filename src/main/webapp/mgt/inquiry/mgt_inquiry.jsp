@@ -1,8 +1,9 @@
+<%@page import="prj2.mgt.post.dao.MgtInquiryDAO"%>
 <%@page import="prj2.mgt.post.BoardUtil"%>
 <%@page import="prj2.mgt.post.vo.InquiryVO"%>
 <%@ page import="prj2.mgt.login.vo.ManagerVO"%>
 <%@page import="java.util.List"%>
-<%@page import="prj2.mgt.post.dao.MgtInquiryDAO"%>
+
 <%@page import="java.sql.SQLException"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"

@@ -19,7 +19,7 @@ public class MgtInquiryDAO {
 	private String[] columnNames;
 	
 	private MgtInquiryDAO(){
-		columnNames = new String[]{"content", "title", "content", "mem_id"}; // 검색 컬럼
+		columnNames = new String[]{"title_content", "title", "content", "mem_id"}; // 검색 컬럼
 	} // MgtInquiryDAO
 
 	public static MgtInquiryDAO getInstance(){
@@ -47,7 +47,7 @@ public class MgtInquiryDAO {
 
 			// 4. 쿼리문 생성 객체 얻기 (Dynamic Query)
 			StringBuilder selectTotalCount = new StringBuilder();
-			selectTotalCount.append("	select count(*) cnt from inquiry	");	// 모든 레코드의 수
+			selectTotalCount.append("	select count(*) cnt from (select inquiry.*, title||'㏇'||content title_content from inquiry)	");	// 모든 레코드의 수
 			// 검색 키워드가 존재하면 키워드에 해당하는 레코드의 수만 검색
 			if(sVO.getKeyword() != null && !"".equals(sVO.getKeyword())) {
 				selectTotalCount.append("	where ").append(columnNames[Integer.parseInt(sVO.getField())]).append(" like '%'||?||'%'	");
@@ -92,10 +92,11 @@ public class MgtInquiryDAO {
 			// 4. 쿼리문 생성 객체 얻기 (Dynamic Query)
 			StringBuilder selectPagingInquiry = new StringBuilder();
 			selectPagingInquiry
-			.append("	select	INQUIRY_NUM, TITLE, SECRET_FLAG, MEM_ID, INPUT_DATE, ANSWER_FLAG, rnum	")
-			.append("	from 	(select INQUIRY_NUM, TITLE, SECRET_FLAG, MEM_ID, INPUT_DATE, ANSWER_FLAG, row_number() over(order by input_date desc) rnum	")
-			.append("			from	inquiry	");
-			
+			.append("	select	INQUIRY_NUM, TITLE, title_content, SECRET_FLAG, MEM_ID, INPUT_DATE, ANSWER_FLAG, rnum	")
+			.append("	from 	(select INQUIRY_NUM, TITLE, title_content, SECRET_FLAG, MEM_ID, INPUT_DATE, ANSWER_FLAG, row_number() over(order by input_date desc) rnum	")
+			.append("			from	(	")
+			.append("					select inquiry.*, title||'㏇'||content title_content from inquiry	")
+			.append("					)	");
 			if(sVO.getKeyword() != null && !"".equals(sVO.getKeyword())) {
 				selectPagingInquiry.append("	where instr(").append(columnNames[Integer.parseInt(sVO.getField())])
 				.append(", ? ) > 0	");

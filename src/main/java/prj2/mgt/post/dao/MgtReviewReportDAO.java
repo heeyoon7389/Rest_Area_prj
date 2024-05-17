@@ -112,7 +112,7 @@ public class MgtReviewReportDAO {
 			.append("			end content_report,	")
 			.append("			mem_id_review, mem_id_report, input_date, blind_flag, process_flag, process_date, delete_flag	")
 			.append("	from	(	")
-			.append("			select	row_number() over (order by rpt.process_flag, rpt.input_date desc) rnum, rpt.ra_review_num, rpt.content_report, rev.mem_id_review, rpt.mem_id_report, rpt.input_date, rpt.process_flag, rpt.process_date, rev.blind_flag, rev.delete_flag	")
+			.append("			select	row_number() over (order by rpt.input_date desc) rnum, rpt.ra_review_num, rpt.content_report, rev.mem_id_review, rpt.mem_id_report, rpt.input_date, rpt.process_flag, rpt.process_date, rev.blind_flag, rev.delete_flag	")
 			.append("			from	(select ra_review_num, mem_id mem_id_review, content content_review, blind_flag, delete_flag from ra_review) rev,	")
 			.append("					(select ra_review_num, content content_report, mem_id mem_id_report, input_date, process_flag, process_date from review_report) rpt	")
 			.append("			where	(rpt.ra_review_num = rev.ra_review_num)	");
