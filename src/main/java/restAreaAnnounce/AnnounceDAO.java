@@ -76,7 +76,6 @@ public class AnnounceDAO {
 				pstmt.setString(1, sVO.getKeyword());
 			}//end if
 			
-			System.out.println( selectCnt );
 			
 			
 		//6. 쿼리문 수행 후 결과얻기
