@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>RestArea - 관리자</title>
 <link rel="icon" href="http://192.168.10.220/jsp_prj/common/favicon.ico"/>
 <!--bootstrap 시작-->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -84,19 +84,19 @@
 </head>
 <body>
 <div id="wrap">
-	<div id="modifyMenu"><h5><strong>메뉴 수정</strong> > ㅁㄴㅇㄹ > ㅁㅁ전문점</h5></div>
+	<div id="modifyMenu"><h5><strong>메뉴 수정</strong>>경산(서울)휴게소>ㅁㅁ전문점</h5></div>
 	<div id="inputWrap">
 	<label>메뉴명</label><br>
-	<input type="text" placeholder="메뉴 이름"><br/><br/>
+	<input type="text" placeholder="메뉴 이름" value="된장찌개"><br/><br/>
 	
 	<label>매장명</label><br>
-	<label><h4>ㅁㅁ전문점</h4></label><br><br>
+	<label><h4>한식전문점</h4></label><br><br>
 	
 	<label>가격</label><br>
-	<input type="text" placeholder="가격"><br/><br/>
+	<input type="text" placeholder="가격" value="7500"><br/><br/>
 	
 	<label>상세정보</label><br>
-	<textarea id="menuMeno" rows="9" cols="40" placeholder="내용을 입력해주세요." style="resize: none;"></textarea><br/><br/>
+	<textarea id="menuMeno" rows="9" cols="40" placeholder="내용을 입력해주세요." style="resize: none;">두부가 잔뜩 들어간 된장찌개</textarea><br/><br/>
 	
 	<div id="btnWrap">
 	<input type="button" value="추가" id="addMenuBtn"/>　

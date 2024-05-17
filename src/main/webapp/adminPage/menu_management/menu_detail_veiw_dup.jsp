@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>RestArea - 관리자</title>
 <link rel="icon" href="http://192.168.10.220/jsp_prj/common/favicon.ico"/>
 <!--bootstrap 시작-->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -75,22 +75,22 @@
 </head>
 <body>
 <div id="wrap">
-	<div id="detail_view"><h5><strong>메뉴 상세정보</strong> > ㅁㄴㅇㄹ > ㅁㅁ전문점</h5></div>
+	<div id="detail_view"><h5><strong>메뉴 상세정보</strong>>경산(서울)휴게소>한식전문점</h5></div>
 	<div id="inputWrap">
 	<div id="img">
-	<img src="../images/bab.png" width="150px" height="150px"/><br>
+	<img src="void" width="150px" height="150px"/><br>
 	</div>
 	<label>메뉴명</label><br>
-	<label id="br"/><h4>돌솥비빔밥</h4></label><br>
+	<label id="br"><h4>된장찌개</h4></label><br>
 	
 	<label>매장명</label><br>
-	<label id="br"/><h4>ㅁㅁ전문점</h4></label><br>
+	<label id="br"><h4>한식전문점</h4></label><br>
 	
 	<label>가격</label><br>
-	<label id="br"/><h4>8,000</h4></label><br>
+	<label id="br"><h4>7500</h4></label><br>
 	
 	<label>상세정보</label><br>
-	<textarea id="menuMeno" rows="3" cols="40" placeholder="내용을 입력해주세요." style="resize: none;"></textarea><br/><br/>
+	<textarea id="menuMeno" rows="3" cols="40" placeholder="내용을 입력해주세요." style="resize: none;">두부가 잔뜩 들어간 된장찌개</textarea><br/><br/>
 	
 	<div id="btnWrap">
 	<input type="button" value="닫기" id="exitBtn"/>
