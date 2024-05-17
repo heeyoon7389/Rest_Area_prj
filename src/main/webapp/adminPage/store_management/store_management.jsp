@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>메뉴 관리</title>
+<title>RestArea - 관리자</title>
 <!-- 파비콘 시작 -->
 <!-- <link rel="icon" href="http://192.168.10.220/jsp_prj/common/favicon.ico"/> -->
 <!-- 파비콘 끝 -->
@@ -204,12 +204,24 @@
 		
 		/* 매장수정 */
 		$("#modifyShopBtn").click(function(){
+			getStoreCode();
+			if(storeCode == ""){
+				alert("매장을 선택해주세요.");
+				return;
+			}//end if
+			
 			$("#addFrame").hide();
 			$("#modifyFrame").show();
 		});
 		
 		/* 삭제 */
 		$("#deleteShopBtn").click(function(){
+			getStoreCode();
+			if(storeCode == ""){
+				alert("매장을 선택해주세요.");
+				return;
+			}//end if
+			
 			if(confirm("정말 삭제하시겠습니까?")){
 				alert("삭제되었습니다.")
 			}//end if
@@ -217,8 +229,6 @@
 		
 		/* 매장추가 - 추가버튼 */
 		$("#addStoreBtn2").click(function(){
-			
-			
 			var storeName = $("#addStoreName").val();
 			var storeType = $("#addStoreType").val();
 			var storeMemo = $("#addStoreMemo").val();
@@ -229,7 +239,6 @@
 			}
 			
 			selectStore();
-			
 		});
 		
 		function getStoreCode(){

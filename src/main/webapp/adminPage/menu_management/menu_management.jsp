@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>메뉴 관리</title>
+<title>RestArea - 관리자</title>
 <!-- 파비콘 시작 -->
 <!-- <link rel="icon" href="http://192.168.10.220/jsp_prj/common/favicon.ico"/> -->
 <!-- 파비콘 끝 -->
@@ -172,6 +172,8 @@
 </style>
 <script type="text/javascript">
 	$(function(){
+		var menuCode = "";
+		
 		$(function(){
 			/* 메뉴추가 */
 			$("#addMenuBtn").click(function(){
@@ -180,16 +182,34 @@
 			
 			/* 상세조회 */
 			$("#detailViewBtn").click(function(){
+				getMenuCode();
+				if(menuCode == ""){
+					alert("메뉴를 선택해주세요.");
+					return;
+				}//end if
+				
 				selectMenu();
 			});
 			
 			/* 수정 */
 			$("#modifyMenuBtn").click(function(){
+				getMenuCode();
+				if(menuCode == ""){
+					alert("메뉴를 선택해주세요.");
+					return;
+				}//end if
+				
 				modifyMenu();
 			});
 			
 			/* 삭제 */
 			$("#deleteMenuBtn").click(function(){
+				getMenuCode();
+				if(menuCode == ""){
+					alert("메뉴를 선택해주세요.");
+					return;
+				}//end if
+				
 				if(confirm("정말 삭제하시겠습니까?")){
 					alert("삭제되었습니다.")
 				}//end if
@@ -212,7 +232,15 @@
 					+(window.screenY+100)+", left="+(window.screenX+100));
 		}//updateMenu
 		
-		
+		function getMenuCode(){
+			var radio = document.getElementsByName('radio');
+			for(var i=0 ; i<radio.length ; i++){
+				if(radio[i].checked){
+					menuCode = radio[i].value;
+					break;
+				}//end if
+			}//end for
+		}//getMenuCode
 		
 	});//ready
 </script>

@@ -13,7 +13,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>사용 가능 휴게시설 관리</title>
+<title>RestArea - 관리자</title>
 
 <!-- 파비콘 시작 -->
 <!-- <link rel="icon" href="http://192.168.10.220/jsp_prj/common/favicon.ico"/> -->
@@ -185,13 +185,25 @@
 			$("#modifyFrame").hide();
 			$("#addFrame").show();
 		});
+			
+		/* 추가 */
+		$("#addAmenitieBtn").click(function(){
+				alert("추가되었습니다.")
+		});
+		
+		/* 수정 */
+		$("#modifyAmenitieBtn").click(function(){
+			if(confirm("정말 수정하시겠습니까?")){
+				alert("수정되었습니다.")
+			}//end if
+		});
 		
 		/* 삭제 */
 		$("#deleteAmenitieBtn").click(function(){
 			if(confirm("정말 삭제하시겠습니까?")){
 				alert("삭제되었습니다.")
 			}//end if
-		});	
+		});
 		/* 테이블이벤트 */
 		$("#shopTable tr").click(function(){
 			
