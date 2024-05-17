@@ -44,8 +44,8 @@
             		$("#id").focus();
             		return;
             	} else {
-        			window.open("../join_page/id_dup.jsp?id="+id, "idDup", "width=472, height=390, top="+
-        			(window.screenY+100)+", left="+(window.screenX+100));
+        			window.open("../join_page/id_dup.jsp?id="+id, "idDup", "width=472, height=350, top="+
+        			(window.screenY+203)+", left="+(window.screenX+306));
             	}
             });
             
@@ -76,8 +76,8 @@
             		$("#nick").focus();
             		return;
             	} else {
-        			window.open("../join_page/nick_dup.jsp?nick="+nick, "nickDup", "width=472, height=390, top="+
-        			(window.screenY+100)+", left="+(window.screenX+100));
+        			window.open("../join_page/nick_dup.jsp?nick="+nick, "nickDup", "width=472, height=350, top="+
+        			(window.screenY+203)+", left="+(window.screenX+306));
             	}
             });
             

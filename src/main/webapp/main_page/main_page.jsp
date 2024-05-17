@@ -38,8 +38,8 @@
 	$(function(){
 		//////////////////////////////////////////////////////////////////////////
 		$("#user_login").click(function(){
-			window.open("../login_page/login.jsp", "login", "width=600, height=515, top="+
-					(window.screenY+150)+", left="+(window.screenX+150));
+			window.open("../login_page/login.jsp", "login", "width=540, height=465, top="+
+					(window.screenY+203)+", left="+(window.screenX+360));
 		});
 		/////////////////////////////////////////////////////////////////////////
 		$("#logout").click(function() {
