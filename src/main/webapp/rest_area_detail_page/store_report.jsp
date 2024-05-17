@@ -1,8 +1,10 @@
+<%@page import="prj2VO.LoginVO"%>
 <%@page import="storeRep.StoreRepDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     info=""%>
 <%@ taglib prefix = "c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%request.setCharacterEncoding("UTF-8");%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,7 +59,8 @@
             if ("POST".equalsIgnoreCase(request.getMethod())) {
             	request.setCharacterEncoding("UTF-8");
                 String storeNum = request.getParameter("storeNum");
-                String memId = "kimking"; // 실제 로그인된 사용자의 ID를 세션에서 가져와야 합니다.
+                LoginVO loginData = (LoginVO) session.getAttribute("loginData"); // 실제 로그인된 사용자의 ID를 세션에서 가져와야 합니다.
+                String memId = loginData.getMemId();
                 String content = request.getParameter("content");
 
                 if (content == null || content.trim().isEmpty()) {

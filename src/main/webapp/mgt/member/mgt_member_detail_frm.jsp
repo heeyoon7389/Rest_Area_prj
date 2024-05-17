@@ -53,17 +53,19 @@ request.setCharacterEncoding("UTF-8");
 <script type="text/javascript">
 	
 	$(function() {
+		callAjaxReview();
+		
 		$("#btnCancel").click(function(){				
 // 			history.back();
 			let href = "http://192.168.10.214/Rest_Area_prj/mgt/member/mgt_member.jsp?currentPage=${param.currentPage }";
 			if("${param.keyword}" != ''){
-				href += "?keyword=${param.keyword}";
+				href += "&keyword=${param.keyword}";
 			} // end if
 			if("${param.field}" != '') {
-				href += "?field=${param.field}";
+				href += "&field=${param.field}";
 			} // end if
 			if("${param.pageScale}" != '') {
-				href += "?pageScale=${param.pageScale}";
+				href += "&pageScale=${param.pageScale}";
 			} // end if
 			location.href = href;
 		}); // click
@@ -78,7 +80,40 @@ request.setCharacterEncoding("UTF-8");
 				suspendMember();
 			} // end if
 		}) // click
+		
+		$("#review").click(function () {
+	 		callAjaxReview();
+			changeBtnClass(0);
+		});
+		$("#inquiry").click(function () {
+			callAjaxInquiry();
+			changeBtnClass(1);
+		});
+		$("#storeReport").click(function () {
+			callAjaxStoreReport();
+			changeBtnClass(2);
+		});
+		$("#reviewReport").click(function () {
+			callAjaxReviewReport();
+			changeBtnClass(3);
+		});
+		$("#starRate").click(function () {
+			callAjaxStarRate();
+			changeBtnClass(4);
+		});
 	}); // $(document).ready(function() { })
+	
+	function changeBtnClass(ind) {
+		$(".btnRecent").each(function (index, value){
+			if(ind == index) {
+				$(this).addClass("btn-dark");
+				$(this).removeClass("btn-secondary")
+			} else {
+				$(this).addClass("btn-secondary");
+				$(this).removeClass("btn-dark")
+			} // end else
+		}); // each
+	} // changebBtnClass
 	
 	function suspendMember() {
 		let href = "http://192.168.10.214/Rest_Area_prj/mgt/member/mgt_member_update_process.jsp?currentPage=${param.currentPage }";
@@ -95,6 +130,205 @@ request.setCharacterEncoding("UTF-8");
 		$("#frmDetail").submit();
 		window.opener.location.reload();
 	} // suspendMember
+	
+	function callAjaxStarRate() {
+		var param = {memId: "${param.memId}"};
+		
+		var totalCount = 0;
+		var pageScale = 5;
+		var currentPage = 1;
+		var list = new Array();
+		
+		$.ajax({
+			url: "mgt_member_star_rate_process.jsp",
+			type:"POST",
+			data:param,
+			dataType: "JSON",
+			error: function(xhr) {
+				alert('문제가 발생했습니다');
+				console.log(xhr.status + "/" + xhr.statusText);
+			},
+			success: function(jsonObj) {
+				if(jsonObj.result) {
+					totalCount = jsonObj.totalCount;
+					pageScale = jsonObj.pageScale;
+					currentPage = jsonObj.currentPage;
+					list = jsonObj.data;
+					
+					var tabSR = '<table style="width:100%;"><tr><th>번호</th><th>휴게소</th><th>별점</th><th>작성자</th><th>작성일</th></tr>';
+					for (let i = 0; i < list.length; i++){
+						tabSR += '<tr>'
+						+ '<td>' + (totalCount - ((currentPage - 1) * pageScale) - i) + '</td>'
+						+ '<td>' + list[i].raName + '</td>'
+						+ '<td>' + list[i].star + '</td>'
+						+ '<td>' + list[i].memId + '</td>'
+						+ '<td>' + list[i].inputDate + '</td>'
+						+ '</tr>';
+					} // end for
+					tabSR += '</table>';
+					$("#tab").html(tabSR);
+				} // end if
+			} // success
+		}); // ajax
+	} // callAjaxStarRate
+	
+	function callAjaxReview() {
+		var param = {memId: "${param.memId}"};
+		
+		var totalCount = 0;
+		var pageScale = 5;
+		var currentPage = 1;
+		var list = new Array();
+		
+		$.ajax({
+			url: "mgt_member_review_process.jsp",
+			type:"POST",
+			data:param,
+			dataType: "JSON",
+			error: function(xhr) {
+				alert('문제가 발생했습니다');
+				console.log(xhr.status + "/" + xhr.statusText);
+			},
+			success: function(jsonObj) {
+				if(jsonObj.result) {
+					totalCount = jsonObj.totalCount;
+					pageScale = jsonObj.pageScale;
+					currentPage = jsonObj.currentPage;
+					list = jsonObj.data;
+					
+					var tabSR = '<table style="width:100%;"><tr><th>번호</th><th>간략 내용</th><th>휴게소</th><th>작성자</th><th>작성일</th><th>블라인드</th><th>삭제일</th></tr>';
+					for (let i = 0; i < list.length; i++){
+						tabSR += '<tr>'
+						+ '<td>' + /*(totalCount - ((currentPage - 1) * pageScale) - i)*/ (list.length - i) + '</td>'
+						+ '<td>' + list[i].title + '</td>'
+						+ '<td>' + list[i].raName + '</td>'
+						+ '<td>' + list[i].memId + '</td>'
+						+ '<td>' + list[i].inputDate + '</td>'
+						+ '<td>' + list[i].blindFlag + '</td>'
+						+ '<td>' + list[i].deleteDate + '</td>'
+						+ '</tr>';
+					} // end for
+					tabSR += '</table>';
+					$("#tab").html(tabSR);
+				} // end if
+			} // success
+		}); // ajax
+	} // callAjaxStarRate
+	
+	function callAjaxStoreReport() {
+		var param = {memId: "${param.memId}"};
+		
+		var pageScale = 5;
+		var list = null;
+		
+		$.ajax({
+			url: "mgt_member_store_report_process.jsp",
+			type:"POST",
+			data:param,
+			dataType: "JSON",
+			error: function(xhr) {
+				alert('문제가 발생했습니다');
+				console.log(xhr.status + "/" + xhr.statusText);
+			},
+			success: function(jsonObj) {
+				if(jsonObj.result) {
+					list = jsonObj.data;
+					pageScale = jsonObj.pageScale;
+					var tabSR = '<table style="width:100%;"><tr><th>번호</th><th>간략 내용</th><th>신고자</th><th>신고일</th><th>휴게소</th><th>매장명</th><th>처리상태</th><th>처리일</th></tr>';
+					for (let i = 0; i < list.length; i++){
+						tabSR += '<tr>'
+						+ '<td>' + (list.length - i) + '</td>'
+						+ '<td>' + list[i].title + '</td>'
+						+ '<td>' + list[i].memId + '</td>'
+						+ '<td>' + list[i].inputDate + '</td>'
+						+ '<td>' + list[i].raName + '</td>'
+						+ '<td>' + list[i].storeName + '</td>'
+						+ '<td>' + list[i].processFlag + '</td>'
+						+ '<td>' + list[i].processDate + '</td>'
+						+ '</tr>';
+					} // end for
+					tabSR += '</table>';
+					$("#tab").html(tabSR);
+				} // end if
+			} // success
+		}); // ajax
+	} // callAjaxStoreReport
+	
+	function callAjaxReviewReport() {
+		var param = {memId: "${param.memId}"};
+		
+		var pageScale = 5;
+		var list = null;
+		
+		$.ajax({
+			url: "mgt_member_review_report_process.jsp",
+			type:"POST",
+			data:param,
+			dataType: "JSON",
+			error: function(xhr) {
+				alert('문제가 발생했습니다');
+				console.log(xhr.status + "/" + xhr.statusText);
+			},
+			success: function(jsonObj) {
+				if(jsonObj.result) {
+					list = jsonObj.data;
+					pageScale = jsonObj.pageScale;
+					var tabSR = '<table style="width:100%;"><tr><th>번호</th><th>간략 내용</th><th>리뷰작성자</th><th>신고자</th><th>신고일</th><th>블라인드</th><th>삭제</th><th>처리상태</th><th>처리일</th></tr>';
+					for (let i = 0; i < list.length; i++){
+						tabSR += '<tr>'
+						+ '<td>' + (list.length - i) + '</td>'
+						+ '<td>' + list[i].reportContent + '</td>'
+						+ '<td>' + list[i].reviewMemId + '</td>'
+						+ '<td>' + list[i].reportMemId + '</td>'
+						+ '<td>' + list[i].reportInputDate + '</td>'
+						+ '<td>' + list[i].blindFlag + '</td>'
+						+ '<td>' + list[i].deleteFlag + '</td>'
+						+ '<td>' + list[i].processFlag + '</td>'
+						+ '<td>' + list[i].processDate + '</td>'
+						+ '</tr>';
+					} // end for
+					tabSR += '</table>';
+					$("#tab").html(tabSR);
+				} // end if
+			} // success
+		}); // ajax
+	} // callAjaxReviewReport
+	
+	function callAjaxInquiry() {
+		var param = {memId: "${param.memId}"};
+		
+		var pageScale = 5;
+		var list = null;
+		
+		$.ajax({
+			url: "mgt_member_inquiry_process.jsp",
+			type:"POST",
+			data:param,
+			dataType: "JSON",
+			error: function(xhr) {
+				alert('문제가 발생했습니다');
+				console.log(xhr.status + "/" + xhr.statusText);
+			},
+			success: function(jsonObj) {
+				if(jsonObj.result) {
+					list = jsonObj.data;
+					pageScale = jsonObj.pageScale;
+					var tabSR = '<table style="width:100%;"><tr><th>번호</th><th>제목</th><th>작성자</th><th>작성일</th><th>답변</th></tr>';
+					for (let i = 0; i < list.length; i++){
+						tabSR += '<tr>'
+						+ '<td>' + (list.length - i) + '</td>'
+						+ '<td>' + list[i].title + list[i].secretFlag + '</td>'
+						+ '<td>' + list[i].memId + '</td>'
+						+ '<td>' + list[i].inputDate + '</td>'
+						+ '<td>' + list[i].answerFlag + '</td>'
+						+ '</tr>';
+					} // end for
+					tabSR += '</table>';
+					$("#tab").html(tabSR);
+				} // end if
+			} // success
+		}); // ajax
+	} // callAjaxReviewReport
 	
 	document.getElementById('sideDash').setAttribute('class', 'sideText sideDisSelect');
 	document.getElementById('sideMember').setAttribute('class', 'sideText sideSelect');
@@ -133,12 +367,12 @@ try {
 		<!-- 최상단 메뉴이름 타이틀바 끝 -->
 		
 		<!-- 내용 시작 -->
-		<div id="contentWrap" style="margin:0px auto; width: 462px; height: 749px;">
+		<div id="contentWrap" style="margin:0px auto; width: 900px; height: 749px;">
 			<form method="post" action="mgt_member_update_process.jsp" name="frmDetail" id="frmDetail">
 				<input type="hidden" id="managerId" name="managerId" value="${sessionScope.loginData2.managerId }"/>
 				<input type="hidden" id="memId" name="memId" value="${param.memId }"/>
 				<input type="hidden" id="suspendFlag" name="suspendFlag" value="${mVO.suspendFlag }"/>
-				<div style="margin:0px auto;" >
+				<div style="margin:0px auto; padding-left:220px;" >
 					<table>
 						<tr>
 							<th style="width: 60px;">아이디</th>
@@ -173,6 +407,21 @@ try {
 							<td><fmt:formatDate value="${mVO.withdrawDate }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 						</tr>
 					</table>
+				</div>
+				<div style="margin-top:10px;">
+					<div>
+					최근 활동
+					</div>
+					<input type="button" value="리뷰" class="btn btn-sm btn-dark btnRecent" id="review"/>
+					<input type="button" value="문의내역" class="btn btn-sm btn-secondary btnRecent" id="inquiry"/>
+					<input type="button" value="매장신고" class="btn btn-sm btn-secondary btnRecent" id="storeReport"/>
+					<input type="button" value="리뷰신고" class="btn btn-sm btn-secondary btnRecent" id="reviewReport"/>
+					<input type="button" value="별점 내역" class="btn btn-sm btn-secondary btnRecent" id="starRate"/>
+				</div>
+<!-- 				<div style="margin-top:10px;"> -->
+<!-- 				별점내역 -->
+<!-- 				</div> -->
+				<div id="tab" style="width:900px; margin:0px auto; text-align:center;">
 				</div>
 				<div style="margin-top:10px; float:right;">
 					<c:choose>

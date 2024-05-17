@@ -606,10 +606,10 @@ try {
 								<td class="borderBot tableC1"><fmt:formatDate value="${drrVO.inputDate }" pattern="YYYY-MM-dd HH:mm:ss"/></td>
 								<td class="borderBot tableC2_2"><c:out value="${drrVO.title}"/></td>
 								<c:choose>
-									<c:when test="${rrrVO.progressStatus eq 0 }">
+									<c:when test="${drrVO.flagAnswer eq 0 }">
 										<td class="borderBot tableC3 fontRed">처리 전</td>
 									</c:when>
-									<c:when test="${rrrVO.progressStatus eq 1 }">
+									<c:when test="${drrVO.flagAnswer eq 1 }">
 										<td class="borderBot tableC3">처리 중</td>
 									</c:when>
 									<c:otherwise>

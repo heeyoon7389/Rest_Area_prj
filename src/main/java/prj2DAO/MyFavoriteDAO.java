@@ -108,7 +108,7 @@ public class MyFavoriteDAO {
 			.append("	from ( select MEM_ID, RA_NUM, INPUT_DATE,	")
 			.append("			row_number() over(order by INPUT_DATE desc) rnum	")
 			.append("			from FAVORITE ")
-			.append("			where mem_id=?  ");
+			.append("			where mem_id=? and favorite_flag = '1'  ");
 			
 			if(sVO.getKeyword() != null && !"".equals(sVO.getKeyword() )) {
 				
@@ -176,7 +176,8 @@ public class MyFavoriteDAO {
 			
 			StringBuilder deleteFavorite= new StringBuilder();
 			deleteFavorite
-			.append(" delete FAVORITE ")
+			.append(" update FAVORITE ")
+			.append(" set  favorite_flag = '0' ")
 			.append(" where MEM_ID=? and RA_NUM=? ");
 			
 			pstmt=con.prepareStatement(deleteFavorite.toString());

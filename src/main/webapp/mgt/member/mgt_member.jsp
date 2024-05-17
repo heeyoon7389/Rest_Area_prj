@@ -50,6 +50,12 @@ request.setCharacterEncoding("UTF-8");
 	$(function() {
 		var field = "0";
 		
+		if("${param.pageScale}" == null || '' == "${param.pageScale}") {
+			$("#pageScale").prop("selected", "5");
+		} else {
+			$("#pageScale").prop("selected", "${param.pageScale}");
+		} // end else
+		
 		$("#btnSearch").click(function () {
 			chkNull();
 		}); // click
@@ -144,26 +150,31 @@ request.setCharacterEncoding("UTF-8");
 			%>
 			
 			<form name="frmBoard" id="frmBoard" action="mgt_member.jsp">
-				<div style="width:150px; float:left;">
-					<input type="button" value="전체" id="btnAllSearch" class="btn btn-sm btn-info"/>
+				<div style="margin:0px auto; width:800px;">
+					<div style="width:150px; text-align:left; float:left;">
+						<input type="button" value="전체" id="btnAllSearch" class="btn btn-sm btn-secondary"/>
+					</div>
+					<div style="width:120px; float:right; text-align:right;">
+						<c:set var="pageSc" value="${param.pageScale }"/>
+						<c:if test="${empty pageSc or '' eq pageSc}">
+							<c:set var="pageSc" value="5"/>
+						</c:if>
+						<select id="pageScale" name="pageScale">
+							<option value="5"${pageSc eq 5 ? " selected='selected'" : "" }>5명씩 보기</option>
+							<option value="10"${pageSc eq 10 ? " selected='selected'" : "" }>10명씩 보기</option>
+							<option value="20"${pageSc eq 20 ? " selected='selected'" : "" }>20명씩 보기</option>
+						</select>
+					</div>
 				</div>
-				<div style="width:150px; float:right;">
-					<select id="pageScale" name="pageScale">
-						<option value="5"${param.pageScale eq 5 ? " selected='selected'" : "" }>5명씩 보기</option>
-						<option value="10"${param.pageScale eq 10 ? " selected='selected'" : "" }>10명씩 보기</option>
-						<option value="20"${param.pageScale eq 20 ? " selected='selected'" : "" }>20명씩 보기</option>
-					</select>
-				</div>
-				
-				<div class="tableFrm">
+				<div class="tableFrm" style="margin:0px auto; padding-top:20px; width:800px;">
 					<table class="restAreaTable">
 						<thead>
 							<tr>
 								<th>번호</th>
 								<th>아이디</th>
 								<th>닉네임</th>
-								<th>이메일</th>
-								<th>이름</th>
+<!-- 								<th>이메일</th> -->
+<!-- 								<th>이름</th> -->
 								<th>정지</th>
 								<th>탈퇴</th>
 							</tr>
@@ -174,10 +185,13 @@ request.setCharacterEncoding("UTF-8");
 									<c:set var="rnum" value="${totalCount - ((currentPage - 1) * pageScale) - i.index }"/>
 									<td><c:out value="${rnum }"/></td>
 <%-- 									<td><c:out value="${mVO.memId }"/></td> --%>
-									<td><a style="text-decoration: none; color: black;" href="mgt_member_detail_frm.jsp?rnum=${rnum }&currentPage=${empty param.currentPage ? 1:param.currentPage}&memId=${mVO.memId}"><c:out value="${mVO.memId }"/></a></td>
+<%-- 									<td><a style="text-decoration: none; color: black;" href="mgt_member_detail_frm.jsp?rnum=${rnum }&currentPage=${empty param.currentPage ? 1:param.currentPage}&memId=${mVO.memId}" ><c:out value="${mVO.memId }"/></a></td> --%>
+									<td style="cursor:pointer;" onClick="
+										location.href='mgt_member_detail_frm.jsp?rnum=${rnum }&currentPage=${empty param.currentPage ? 1:param.currentPage}&memId=${mVO.memId}&pageScale=' + $('#pageScale').val() 
+									"><c:out value="${mVO.memId }"/></td>
 									<td><c:out value="${mVO.nick }"/></td>
-									<td><c:out value="${mVO.email }"/></td>
-									<td><c:out value="${mVO.name }"/></td>								
+<%-- 									<td><c:out value="${mVO.email }"/></td> --%>
+<%-- 									<td><c:out value="${mVO.name }"/></td>								 --%>
 									<td>
 									<c:if test="${mVO.suspendFlag eq true }">
 										<font color='#ffa500'>정지</font>

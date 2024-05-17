@@ -131,13 +131,13 @@ request.setCharacterEncoding("UTF-8");
 				pageContext.setAttribute("pageScale", pageScale);
 				pageContext.setAttribute("currentPage", currentPage);
 			%>
-			<div style="width:150px; float:left;">
-				<input type="button" value="전체글" id="btnAllSearch" class="btn btn-sm btn-info"/>
+			<div style="width:150px; text-align:left; padding-left:15px; float:left;">
+				<input type="button" value="전체글" id="btnAllSearch" class="btn btn-sm btn-secondary"/>
+			</div>			
+			<div style="width:150px; float:right; text-align:right; padding-right:17px;">
+				<input type="button" value="글쓰기" id="btnWrite" class="btn btn-sm btn-primary"/>
 			</div>
-			<div style="width:150px; float:right;">
-				<input type="button" value="글쓰기" id="btnWrite" class="btn btn-sm btn-info"/>
-			</div>
-			<div class="tableFrm" style="height:460px;">
+			<div class="tableFrm" style="height:460px; padding-top:20px;">
 				<table class="restAreaTable">
 					<thead>
 						<tr>

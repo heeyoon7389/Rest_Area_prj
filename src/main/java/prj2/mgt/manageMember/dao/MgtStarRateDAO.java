@@ -44,7 +44,7 @@ public class MgtStarRateDAO {
 			// 4. 쿼리문 생성 객체 얻기 (Dynamic Query)
 			StringBuilder selectMaxPage = new StringBuilder();
 			selectMaxPage
-			.append("	select count(*) cnt from inquiry	")	// 모든 레코드의 수
+			.append("	select count(*) cnt from star_rate	")	// 모든 레코드의 수
 			.append("	where mem_id like '%'||?||'%'	");
 			pstmt = con.prepareStatement(selectMaxPage.toString());
 
@@ -84,7 +84,7 @@ public class MgtStarRateDAO {
 			// 4. 쿼리문 생성 객체 얻기 (Dynamic Query)
 			StringBuilder selectPagingStarRate = new StringBuilder();
 			selectPagingStarRate
-			.append("	select 	rnum, mem_id, ra_name, ra_num, star, input_date	")
+			.append("	select 	rnum, mem_id, ra_name, ra_num, star, to_char(input_date, 'yyyy-mm-dd') input_date	")
 			.append("	from	(	")
 			.append("			select 	row_number() over(order by input_date desc) rnum, mem_id, ra.ra_name, ra.ra_num, star, input_date	")
 			.append("			from	star_rate sr,	")
@@ -103,7 +103,7 @@ public class MgtStarRateDAO {
 			rs = pstmt.executeQuery();
 			StarRateMemVO srmVO = null;
 			while(rs.next()) {
-				srmVO = new StarRateMemVO(rs.getString("ra_name"), rs.getString("ra_num"), rs.getString("mem_id"), rs.getInt("star"), rs.getDate("input_date"));
+				srmVO = new StarRateMemVO(rs.getString("ra_name"), rs.getString("ra_num"), rs.getString("mem_id"), rs.getDouble("star"), rs.getString("input_date"));
 				list.add(srmVO);
 			} // end while
 		} finally { 

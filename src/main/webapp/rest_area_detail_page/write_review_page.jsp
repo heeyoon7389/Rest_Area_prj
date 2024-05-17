@@ -57,7 +57,8 @@
 			</h2>
 			<%
 			String raNum = request.getParameter("raNum");
-			String memberId = ((LoginVO) session.getAttribute("loginData")).getMemId();
+			/*String memberId = ((LoginVO) session.getAttribute("loginData")).getMemId(); */
+			String memberId = request.getParameter("memberId");
 			%>
 			<form action="write_review_process.jsp" method="post"
 				onsubmit="return chkNull();">
