@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>로그인</title>
-<link rel="icon" href="http://192.168.10.218/jsp_prj/common/favicon.ico"/>
+<link rel="icon" href="http://192.168.10.218/Rest_Area_prj/common/tamcatIcon.ico"/>
 <!--bootstrap 시작-->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -33,6 +33,7 @@ body {
 .form {
   background: #FFFFFF;
   width: 600px;
+  height: 515px;
   border-radius: 4px; /* 둥근 모서리 */
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.1); /* 그림자 */
   overflow: hidden;

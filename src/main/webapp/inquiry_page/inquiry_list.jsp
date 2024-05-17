@@ -53,7 +53,7 @@
        padding-bottom: 10px;
     padding-right: 120px;
     }
-	
+
 </style>
 <script type="text/javascript">
 	$(function(){
@@ -148,7 +148,7 @@ try{
 		</c:forEach>
 		</tbody>
 	</table>
-	<input type="button" value="글작성" id="btnWrite" class="btn btn-info btn-sm" style="float: right;"/>
+	<input type="button" value="글작성" id="btnWrite" class="btn btn-info btn-sm"/>
 	</div>
 	
 	</div>
