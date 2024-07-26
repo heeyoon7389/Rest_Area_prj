@@ -1,0 +1,55 @@
+/* 네비게이션 바 스타일 */
+.nav-item {
+	margin-top: 15px;
+}
+
+#login {
+	cursor: pointer;
+}
+/* 검색창 스타일 */
+.search-container form {
+	width: 100%;
+}
+/* 검색창 select 스타일 */
+.form-select {
+	width: 185px;
+}
+/* 검색 버튼 크기 조절 */
+.btn-primary {
+	flex-shrink: 0;
+	width: 100px;
+	height: 65px;
+}
+
+.main {
+	margin-top: 15px;
+	width: 100%;
+	float: left;
+	width: 100%;
+}
+
+#main_1 {
+	float: left;
+	overflow: auto;
+	width: 50%;
+	height: 750px;
+}
+
+.main_2 {
+	float: right;
+	width: 50%;
+	height: 750px;
+}
+
+.col-md-6 {
+	margin-top: 20px;
+}
+
+a {
+	text-decoration: none;
+	color: black;
+}
+
+footer {
+	margin-top: 150px;
+}

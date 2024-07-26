@@ -33,14 +33,24 @@ public class RestAreaInfoDAO {
 			//2.
 			con = dbCon.getConn("jdbc/restarea");
 			//3.
-			String selectRestAreaInfo = "";
-			pstmt = con.prepareStatement(selectRestAreaInfo);
+			StringBuilder selectRestAreaInfo = new StringBuilder()
+					.append("select ra_name, addr, latitude, longitude ")
+					.append("from Rest_area ")
+					.append("where ra_num =?");
+			pstmt = con.prepareStatement(selectRestAreaInfo.toString());
 			//4.
-			pstmt.setString(0, selectRestAreaInfo);
+			pstmt.setString(1, raNum);
 			
 			rs = pstmt.executeQuery();
+			RestAreaInfoVO raiVO = null;
 			if(rs.next()) {
-				raVO = new RestAreaInfoVO();
+				RestAreaInfoVO raiVOBuilder = raiVO.builder()
+						.raName(rs.getString("ra_name"))
+						.raAddr(rs.getString("addr"))
+						.latitude(rs.getDouble("latitude"))
+						.longitude(rs.getDouble("longitude"))
+						.build();
+				raVO = raiVOBuilder;
 			}
 		} finally {
 			dbCon.closeCon(rs, pstmt, con);
@@ -73,4 +83,34 @@ public class RestAreaInfoDAO {
 		}
 		return cnt;
 	}
+	
+	public int updateFavorite(String flag, String memberId, String raNum) throws SQLException {
+		int cnt = 0;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		DbConnection dbCon = DbConnection.getInstance();
+		
+		try {
+		con = dbCon.getConn("jdbc/restarea");
+		
+		StringBuilder updateFavoite = new StringBuilder();
+		updateFavoite
+		.append("update  favorite ")
+		.append("set     favorite_flag = ? ")
+		.append("where   mem_id = ? and ra_num = ? ");
+		
+		pstmt=con.prepareStatement(updateFavoite.toString());
+		
+		pstmt.setString(1, flag);
+		pstmt.setString(2, memberId);
+		pstmt.setString(3, raNum);
+		
+		cnt = pstmt.executeUpdate();
+		}finally {
+			dbCon.closeCon(null, pstmt, con);
+		}//end finally
+		
+		return cnt;
+	}//updateFavorite
 }

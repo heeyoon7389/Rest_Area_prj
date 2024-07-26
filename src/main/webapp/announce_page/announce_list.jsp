@@ -8,26 +8,9 @@
     pageEncoding="UTF-8"
     info="공지사항 리스트"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<!--<link rel="icon" href="http://192.168.10.210/jsp_prj/common/favicon.ico"/>-->
-<!--bootstrap 시작-->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<!--bootstrap 끝-->
-<link rel="stylesheet" href="http://192.168.10.213/Reatarea_Project/common/css/main.css" type="text/css" media="all" />
-<link rel="stylesheet" href="http://192.168.10.213/Reatarea_Project/common/css/board.css" type="text/css" media="all" />
-<!--jquery CDN 시작-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-<!--jquery CDN 끝-->
 
 <style type="text/css">
 	#wrap{ width: 1462px; height: 749px; margin: 0px auto; }
-	#header{ height: 100px;
-	background: #FFFFFF url('http://localhost/jsp_prj/common/images/header.png') no-repeat; }
 	.num{ width: 80px}
 	.title{ width :180px}
 	.id{ width: 120px}
@@ -74,11 +57,11 @@
 		});//click
 		
 		$("#btnAllSearch").click(function(){
-			location.href="inquiry_list.jsp";
+			location.href="../main_page/main_page.jsp?link=announce";
 		});//click	
 		
 		$("#btnWrite").click(function(){
-			location.href="inquiry_write_frm.jsp";
+			location.href="../main_page/main_page.jsp?link=announce_read";
 		});//click
 		
 		$("#keyword").keydown(function( evt ){
@@ -96,10 +79,7 @@
 		}//end if
 	}//chkNull
 </script>
-</head>
-<body>
 <div id="wrap">
-<div id="header"></div>
 <div id="content">
 <%
 request.setCharacterEncoding("UTF-8");
@@ -139,13 +119,6 @@ try{
 	pageContext.setAttribute("pageScale", pageScale);
 	pageContext.setAttribute("currentPage", currentPage);
 %>
-	총 레코드의 수 : <%= totalCount  %>건<br/>
-	한 화면에 보여줄 게시물 수 : <%= pageScale  %>건<br/>
-	총 페이지 수 : <%= totalPage  %>장<br/>
-	클릭한페이지 : <%= tempPage  %>/<%= currentPage  %>번<br/>
-	시작번호 :<%= startNum %>번<br/>
-	끝번호 :<%= endNum %>번<br/>
-	
 	<div style="height: 500px"> 
 	<div class="program_table">
 	<table class="table">
@@ -162,7 +135,7 @@ try{
 		<c:forEach var="aVO" items="${ list }" varStatus="i">
 		<tr>
 		<td><c:out value="${totalCount-(currentPage-1)*pageScale- i.index }"/></td>
-		<td><a href="announce_read_frm.jsp?announce_num=${ aVO.announce_num }&currentPage=${empty param.currentPage ?1:param.currentPage}"><c:out value="${ aVO.title }"/></a></td>
+		<td><a href="../main_page/main_page.jsp?link=announce_read&announce_num=${ aVO.announce_num }&currentPage=${empty param.currentPage ?1:param.currentPage}"><c:out value="${ aVO.title }"/></a></td>
 		<td><c:out value="${ aVO.managerid }"/></td>
 		<td><c:out value="${ aVO.input_date }"/></td>
 		<td><c:out value="${ aVO.announce_view }"/></td>
@@ -177,7 +150,8 @@ try{
 	
 	<div class="paging">
 	<div style="text-align:  center;">
-	<form action="announce_list.jsp" name="frmBoard" id="frmBoard">
+	<form action="main_page.jsp" name="frmBoard" id="frmBoard">
+	<input type="hidden" name="link" value="announce"/>
 		<select name="field" id="field">
 		<option value="0"${ param.field eq 0?" selected='selected'":"" }>제목</option>
 		<option value="1"${ param.field eq 1?" selected='selected'":"" }>내용</option>
@@ -209,7 +183,7 @@ try{
 	--%>
 	
 	
-	<%= BoardUtil.getInstance().pageNation("announce_list.jsp",param,
+	<%= BoardUtil.getInstance().pageNation("../main_page/main_page.jsp?link=announce",param,
 			totalPage, currentPage)
 	
 		 
@@ -233,5 +207,3 @@ try{
 </div>
 
 </div>
-</body>
-</html>

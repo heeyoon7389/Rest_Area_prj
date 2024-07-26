@@ -1,3 +1,4 @@
+<%@page import="prj2DAO.BoardUtil"%>
 <%@page import="prj2VO.MyInquiryVO"%>
 <%@page import="java.util.List"%>
 <%@page import="prj2VO.LoginVO"%>
@@ -7,11 +8,30 @@
     pageEncoding="UTF-8"
     info="마이페이지"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <script type="text/javascript">
 	$(function(){
+		$("#btnSearch").click(function(){
+			chkNull();
+		});//click
 		
+		$("#btnAllSearch").click(function(){
+			location.href="../main_page/main_page.jsp?link=myPage&my=myInquiry";
+		});//click
+		
+		$("#keyword").keydown(function( evt ){
+			if(evt.which == 13){
+				chkNull();
+			}
+		});//keydown
 	});//ready
+	
+	function chkNull(){
+		if($("#keyword").val().trim() != ""){
+			var field = $("#field").val();
+			var keyword = $("#keyword").val();
+			$("#searchFrm").submit();
+		}
+	}//chkNull
 </script>
 
 <!-- /////////////////////////////여기에 include////////////////////////////////////// -->
@@ -59,7 +79,7 @@ try{
   <thead>
     <tr>
       <th>#</th><!-- <th scope="col"> -->
-      <th>문의 제목</th>
+      <th colspan="2">문의 제목</th>
       <th>작성일</th>
       <th>답변</th>
     </tr>
@@ -70,14 +90,16 @@ try{
     	<!-- 번호를 마지막 숫자부터 출력 -->
       <td><c:out value="${ totalCount - (currentPage-1) * pageScale - i.index }"/></td>
       <td colspan="2">
-      	<a href="../main_page/main_page.jsp?link=myPage&my=myInquiry&seq=${ miVO.inquiryNum }&currentPage=${empty param.currentPage ? 1 : param.currentPage}">
+      	<a href="../main_page/main_page.jsp?link=myPage&my=myInquiry_read&seq=${ miVO.inquiryNum }&currentPage=${empty param.currentPage ? 1 : param.currentPage}" style="text-decoration:none; color: black;">
      		<c:out value="${ miVO.title }"/>
       	</a>
       </td>
       <td><c:out value="${ miVO.inputDate }"/></td>
       <td>
       	<c:if test="${ miVO.answerFlag eq 1 }">
-      		<c:out value="답변보기"/>
+      		<a href="../main_page/main_page.jsp?link=myPage&my=myInquiry_read&seq=${ miVO.inquiryNum }&currentPage=${empty param.currentPage ? 1 : param.currentPage}" style="text-decoration:none;">
+	      		<c:out value="답변보기"/>
+      		</a>
       	</c:if>
       </td>
     </tr>
@@ -89,15 +111,41 @@ try{
 
 <!-- 검색 창 시작 -->
 <div style="text-align: center;">
-<form action="../main_page/main_page.jsp?link=myPage&my=myInquiry" name="searchFrm" id="searchFrm">
-	<
+<form name="searchFrm" id="searchFrm" action="main_page.jsp">
+	<input type="hidden" name="link" value="myPage"/>
+	<input type="hidden" name="my" value="myInquiry"/><!-- 파라메터 다시 주기 -->
+	<select name="field" id="field">
+	<option value="0"${ param.field eq 0 ? " selected='selected' " : "" }>제목</option>
+	<option value="1"${ param.field eq 1 ? " selected='selected' " : "" }>내용</option>
+	<option value="2"${ param.field eq 2 ? " selected='selected' " : "" }>답변내용</option>
+	</select>
+	<input type="text" name="keyword" id="keyword" value="${ param.keyword }" style="width: 230px" />
+	<input type="button" value="검색" id="btnSearch" class="btn btn-info btn-sm"/>
+	<input type="button" value="전체글" id="btnAllSearch" class="btn btn-info btn-sm"/>
+	<input type="text" style="display: none;"/>
 </form>
 </div>
 <!-- 검색 창 끝 -->
+<!-- pageNation 시작 -->
+<div style="text-align: center;">
+	<%
+	String param="";
+	%>
+	<c:if test="${ not empty param.keyword }">
+	<%
+	param = "&field" + request.getParameter("field") + "&keyword=" + request.getParameter("keyword");
+	%>
+	<c:set var="link2" value="&field=${param.field }&keyword=${param.keyword }"/>
+	</c:if>
+	
+	<%= BoardUtil.getInstance().pageNation("../main_page/main_page.jsp?link=myPage&my=myInquiry", param, totalPage, currentPage) %>
+	<br>
+</div>
+<!-- pageNation 끝 -->
 
 <%}catch(SQLException se){
 	se.printStackTrace();
-	%>alert("죄송합니다. 잠시후 다시 시도해주세요.");<%
+	out.println("죄송합니다. 잠시후 다시 시도해주세요.");
 }//end catch
 %>
 </div><!-- wrap -->

@@ -55,7 +55,7 @@ public class InquiryDAO {
 		
 			
 			String insertInquiry=
-			" insert into inquiry(mem_id, title, content) values(?,?,?)";
+			" insert into inquiry(mem_id, title, content, INQUIRY_NUM) values(?,?,?,SEQ_INQUIRY.NEXTVAL)";
 	
 			pstmt=con.prepareStatement(insertInquiry);
 			
@@ -114,7 +114,6 @@ public class InquiryDAO {
 				pstmt.setString(1, sVO.getKeyword());
 			}//end if
 			
-			System.out.println( selectCnt );
 			
 		//6. 쿼리문 수행 후 결과얻기
 			rs=pstmt.executeQuery();
