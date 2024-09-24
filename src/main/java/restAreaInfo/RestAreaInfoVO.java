@@ -21,6 +21,6 @@ public class RestAreaInfoVO {
 	private String raAddr;
 	private double latitude;
 	private double longitude;
-	private boolean favoriteRa;
+	private String favoriteRa;
 	private String memberId;
 }

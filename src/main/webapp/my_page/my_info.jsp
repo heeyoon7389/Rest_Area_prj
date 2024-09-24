@@ -6,50 +6,23 @@
     info="마이페이지"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%
-String paramPass = request.getParameter("promptPass"); // 프롬프트 폼에서 전송된 데이터 가져오기
-if(paramPass == null || "".equals(paramPass)){//값이 없으면 프롬프트 출력
-%>
 <script type="text/javascript">
-$(function(){
-	let inputPass = prompt("비밀번호를 입력해주세요.");
-	if(inputPass){
-		// 프롬프트에서 받은 값을 폼의 hidden 필드에 설정
-		$("#promptPass").val(inputPass);
-		// 폼 제출
-		document.chkFrm.submit();
-	}//end if
+$(function(){	
+	
 });//ready
 </script>
-<% }else{
-		String encryptPass = DataEncrypt.messageDigest("MD5", paramPass);
-		// 가져온 데이터를 pageContext에 저장
-		pageContext.setAttribute("pagePass", encryptPass);
-	}//end else
-%>
-			
+	
 <script type="text/javascript">		
 $(function(){
-		//값 비교
-		var getPagePass = '<%= pageContext.getAttribute("pagePass") %>';
- 		if(getPagePass !== "" && getPagePass !== null){
-			var sessionPass = '<%= ((LoginVO)session.getAttribute("loginData")).getPass() %>';	
-			if(getPagePass !== sessionPass){
-				alert("비밀번호가 일치하지 않습니다.");
-				location.href="../main_page/main_page.jsp?link=logo";
-			
-			}else{
-				//사용자 정보 설정
-				$("#id").val('<%= ((LoginVO)session.getAttribute("loginData")).getMemId() %>');
-				$("#name").val('<%= ((LoginVO)session.getAttribute("loginData")).getName() %>');
-				$("#nick").val('<%= ((LoginVO)session.getAttribute("loginData")).getNick() %>');
-			
-				var email = '<%= ((LoginVO)session.getAttribute("loginData")).getEmail() %>';
-				var emails = email.split('@');
-				$("#email1").val(emails[0]);
-				$("#email2").val(emails[1]);
-			}//end else
-		}//end if
+		//사용자 정보 설정
+		$("#id").val('<%= ((LoginVO)session.getAttribute("loginData")).getMemId() %>');
+		$("#name").val('<%= ((LoginVO)session.getAttribute("loginData")).getName() %>');
+		$("#nick").val('<%= ((LoginVO)session.getAttribute("loginData")).getNick() %>');
+		
+		var email = '<%= ((LoginVO)session.getAttribute("loginData")).getEmail() %>';
+		var emails = email.split('@');
+		$("#email1").val(emails[0]);
+		$("#email2").val(emails[1]);
 		
 		//비밀번호 유효성 검사
         $('#password2').focusout(function(){
@@ -78,8 +51,8 @@ $(function(){
         		$("#nick").focus();
         		return;
         	} else {
-    			window.open("../join_page/nick_dup.jsp?nick="+nick, "nickDup", "width=472, height=390, top="+
-    			(window.screenY+100)+", left="+(window.screenX+100));
+    			window.open("../join_page/nick_dup.jsp?nick="+nick, "nickDup", "width=472, height=350, top="+
+    			(window.screenY+203)+", left="+(window.screenX+306));
         	}
         });//nickChk
         

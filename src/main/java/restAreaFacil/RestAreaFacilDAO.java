@@ -35,16 +35,26 @@ public class RestAreaFacilDAO {
 		try {
 			con = dbCon.getConn("jdbc/restarea");
 			//3.
-			String selectFacil = "";
-			pstmt = con.prepareStatement(selectFacil);
-			//4.
-			pstmt.setString(0, selectFacil);
-			RestAreaFacilVO rafVO = null;
+			StringBuilder selectFacil = new StringBuilder();
+			selectFacil
+			.append("select hrf.ra_num, rf.ra_facil_num, rf.img, rf.ra_facil_name, rf.note ")
+			.append("from held_ra_facility hrf, restarea_facility rf ")
+			.append("where hrf.ra_facil_num = rf.ra_facil_num and hrf.ra_num = ?");
 			
+			pstmt = con.prepareStatement(selectFacil.toString());
+			//4.
+			pstmt.setString(1, raNum);
 			rs = pstmt.executeQuery();
+			RestAreaFacilVO rafVO = null;			
 			while(rs.next()) {
-				rafVO = new RestAreaFacilVO();
-				facilList.add(rafVO);
+				RestAreaFacilVO rafVOBuilder = rafVO.builder()
+						.raNum(rs.getString("ra_num"))
+						.raFacilNum(rs.getString("ra_facil_num"))
+						.img(rs.getString("img"))
+						.facilName(rs.getString("ra_facil_name"))
+						.facilNote(rs.getString("note"))
+						.build();		
+				facilList.add(rafVOBuilder);
 			}
 		} finally {
 			dbCon.closeCon(rs, pstmt, con);

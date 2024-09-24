@@ -16,8 +16,10 @@ import lombok.ToString;
 public class RouteVO {
 	private String raNum;
 	private String raName;
+	private String raAddr;
 	private String routeNum;
 	private String routeName;
+	private String raTel;
 	private double restAreaLatitude;
 	private double restAreaLongitude;
 	private String nodeId;
